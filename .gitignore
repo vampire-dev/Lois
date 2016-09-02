@@ -1,3 +1,5 @@
 node_modules
 typings
 .vs
+public/lois/*.js.map
+public/lois/controllers/*.js.map
