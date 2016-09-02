@@ -1,0 +1,47 @@
+.lsan-logo {
+	width: 48px; height:48px;
+}
+
+.logo-text {
+	color: white; font-size: 20px;
+}
+
+.ui-datepicker{z-index:1151 !important;}
+
+.typeahead-demo .custom-popup-wrapper {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1000;
+    display: none;
+    background-color: #f9f9f9;
+  }
+
+.typeahead-demo .custom-popup-wrapper > .message {
+	padding: 10px 20px;
+	border-bottom: 1px solid #ddd;
+	color: #868686;
+}
+
+.typeahead-demo .custom-popup-wrapper > .dropdown-menu {
+	position: static;
+	float: none;
+	display: block;
+	min-width: 160px;
+	background-color: transparent;
+	border: none;
+	border-radius: 0;
+	box-shadow: none;
+ }
+
+ .loading {
+ 	text-align: center; margin: 10px 0px;
+ }
+
+ .number-column {
+ 	text-align: right;
+ }
+
+.pdf-controls { width: 100%; display: block; background: #eee; padding: 1em;}
+}
+.fixed { position: fixed; top: 0; left: calc(50% - 480px); z-index: 100; width: 100%; padding: 1em; background: rgba(238, 238, 238,.9); width: 960px; }
