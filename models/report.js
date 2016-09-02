@@ -3,6 +3,6 @@ var Schema = mongoose.Schema;
 
 var model = new Schema({
     name: { type: String, required: true }
-}, { versionKey: false, collection: 'roles' });
+}, { versionKey: false, collection: 'reports' });
 
-module.exports = mongoose.model('Role', model);
+module.exports = mongoose.model('Report', model);

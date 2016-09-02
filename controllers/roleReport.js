@@ -1,4 +1,6 @@
-﻿var model = require('../models/role');
+﻿var model = require('../models/roleReport');
+var reportModel = require('../models/report');
+var roleModel = require('../models/role');
 var mongoose = require('mongoose');
 var co = require('co');
 var objectId = mongoose.Types.ObjectId;
@@ -6,18 +8,30 @@ var objectId = mongoose.Types.ObjectId;
 function Controller() { }
 
 Controller.prototype.get = function (id) {
-    return model.findOne({ "_id": objectId(id) }).exec();
+    return model.findOne({ "_id": objectId(id) }).populate('report').populate('role').exec();
 };
 
 Controller.prototype.getAll = function (query) {
+    if (!query['location'])
+        throw new Error('Base location is not found');
+
     var limit = query['limit'] ? query['limit'] : 10;
     var skip = query['skip'] ? query['skip'] : 0;
     var parameters = {};
 
-    if (query['name'])
-        parameters['name'] = new RegExp(query['name'], 'i');
+    if (query['menu'])
+        parameters['report'] = objectId(query['report']);
 
-    return model.find(parameters).skip(skip).limit(limit).lean().exec();
+    if (query['role'])
+        parameters['role'] = objectId(query['role']);
+
+    return model.find(parameters)
+        .populate('report')
+        .populate('role')
+        .skip(skip)
+        .limit(limit)
+        .lean()
+        .exec();
 };
 
 Controller.prototype.save = function (data) {

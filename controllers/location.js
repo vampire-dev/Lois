@@ -7,7 +7,7 @@ var objectId = mongoose.Types.ObjectId;
 function Controller() { }
 
 Controller.prototype.get = function (id) {
-    return model.findOne({ "_id": objectId(id) }).populate('region');
+    return model.findOne({ "_id": objectId(id) }).populate('region').exec();
 };
 
 Controller.prototype.getAll = function (query) {

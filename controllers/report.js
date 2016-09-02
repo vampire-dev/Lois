@@ -1,4 +1,4 @@
-﻿var model = require('../models/role');
+﻿var model = require('../models/report');
 var mongoose = require('mongoose');
 var co = require('co');
 var objectId = mongoose.Types.ObjectId;

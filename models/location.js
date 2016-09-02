@@ -1,6 +1,5 @@
 ﻿var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-var objectId = mongoose.Types.ObjectId;
 var refId = mongoose.Schema.Types.ObjectId;
 
 var model = new Schema({

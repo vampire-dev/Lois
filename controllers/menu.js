@@ -1,4 +1,4 @@
-﻿var model = require('../models/role');
+﻿var model = require('../models/menu');
 var mongoose = require('mongoose');
 var co = require('co');
 var objectId = mongoose.Types.ObjectId;
@@ -17,7 +17,7 @@ Controller.prototype.getAll = function (query) {
     if (query['name'])
         parameters['name'] = new RegExp(query['name'], 'i');
 
-    return model.find(parameters).skip(skip).limit(limit).lean().exec();
+    return model.find(parameters).sort({"position": 1}).skip(skip).limit(limit).lean().exec();
 };
 
 Controller.prototype.save = function (data) {

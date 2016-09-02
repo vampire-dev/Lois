@@ -6,7 +6,7 @@ var objectId = mongoose.Types.ObjectId;
 function Controller() { }
 
 Controller.prototype.get = function (id) {
-    return model.findOne({ "_id": objectId(id) });
+    return model.findOne({ "_id": objectId(id) }).exec();
 };
 
 Controller.prototype.getAll = function (query) {
