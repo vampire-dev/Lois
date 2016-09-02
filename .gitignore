@@ -3,3 +3,4 @@ typings
 .vs
 public/lois/*.js.map
 public/lois/controllers/*.js.map
+obj/Debug
