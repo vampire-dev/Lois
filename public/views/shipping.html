@@ -1,0 +1,637 @@
+﻿<section id="widget-grid">
+    <div class="row">
+        <article class="col col-sm-12 col-md-12 col-lg-12">
+            <div class="jarviswidget jarviswidget-color-blueDark" role="widget" ng-show="!ctrl.showForm">
+                <header role="heading" data-block="header">
+                    <span class="widget-icon"> <i class="fa fa-shopping-cart"></i></span>
+                    <h2>Pengiriman</h2>
+                    <div class="jarviswidget-ctrls" role="menu" ng-show="ctrl.viewType == 1">
+                        <a href="#" ng-click="ctrl.showToolbar = !ctrl.showToolbar"
+                           ng-show="ctrl.showToolbar" class="button-icon jarviswidget-toggle-btn" rel="tooltip" title="minimize">
+                            <i class="fa fa-minus"></i>
+                        </a>
+                        <a href="#" ng-click="ctrl.showToolbar = !ctrl.showToolbar"
+                           ng-show="!ctrl.showToolbar" class="button-icon jarviswidget-toggle-btn" rel="tooltip" title="maximize">
+                            <i class="fa fa-plus"></i>
+                        </a>
+                    </div>
+                </header>
+                <div role="content">
+                    <div class="jarviswidget-editbox"></div>
+                    <div class="widget-body no-padding">
+                        <div class="widget-body-toolbar" ng-show="ctrl.showToolbar">
+                            <form class="smart-form">
+                                <legend>Filter data</legend>
+                                <fieldset>
+                                    <div class="row">
+                                        <section class="col col-sm-12 col-md-12 col-lg-4">
+                                            <label class="input">
+                                                <input type="text" placeholder="Spb" ng-model="ctrl.filters.spbNumber" />
+                                            </label>
+                                        </section>
+                                        <section class="col col-sm-12 col-md-12 col-lg-4">
+                                            <label class="input">
+                                                <input type="text" placeholder="Penerima" ng-model="ctrl.filters.receiverName" />
+                                            </label>
+                                        </section>
+                                        <section class="col col-sm-12 col-md-12 col-lg-4">
+                                            <label class="input">
+                                                <input type="text"
+                                                       ng-model="ctrl.filters.sender"
+                                                       placeholder="Pengirim"
+                                                       uib-typeahead="data as data.name for data in ctrl.suggest('client', $viewValue)"
+                                                       typeahead-min-length="2"
+                                                       typeahead-loading="senderFilter" class="form-control" />
+                                                <i ng-show="senderFilter" class="glyphicon glyphicon-refresh"></i>
+                                            </label>
+                                        </section>
+                                        <section class="col col-sm-12 col-md-12 col-lg-4">
+                                            <label class="input">
+                                                <input type="text"
+                                                       ng-model="ctrl.filters.destination"
+                                                       placeholder="Tujuan"
+                                                       uib-typeahead="data as data.name for data in ctrl.suggest('location', $viewValue)"
+                                                       typeahead-min-length="2"
+                                                       typeahead-loading="destinationFilter" class="form-control" />
+                                                <i ng-show="destinationFilter" class="glyphicon glyphicon-refresh"></i>
+                                            </label>
+                                        </section>
+                                        <section class="col col-sm-12 col-md-12 col-lg-4">
+                                            <label class="input">
+                                                <input type="text"
+                                                       ng-model="ctrl.filters.partner"
+                                                       placeholder="Partner"
+                                                       uib-typeahead="data as data.name for data in ctrl.suggest('partner', $viewValue)"
+                                                       typeahead-min-length="2"
+                                                       typeahead-loading="partnerFilter" class="form-control" />
+                                                <i ng-show="partnerFilter" class="glyphicon glyphicon-refresh"></i>
+                                            </label>
+                                        </section>
+                                        <section class="col col-sm-12 col-md-12 col-lg-4">
+                                            <label class="input">
+                                                <input type="text"
+                                                       ng-model="ctrl.filters.paymentType"
+                                                       placeholder="Cara Bayar"
+                                                       uib-typeahead="data as data.name for data in ctrl.suggest('paymentType', $viewValue)"
+                                                       typeahead-min-length="2"
+                                                       typeahead-loading="paymentTypeFilter" class="form-control" />
+                                                <i ng-show="paymentTypeFilter" class="glyphicon glyphicon-refresh"></i>
+                                            </label>
+                                        </section>
+                                        <section class="col col-sm-12 col-md-12 col-lg-4">
+                                            <label class="input">
+                                                <input type="text" placeholder="Status Bayar" ng-model="ctrl.filters.paymentStatus" />
+                                            </label>
+                                        </section>
+                                        <section class="col col-sm-12 col-md-12 col-lg-4">
+                                            <label class="input">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                                    <input datepicker class="form-control" placeholder="Dari Tanggal"
+                                                           id="from-transaction-date" type="text" ng-model="ctrl.filters.from" />
+                                                </div>
+                                            </label>
+                                        </section>
+                                        <section class="col col-sm-12 col-md-12 col-lg-4">
+                                            <label class="input">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                                    <input datepicker class="form-control" placeholder="Sampai Tanggal"
+                                                           id="to-transaction-date" type="text" ng-model="ctrl.filters.to" />
+                                                </div>
+                                            </label>
+                                        </section>
+                                    </div>
+                                </fieldset>
+                            </form>
+                        </div>
+                        <div class="widget-body-toolbar">
+                            <div class="row">
+                                <div class="col-xs-9 col-sm-5 col-md-5 col-lg-6">
+                                    <a href="#" class="btn btn-default" ng-show="ctrl.viewType == 2" style="color: black;" ng-click="ctrl.viewShipping()">
+                                        <i class="fa fa-arrow-left"></i> Kembali
+                                    </a>
+                                    <a href="#" class="btn btn-default" ng-show="ctrl.viewType == 1" style="color: black;" ng-click="ctrl.filter()">
+                                        <i class="fa fa-search"></i> Cari
+                                    </a>
+                                    <a href="#" class="btn btn-default" style="color: black;" ng-click="ctrl.viewType == 1 ? ctrl.add() : ctrl.addItem()">
+                                        <i class="fa fa-plus"></i> Tambah
+                                    </a>
+                                </div>
+                                <div class="col-xs-9 col-sm-5 col-md-5 col-lg-6">
+                                    <select name="dt_basic_length" aria-controls="dt_basic" class="form-control" ng-model="ctrl.paging.max"
+                                            ng-change="ctrl.filter()" style="float:right; width:15%;" to-number>
+                                        <option value="10">10</option>
+                                        <option value="25">25</option>
+                                        <option value="50">50</option>
+                                        <option value="100">100</option>
+                                        <option value="500">500</option>
+                                        <option value="1000">1000</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped table-condensed table-hover smart-form has-tickbox" ng-show="ctrl.viewType == 1">
+                                <thead>
+                                    <tr style="color:black;">
+                                        <th style="text-align: center; width: 10%;">Spb</th>
+                                        <th style="text-align: center; width: 9%;">Tanggal</th>
+                                        <th style="text-align: center; width: 10%;">Pengirim</th>
+                                        <th style="text-align: center; width: 10%;">Penerima</th>
+                                        <th style="text-align: center;">Tujuan</th>
+                                        <th style="text-align: center; width:10%">Pembayaran</th>
+                                        <th style="text-align: center; width:12%;">Status</th>
+                                        <th style="text-align: center; width:10%;">Total</th>
+                                        <th style="text-align: center; width:3%;">Confirm</th>
+                                        <th style="text-align: center; width:3%;">Audit</th>
+                                        <th style="text-align: center; width:15%;">Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-show="ctrl.loadingData">
+                                        <td style="text-align: center; margin: 10px 0px;" colspan="100">
+                                            <img src="../assets/img/ajax-loader.gif">
+                                        </td>
+                                    </tr>
+                                    <tr ng-repeat="entity in ctrl.entities" ng-show="!ctrl.loadingData" style="color:black;">
+                                        <td>{{entity.spbNumber}}</td>
+                                        <td>{{entity.date | date:'dd-MM-yyyy'}}</td>
+                                        <td>{{entity.sender.name}}</td>
+                                        <td>{{entity.receiver.name}}</td>
+                                        <td>{{entity.destination.name}}</td>
+                                        <td>{{entity.payment.type.name}}</td>
+                                        <td>
+                                            <p ng-if="entity.payment.status == 'Belum Terbayar'" style="text-align:center;" class="center-block padding-3 label label-danger txt-color-white">
+                                                {{entity.payment.status}}
+                                            </p>
+                                            <p ng-if="entity.payment.status == 'Terbayar Sebagian'" style="text-align:center;" class="center-block padding-3 label label-warning txt-color-white">
+                                                {{entity.payment.status}}
+                                            </p>
+                                            <p ng-if="entity.payment.status == 'Terbayar'" style="text-align:center;" class="center-block padding-3 label label-success txt-color-white">
+                                                {{entity.payment.status}}
+                                            </p>
+                                        </td>
+                                        <td>{{entity.cost.total | currency: 'Rp ' : 0}}</td>
+                                        <td style="text-align:center;" ng-if="entity.confirmed">
+                                            <i class="fa fa-check" />
+                                        </td>
+                                        <td style="text-align:center;" ng-if="!entity.confirmed">
+                                            <i class="fa fa-remove" />
+                                        </td>
+                                        <td style="text-align:center;" ng-if="entity.audited">
+                                            <i class="fa fa-check" />
+                                        </td>
+                                        <td style="text-align:center;" ng-if="!entity.audited">
+                                            <i class="fa fa-remove" />
+                                        </td>
+                                        <td style="text-align:center;">
+                                            <a href="#" class="txt-color-white btn-sm btn-primary" title="Edit" ng-click="ctrl.edit(entity._id)">
+                                                <i class="fa fa-edit"></i> Edit
+                                            </a>
+                                            &nbsp;
+                                            <a href="#" class="txt-color-white btn-sm btn-primary" title="Edit" ng-click="ctrl.viewItems(entity)">
+                                                <i class="fa fa-list"></i> Item
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <table class="table table-bordered table-striped table-condensed table-hover smart-form has-tickbox" ng-show="ctrl.viewType == 2">
+                                <thead>
+                                    <tr style="color:black;">
+                                        <th style="text-align: center; width: 8%;">Spb</th>
+                                        <th style="text-align: center; width: 8%;">Jenis</th>
+                                        <th style="text-align: center; width: 8%;">Bungkus</th>
+                                        <th style="text-align: center; width: 8%;">Isi</th>
+                                        <th style="text-align: center; width: 5%;">Panjang</th>
+                                        <th style="text-align: center; width: 5%;">Lebar</th>
+                                        <th style="text-align: center; width: 5%;">Tinggi</th>
+                                        <th style="text-align: center; width: 5%;">Berat</th>
+                                        <th style="text-align: center; width: 5%;">Koli</th>
+                                        <th style="text-align: center; width: 8%;">Bea Angkut</th>
+                                        <th style="text-align: center; width: 12%;">Status</th>
+                                        <th style="text-align: center; width: 2%;">Audit</th>
+                                        <th style="text-align: center; width: 14%;">Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-show="ctrl.loadingData">
+                                        <td style="text-align: center; margin: 10px 0px;" colspan="100">
+                                            <img src="../assets/img/ajax-loader.gif">
+                                        </td>
+                                    </tr>
+                                    <tr ng-repeat="entity in ctrl.selectedEntity.items" ng-show="!ctrl.loadingData" style="color:black;">
+                                        <td>{{ctrl.selectedEntity.spbNumber}}</td>
+                                        <td>{{entity.itemType.name}}</td>
+                                        <td>{{entity.packingType.name}}</td>
+                                        <td>{{entity.content}}</td>
+                                        <td>{{entity.dimensions.length}}</td>
+                                        <td>{{entity.dimensions.width}}</td>
+                                        <td>{{entity.dimensions.height}}</td>
+                                        <td>{{entity.dimensions.weight}}</td>
+                                        <td>{{entity.colli.quantity}}</td>
+                                        <td>{{entity.cost.shipping | currency: 'Rp ' : 0}}</td>
+                                        <td>
+                                            <p ng-if="entity.status == 'Belum Terekap'"
+                                               style="text-align:center;" class="center-block padding-3 label label-danger txt-color-white">
+                                                {{entity.status}}
+                                            </p>
+                                            <p ng-if="entity.status == 'Terekap' || entity.status == 'Terekap Sebagian'"
+                                               style="text-align:center;" class="center-block padding-3 label label-warning txt-color-white">
+                                                {{entity.status}}
+                                            </p>
+                                            <p ng-if="entity.status == 'Terkirim' || entity.status == 'Terkirim Sebagian'"
+                                               style="text-align:center;" class="center-block padding-3 label label-success txt-color-white">
+                                                {{entity.status}}
+                                            </p>
+                                            <p ng-if="entity.status == 'Retur' || entity.status == 'Surat Jalan Balik'"
+                                               style="text-align:center;" class="center-block padding-3 label label-success txt-color-white">
+                                                {{entity.status}}
+                                            </p>
+                                        </td>
+                                        <td style="text-align:center;">
+                                            <i class="fa fa-check" ng-show="entity.audited"></i>
+                                            <i class="fa fa-remove" ng-show="!entity.audited"></i>
+                                        </td>
+                                        <td style="text-align:left;">
+                                            <a href="#" class="txt-color-white btn-sm btn-primary" title="Edit" ng-click="ctrl.editItem(entity)">
+                                                <i class="fa fa-edit"></i> Edit
+                                            </a>
+                                            &nbsp;
+                                            <a href="#" class="txt-color-white btn-sm btn-danger" title="Hapus" ng-click="ctrl.deleteItem(entity)">
+                                                <i class="fa fa-remove"></i> Hapus
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="widget-footer" ng-show="ctrl.viewType == 1">
+                        <div class="input-group">
+                            <button ng-disabled="(ctrl.paging.page) == 1" href="#" class="btn btn-link" ng-click="ctrl.prev()">
+                                <i class="fa fa-backward"></i>
+                            </button>
+                            {{ctrl.paging.page}}
+                            <button ng-disabled="ctrl.entities.length == 0" href="#" class="btn btn-link" ng-click="ctrl.next()">
+                                <i class="fa fa-forward"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="jarviswidget jarviswidget-color-blueDark" role="widget" ng-show="ctrl.showForm && ctrl.viewType == 1">
+                <header role="heading" data-block="header">
+                    <span class="widget-icon"> <i class="fa fa-truck"></i></span>
+                    <h2>Input Pengiriman</h2>
+                    <div class="jarviswidget-ctrls" role="menu"></div>
+                </header>
+                <div role="content">
+                    <div class="jarviswidget-editbox"></div>
+                    <div class="widget-body no-padding">
+                        <div class="widget-body-toolbar">
+                            <form class="smart-form">
+                                <fieldset ng-show="ctrl.processing">
+                                    <div class="row" style="margin-left: 480px;">
+                                        <td style="text-align: center; margin: 10px 0px;" colspan="100">
+                                            <img src="../assets/img/ajax-loader.gif">
+                                        </td>
+                                    </div>
+                                </fieldset>
+                                <fieldset ng-show="!ctrl.processing">
+                                    <div class="row">
+                                        <section class="col col-sm-12 col-md-12 col-lg-12">
+                                            <label class="label">
+                                                Spb
+                                            </label>
+                                            <label class="input">
+                                                <input type="text" disabled="disabled" ng-model="ctrl.entity.spbNumber" />
+                                            </label>
+                                        </section>
+                                        <section class="col col-sm-12 col-md-12 col-lg-12">
+                                            <label class="label">
+                                                Pengirim<strong class="txt-color-red">*</strong>
+                                            </label>
+                                            <label class="input">
+                                                <input type="text"
+                                                       ng-model="ctrl.entity.sender"
+                                                       uib-typeahead="data as data.name for data in ctrl.suggest('client', $viewValue)"
+                                                       typeahead-min-length="2"
+                                                       typeahead-loading="senderInput" class="form-control" />
+                                                <i ng-show="senderInput" class="glyphicon glyphicon-refresh"></i>
+                                            </label>
+                                        </section>
+                                        <section class="col col-sm-12 col-md-12 col-lg-12">
+                                            <label class="label">
+                                                Tujuan<strong class="txt-color-red">*</strong>
+                                            </label>
+                                            <label class="input">
+                                                <input type="text"
+                                                       ng-model="ctrl.entity.destination"
+                                                       uib-typeahead="data as data.name for data in ctrl.suggest('location', $viewValue)"
+                                                       typeahead-min-length="2"
+                                                       typeahead-loading="destinationInput" class="form-control" />
+                                                <i ng-show="destinationInput" class="glyphicon glyphicon-refresh"></i>
+                                            </label>
+                                        </section>
+                                        <section class="col col-sm-12 col-md-12 col-lg-4">
+                                            <label class="label">
+                                                Penerima
+                                            </label>
+                                            <label class="input">
+                                                <input type="text" ng-model="ctrl.entity.receiver.name" />
+                                            </label>
+                                        </section>
+                                        <section class="col col-sm-12 col-md-12 col-lg-4">
+                                            <label class="label">
+                                                Alamat
+                                            </label>
+                                            <label class="input">
+                                                <input type="text" ng-model="ctrl.entity.receiver.address" />
+                                            </label>
+                                        </section>
+                                        <section class="col col-sm-12 col-md-12 col-lg-4">
+                                            <label class="label">
+                                                Kontak
+                                            </label>
+                                            <label class="input">
+                                                <input type="text" ng-model="ctrl.entity.receiver.contact" />
+                                            </label>
+                                        </section>
+                                        <section class="col col-sm-12 col-md-12 col-lg-12">
+                                            <label class="label">
+                                                Supir
+                                            </label>
+                                            <label class="input">
+                                                <input type="text" ng-model="ctrl.entity.driver" />
+                                            </label>
+                                        </section>
+                                        <section class="col col-sm-12 col-md-12 col-lg-12">
+                                            <label class="label">
+                                                Partner
+                                            </label>
+                                            <label class="input">
+                                                <input type="text"
+                                                       ng-model="ctrl.entity.partner"
+                                                       uib-typeahead="data as data.name for data in ctrl.suggest('partner', $viewValue)"
+                                                       typeahead-min-length="2"
+                                                       typeahead-loading="partnerInput" class="form-control" />
+                                                <i ng-show="partnerInput" class="glyphicon glyphicon-refresh"></i>
+                                            </label>
+                                        </section>
+                                        <section class="col col-sm-12 col-md-12 col-lg-12">
+                                            <label class="label">
+                                                Lokasi Bayar
+                                            </label>
+                                            <label class="input">
+                                                <input type="text"
+                                                       ng-model="ctrl.entity.payment.location"
+                                                       uib-typeahead="data as data.name for data in ctrl.suggest('location', $viewValue)"
+                                                       typeahead-min-length="2"
+                                                       typeahead-loading="paymentLocationInput" class="form-control" />
+                                                <i ng-show="paymentLocationInput" class="glyphicon glyphicon-refresh"></i>
+                                            </label>
+                                        </section>
+                                        <section class="col col-sm-12 col-md-12 col-lg-12">
+                                            <label class="label">
+                                                Cara Bayar
+                                            </label>
+                                            <label class="input">
+                                                <input type="text"
+                                                       ng-model="ctrl.entity.payment.type"
+                                                       uib-typeahead="data as data.name for data in ctrl.suggest('paymentType', $viewValue)"
+                                                       typeahead-min-length="2"
+                                                       typeahead-loading="paymentTypeInput" class="form-control" />
+                                                <i ng-show="paymentTypeInput" class="glyphicon glyphicon-refresh"></i>
+                                            </label>
+                                        </section>
+                                        <section class="col col-sm-12 col-md-12 col-lg-12">
+                                            <label class="label">
+                                                Tanggal
+                                            </label>
+                                            <label class="input">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                                    <input datepicker class="form-control" id="transaction-date" type="text" ng-model="ctrl.entity.date">
+                                                </div>
+                                            </label>
+                                        </section>
+                                        <section class="col col-sm-12 col-md-12 col-lg-12">
+                                            <label class="label">
+                                                Tarif
+                                            </label>
+                                            <label class="select">
+                                                <select ng-model="ctrl.entity.tariff" to-number>
+                                                    <option value="0">Tarif 1</option>
+                                                    <option value="1">Tarif 2</option>
+                                                    <option value="2">Tarif 3</option>
+                                                </select><i></i>
+                                            </label>
+                                        </section>
+                                        <section class="col col-sm-12 col-md-12 col-lg-4">
+                                            <label class="label">
+                                                Biaya Kuli
+                                            </label>
+                                            <label class="input">
+                                                <input type="text" ng-model="ctrl.entity.cost.worker" />
+                                            </label>
+                                        </section>
+                                        <section class="col col-sm-12 col-md-12 col-lg-4">
+                                            <label class="label">
+                                                Biaya Ekspedisi
+                                            </label>
+                                            <label class="input">
+                                                <input type="text" ng-model="ctrl.entity.cost.expedition" />
+                                            </label>
+                                        </section>
+                                        <section class="col col-sm-12 col-md-12 col-lg-4">
+                                            <label class="label">
+                                                Pph
+                                            </label>
+                                            <label class="select">
+                                                <select ng-model="ctrl.entity.cost.pph" to-number>
+                                                    <option value="0">0</option>
+                                                    <option value="0.02">0.02</option>
+                                                    <option value="0.98">0.98</option>
+                                                </select><i></i>
+                                            </label>
+                                        </section>
+                                        <section class="col col-sm-12 col-md-12 col-lg-4">
+                                            <label class="label">
+                                                Keterangan
+                                            </label>
+                                            <label class="input">
+                                                <input type="text" ng-model="ctrl.entity.notes.shipping" />
+                                            </label>
+                                        </section>
+                                        <section class="col col-sm-12 col-md-12 col-lg-4">
+                                            <label class="label">
+                                                Keterangan Partner
+                                            </label>
+                                            <label class="input">
+                                                <input type="text" ng-model="ctrl.entity.notes.partner" />
+                                            </label>
+                                        </section>
+                                        <section class="col col-sm-12 col-md-12 col-lg-4">
+                                            <label class="label">
+                                                PO
+                                            </label>
+                                            <label class="input">
+                                                <input type="text" ng-model="ctrl.entity.notes.po" />
+                                            </label>
+                                        </section>
+                                    </div>
+                                </fieldset>
+                                <footer>
+                                    <button type="button" class="btn btn-default" ng-click="ctrl.toggleShowForm(false)">Cancel</button>
+                                    <button type="button" class="btn btn-default" ng-click="ctrl.save()">Save</button>
+                                </footer>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="jarviswidget jarviswidget-color-blueDark" role="widget" ng-show="ctrl.showForm && ctrl.viewType == 2">
+                <header role="heading" data-block="header">
+                    <span class="widget-icon"> <i class="fa fa-truck"></i></span>
+                    <h2>Input Barang (Item)</h2>
+                    <div class="jarviswidget-ctrls" role="menu"></div>
+                </header>
+                <div role="content">
+                    <div class="jarviswidget-editbox"></div>
+                    <div class="widget-body no-padding">
+                        <div class="widget-body-toolbar">
+                            <form class="smart-form">
+                                <fieldset ng-show="ctrl.processing">
+                                    <div class="row" style="margin-left: 480px;">
+                                        <td style="text-align: center; margin: 10px 0px;" colspan="100">
+                                            <img src="../assets/img/ajax-loader.gif">
+                                        </td>
+                                    </div>
+                                </fieldset>
+                                <fieldset ng-show="!ctrl.processing">
+                                    <div class="row">
+                                        <section class="col col-sm-12 col-md-12 col-lg-12">
+                                            <label class="label">
+                                                Spb
+                                            </label>
+                                            <label class="input">
+                                                <input type="text" disabled="disabled" ng-model="ctrl.selectedEntity.spbNumber" />
+                                            </label>
+                                        </section>
+                                        <section class="col col-sm-12 col-md-12 col-lg-12">
+                                            <label class="label">
+                                                Jenis<strong class="txt-color-red">*</strong>
+                                            </label>
+                                            <label class="input">
+                                                <input type="text"
+                                                       ng-model="ctrl.selectedItem.itemType"
+                                                       uib-typeahead="data as data.name for data in ctrl.suggest('itemType', $viewValue)"
+                                                       typeahead-min-length="3"
+                                                       typeahead-loading="itemTypeInput" class="form-control" />
+                                                <i ng-show="itemTypeInput" class="glyphicon glyphicon-refresh"></i>
+                                            </label>
+                                        </section>
+                                        <section class="col col-sm-12 col-md-12 col-lg-12">
+                                            <label class="label">
+                                                Packing<strong class="txt-color-red">*</strong>
+                                            </label>
+                                            <label class="input">
+                                                <input type="text"
+                                                       ng-model="ctrl.selectedItem.packingType"
+                                                       uib-typeahead="data as data.name for data in ctrl.suggest('packingType', $viewValue)"
+                                                       typeahead-min-length="2"
+                                                       typeahead-loading="packingTypeInput" class="form-control" />
+                                                <i ng-show="packingTypeInput" class="glyphicon glyphicon-refresh"></i>
+                                            </label>
+                                        </section>
+                                        <section class="col col-sm-12 col-md-12 col-lg-12">
+                                            <label class="label">
+                                                Isi
+                                            </label>
+                                            <label class="input">
+                                                <input type="text" ng-model="ctrl.selectedItem.content" />
+                                            </label>
+                                        </section>
+                                        <section class="col col-sm-12 col-md-12 col-lg-3">
+                                            <label class="label">
+                                                Panjang
+                                            </label>
+                                            <label class="input">
+                                                <input type="text" ng-model="ctrl.selectedItem.dimensions.length" />
+                                            </label>
+                                        </section>
+                                        <section class="col col-sm-12 col-md-12 col-lg-3">
+                                            <label class="label">
+                                                Tinggi
+                                            </label>
+                                            <label class="input">
+                                                <input type="text" ng-model="ctrl.selectedItem.dimensions.height" />
+                                            </label>
+                                        </section>
+                                        <section class="col col-sm-12 col-md-12 col-lg-3">
+                                            <label class="label">
+                                                Lebar
+                                            </label>
+                                            <label class="input">
+                                                <input type="text" ng-model="ctrl.selectedItem.dimensions.width" />
+                                            </label>
+                                        </section>
+                                        <section class="col col-sm-12 col-md-12 col-lg-3">
+                                            <label class="label">
+                                                Berat
+                                            </label>
+                                            <label class="input">
+                                                <input type="text" ng-model="ctrl.selectedItem.dimensions.weight" />
+                                            </label>
+                                        </section>
+                                        <section class="col col-sm-12 col-md-12 col-lg-3">
+                                            <label class="label">
+                                                Koli
+                                            </label>
+                                            <label class="input">
+                                                <input type="text" ng-model="ctrl.selectedItem.colli.quantity" />
+                                            </label>
+                                        </section>
+                                        <section class="col col-sm-12 col-md-12 col-lg-3">
+                                            <label class="label">
+                                                Bea Koli
+                                            </label>
+                                            <label class="input">
+                                                <input type="text" ng-model="ctrl.selectedItem.cost.colli" />
+                                            </label>
+                                        </section>
+                                        <section class="col col-sm-12 col-md-12 col-lg-3">
+                                            <label class="label">
+                                                Bea Tambahan
+                                            </label>
+                                            <label class="input">
+                                                <input type="text" ng-model="ctrl.selectedItem.cost.additional" />
+                                            </label>
+                                        </section>
+                                        <section class="col col-sm-12 col-md-12 col-lg-3">
+                                            <label class="label">
+                                                Diskon
+                                            </label>
+                                            <label class="input">
+                                                <input type="text" ng-model="ctrl.selectedItem.cost.discount" />
+                                            </label>
+                                        </section>
+                                    </div>
+                                </fieldset>
+                                <footer>
+                                    <button type="button" class="btn btn-default" ng-click="ctrl.toggleShowItemForm(false)">Cancel</button>
+                                    <button type="button" class="btn btn-default" ng-click="ctrl.saveItem()">Save</button>
+                                </footer>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </article>
+    </div>
+</section>

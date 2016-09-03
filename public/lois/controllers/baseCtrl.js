@@ -20,7 +20,7 @@ var app;
                 ctrl.createQuery();
                 ctrl.loadingData = true;
                 ctrl.functions.load(ctrl.query).then(function (result) {
-                    ctrl.entity = result.data;
+                    ctrl.entities = result.data;
                 }).catch(function (error) {
                     ctrl.notify('error', error.message);
                 }).finally(function () {
@@ -49,6 +49,7 @@ var app;
                 ctrl.processing = true;
                 ctrl.functions.save(ctrl.entity).then(function (result) {
                     ctrl.notify('success', 'Data berhasil disimpan');
+                    ctrl.filter();
                     ctrl.showForm = false;
                 }).catch(function (error) {
                     ctrl.notify('error', error.message);

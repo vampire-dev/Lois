@@ -13,6 +13,24 @@
         }
     }
 
+    export class shipping {
+        static get(id: any) {
+            return http.get('/lois/api/shipping/get?id=' + id);
+        }
+
+        static getAll(query: any) {
+            return http.get('/lois/api/shipping/getAll?query=' + JSON.stringify(query));
+        }
+
+        static save(data: any) {
+            return http.post('/lois/api/shipping/save', JSON.stringify(data));
+        }
+
+        static add() {
+            return http.post('/lois/api/shipping/add', null);
+        }
+    }
+
     export class configuration {
         static get(config: string, id: any) {
             return app.http.get('/lois/api/' + config + '/get?id=' + id);

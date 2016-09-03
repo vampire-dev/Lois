@@ -31,7 +31,7 @@
             ctrl.loadingData = true;
 
             ctrl.functions.load(ctrl.query).then(result => {
-                ctrl.entity = result.data;
+                ctrl.entities = result.data;
             }).catch(error => {
                 ctrl.notify('error', error.message);
             }).finally(() => {
@@ -65,6 +65,7 @@
 
             ctrl.functions.save(ctrl.entity).then(result => {
                 ctrl.notify('success', 'Data berhasil disimpan');
+                ctrl.filter();
                 ctrl.showForm = false;
             }).catch(error => {
                 ctrl.notify('error', error.message);

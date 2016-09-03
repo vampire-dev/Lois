@@ -66,7 +66,6 @@
     <Compile Include="models\roleMenu.js" />
     <Compile Include="models\roleReport.js" />
     <Compile Include="models\shipping.js" />
-    <Compile Include="models\shippingItem.js" />
     <Compile Include="models\tariff.js" />
     <Compile Include="models\trainType.js" />
     <Compile Include="models\user.js" />
@@ -92,6 +91,7 @@
     <Compile Include="public\libs\smartadmin\jarvis.widget.min.js" />
     <Compile Include="routes\client.js" />
     <Compile Include="routes\driver.js" />
+    <Compile Include="routes\itemType.js" />
     <Compile Include="routes\location.js" />
     <Compile Include="routes\menu.js" />
     <Compile Include="routes\packingType.js" />
@@ -102,10 +102,12 @@
     <Compile Include="routes\role.js" />
     <Compile Include="routes\roleMenu.js" />
     <Compile Include="routes\roleReport.js" />
+    <Compile Include="routes\shipping.js" />
     <Compile Include="routes\tariff.js" />
     <Compile Include="routes\trainType.js" />
     <Compile Include="utils\authentication.js" />
     <Compile Include="routes\user.js" />
+    <Compile Include="utils\date.js" />
     <Compile Include="utils\defaultComponent.js" />
     <Content Include="env.json" />
     <Content Include="package.json" />
@@ -336,6 +338,7 @@
     <Content Include="public\views\index.html" />
     <Content Include="public\views\login.html" />
     <Content Include="public\views\main.html" />
+    <Content Include="public\views\shipping.html" />
     <Content Include="README.md" />
   </ItemGroup>
   <ItemGroup>
@@ -403,6 +406,7 @@
     <TypeScriptCompile Include="public\libs\typings\angularjs\angular-sanitize.d.ts" />
     <TypeScriptCompile Include="public\libs\typings\angularjs\angular.d.ts" />
     <TypeScriptCompile Include="public\libs\typings\jquery\jquery.d.ts" />
+    <TypeScriptCompile Include="public\lois\controllers\shippingCtrl.ts" />
     <TypeScriptCompile Include="public\lois\lois.ts" />
     <TypeScriptCompile Include="public\lois\controllers\loginCtrl.ts" />
     <TypeScriptCompile Include="public\typings\globals\angular\index.d.ts" />

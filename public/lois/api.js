@@ -17,6 +17,24 @@ var app;
             return user;
         }());
         api.user = user;
+        var shipping = (function () {
+            function shipping() {
+            }
+            shipping.get = function (id) {
+                return app.http.get('/lois/api/shipping/get?id=' + id);
+            };
+            shipping.getAll = function (query) {
+                return app.http.get('/lois/api/shipping/getAll?query=' + JSON.stringify(query));
+            };
+            shipping.save = function (data) {
+                return app.http.post('/lois/api/shipping/save', JSON.stringify(data));
+            };
+            shipping.add = function () {
+                return app.http.post('/lois/api/shipping/add', null);
+            };
+            return shipping;
+        }());
+        api.shipping = shipping;
         var configuration = (function () {
             function configuration() {
             }

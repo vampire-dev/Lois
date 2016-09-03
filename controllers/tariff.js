@@ -23,12 +23,18 @@ Controller.prototype.getAll = function (query) {
     if (query['destination'])
         parameters['destination'] = objectId(query['destination']);
 
-    var entities = model.find(parameters).populate('client').populate('destination');
+    var entities = model.find(parameters)
+        .populate({ path: 'client', match: { "location": mongoose.Types.ObjectId("57c45abf8e8ddc701960563e") } })
+        .populate('destination');
 
     if (query['limit'] && (query['skip'] || query['skip'] == 0))
         entities.skip(query['skip']).limit(query['limit']);
 
     return entities.lean().exec();
+};
+
+Controller.prototype.getClientTariff = function (client, destination) {
+    return model.findOne({ "client": objectId(client), "destination": objectId(destination) }).exec();
 };
 
 Controller.prototype.save = function (data) {

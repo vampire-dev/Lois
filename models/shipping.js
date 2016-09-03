@@ -2,6 +2,73 @@
 var Schema = mongoose.Schema;
 var refId = mongoose.Schema.Types.ObjectId;
 
+var shippingItem = {
+    itemType: { type: refId, ref: 'ItemType' },
+    packingType: { type: refId, ref: 'PackingType' },
+    content: { type: String, default: null },
+    dimensions: {
+        length: { type: Number, default: 0 },
+        width: { type: Number, default: 0 },
+        height: { type: Number, default: 0 },
+        weight: { type: Number, default: 0 }
+    },
+    colli: {
+        quantity: { type: Number, default: 0 },
+        available: { type: Number, default: 0 },
+        delivered: { type: Number, default: 0 }
+    },
+    cost: {
+        colli: { type: Number, default: 0 },
+        additional: { type: Number, default: 0 },
+        discount: { type: Number, default: 0 },
+        shipping: { type: Number, default: 0 }
+    },
+    status: { type: String, default: 'Belum Terekap' },
+    audited: { type: Boolean, default: false },
+    recapitulations: [{
+        item: { type: refId },
+        quantity: { type: Number, default: 0 },
+        available: { type: Number, default: 0 },
+        weight: { type: Number, default: 0 },
+        limasColor: { type: String, default: null },
+        relationColor: { type: String, default: null },
+        vehicleNumber: { type: String, default: null },
+        departureDate: { type: Date, default: null },
+        notes: { type: String, default: null },
+        trainType: { type: refId, ref: 'TrainType' },
+        driver: { type: refId, ref: 'Driver' },
+        created: {
+            date: { type: Date, default: null },
+            user: { type: refId, ref: 'User' }
+        },
+        modified: {
+            date: { type: Date, default: null },
+            user: { type: refId, ref: 'User' }
+        }
+    }],
+    deliveries: [{
+        item: { type: refId },
+        recapitulation: { type: refId },
+        quantity: { type: Number, default: 0 },
+        available: { type: Number, default: 0 },
+        weight: { type: Number, default: 0 },
+        limasColor: { type: String, default: null },
+        relationColor: { type: String, default: null },
+        vehicleNumber: { type: String, default: null },
+        deliveryCode: { type: String, default: null },
+        notes: { type: String, default: null },
+        driver: { type: refId, ref: 'Driver' },
+        created: {
+            date: { type: Date, default: null },
+            user: { type: refId, ref: 'User' }
+        },
+        modified: {
+            date: { type: Date, default: null },
+            user: { type: refId, ref: 'User' }
+        }
+    }]
+};
+
 var model = new Schema({
     number: { type: Number, required: true },
     spbNumber: { type: String, requried: true },
@@ -54,14 +121,14 @@ var model = new Schema({
     confirmed: { type: Boolean, default: false },
     inputLocation: { type: refId, ref: 'Location' },
     created: {
-        date: { type: Number, default: null },
+        date: { type: Date, default: null },
         user: { type: refId, ref: 'User' }
     },
     modified: {
         date: { type: Date, default: null },
         user: { type: refId, ref: 'User' }
     },
-    items: [{type: refId, ref: 'ShippingItem'}]
+    items: [shippingItem]
 }, { versionKey: false, collection: 'shippings' });
 
 module.exports = mongoose.model('Shipping', model);

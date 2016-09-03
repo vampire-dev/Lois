@@ -37,6 +37,10 @@ module app {
             url: baseUrl,
             templateUrl: '/views/main.html',
             controller: 'indexCtrl as ctrl'
+        }).state('site.main.shipping', {
+            url: '/shipping',
+            templateUrl: '/views/shipping.html',
+            controller: 'shippingCtrl as ctrl'
         }).state('site.main.configuration', {
             url: '/configuration',
             templateUrl: '/views/configuration.html',
