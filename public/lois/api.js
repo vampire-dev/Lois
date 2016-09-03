@@ -104,6 +104,21 @@ var app;
             return payment;
         }());
         api.payment = payment;
+        var invoice = (function () {
+            function invoice() {
+            }
+            invoice.getAll = function (query) {
+                return app.http.get('/lois/api/invoice/getAll?query=' + JSON.stringify(query));
+            };
+            invoice.getList = function (query) {
+                return app.http.get('/lois/api/invoice/getList?query=' + JSON.stringify(query));
+            };
+            invoice.create = function (data) {
+                return app.http.post('/lois/api/invoice/create', JSON.stringify(data));
+            };
+            return invoice;
+        }());
+        api.invoice = invoice;
         var configuration = (function () {
             function configuration() {
             }

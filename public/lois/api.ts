@@ -99,6 +99,20 @@
         }
     }
 
+    export class invoice {
+        static getAll(query: any) {
+            return http.get('/lois/api/invoice/getAll?query=' + JSON.stringify(query));
+        }
+
+        static getList(query: any) {
+            return http.get('/lois/api/invoice/getList?query=' + JSON.stringify(query));
+        }
+
+        static create(data: any) {
+            return http.post('/lois/api/invoice/create', JSON.stringify(data));
+        }
+    }
+
     export class configuration {
         static get(config: string, id: any) {
             return http.get('/lois/api/' + config + '/get?id=' + id);

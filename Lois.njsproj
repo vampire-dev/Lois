@@ -38,6 +38,7 @@
     <Compile Include="controllers\client.js" />
     <Compile Include="controllers\delivery.js" />
     <Compile Include="controllers\driver.js" />
+    <Compile Include="controllers\invoice.js" />
     <Compile Include="controllers\itemType.js" />
     <Compile Include="controllers\location.js" />
     <Compile Include="controllers\menu.js" />
@@ -59,6 +60,7 @@
     <Compile Include="models\audit.js" />
     <Compile Include="models\client.js" />
     <Compile Include="models\driver.js" />
+    <Compile Include="models\invoice.js" />
     <Compile Include="models\itemType.js" />
     <Compile Include="models\location.js" />
     <Compile Include="models\menu.js" />
@@ -98,6 +100,7 @@
     <Compile Include="routes\client.js" />
     <Compile Include="routes\delivery.js" />
     <Compile Include="routes\driver.js" />
+    <Compile Include="routes\invoice.js" />
     <Compile Include="routes\itemType.js" />
     <Compile Include="routes\location.js" />
     <Compile Include="routes\menu.js" />
@@ -348,6 +351,7 @@
     <Content Include="public\views\confirmReturn.html" />
     <Content Include="public\views\delivery.html" />
     <Content Include="public\views\index.html" />
+    <Content Include="public\views\invoice.html" />
     <Content Include="public\views\login.html" />
     <Content Include="public\views\main.html" />
     <Content Include="public\views\payment.html" />
@@ -424,6 +428,7 @@
     <TypeScriptCompile Include="public\libs\typings\angularjs\angular-sanitize.d.ts" />
     <TypeScriptCompile Include="public\libs\typings\angularjs\angular.d.ts" />
     <TypeScriptCompile Include="public\libs\typings\jquery\jquery.d.ts" />
+    <TypeScriptCompile Include="public\lois\controllers\invoiceCtrl.ts" />
     <TypeScriptCompile Include="public\lois\controllers\paymentCtrl.ts" />
     <TypeScriptCompile Include="public\lois\controllers\recapitulationCtrl.ts" />
     <TypeScriptCompile Include="public\lois\controllers\returnCtrl.ts" />
