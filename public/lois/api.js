@@ -164,6 +164,18 @@ var app;
             return notification;
         }());
         api.notification = notification;
+        var audit = (function () {
+            function audit() {
+            }
+            audit.getAll = function (query) {
+                return app.http.get('/lois/api/audit/getAll?query=' + JSON.stringify(query));
+            };
+            audit.process = function (data) {
+                return app.http.post('/lois/api/audit/process', JSON.stringify(data));
+            };
+            return audit;
+        }());
+        api.audit = audit;
         var autocomplete = (function () {
             function autocomplete() {
             }

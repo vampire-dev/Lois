@@ -34,6 +34,7 @@ app.use(require('./routes/payment'));
 app.use(require('./routes/invoice'));
 app.use(require('./routes/reportData'));
 app.use(require('./routes/notification'));
+app.use(require('./routes/audit'));
 
 app.listen(config.port, function (err) {
     mongoose.connect(config.dsn);

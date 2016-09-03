@@ -35,6 +35,7 @@
   <ItemGroup>
     <Compile Include="app.js" />
     <Compile Include="common.js" />
+    <Compile Include="controllers\audit.js" />
     <Compile Include="controllers\client.js" />
     <Compile Include="controllers\delivery.js" />
     <Compile Include="controllers\deliveryOrder.js" />
@@ -100,6 +101,7 @@
     <Compile Include="public\libs\smartadmin\app.min.js" />
     <Compile Include="public\libs\smartadmin\bootstrap.min.js" />
     <Compile Include="public\libs\smartadmin\jarvis.widget.min.js" />
+    <Compile Include="routes\audit.js" />
     <Compile Include="routes\client.js" />
     <Compile Include="routes\delivery.js" />
     <Compile Include="routes\deliveryOrder.js" />
@@ -353,6 +355,7 @@
     <Content Include="public\lois\tsconfig.json" />
     <Content Include="public\typings\globals\angular\typings.json" />
     <Content Include="public\typings\globals\jquery\typings.json" />
+    <Content Include="public\views\audit.html" />
     <Content Include="public\views\configuration.html" />
     <Content Include="public\views\confirmReturn.html" />
     <Content Include="public\views\delivery.html" />
@@ -424,6 +427,7 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="public\lois\api.ts" />
+    <TypeScriptCompile Include="public\lois\controllers\auditCtrl.ts" />
     <TypeScriptCompile Include="public\lois\controllers\baseCtrl.ts" />
     <TypeScriptCompile Include="public\lois\controllers\configurationCtrl.ts" />
     <TypeScriptCompile Include="public\lois\controllers\confirmReturnCtrl.ts" />

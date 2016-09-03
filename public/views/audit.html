@@ -1,0 +1,128 @@
+﻿<section id="widget-grid">
+    <div class="row">
+        <article class="col col-sm-12 col-md-12 col-lg-12">
+            <div class="jarviswidget jarviswidget-color-blueDark" role="widget">
+                <header role="heading" data-block="header">
+                    <span class="widget-icon"> <i class="fa fa-exclamation-circle"></i></span>
+                    <h2>Audit</h2>
+                    <div class="jarviswidget-ctrls" role="menu">
+                        <a href="#" ng-click="ctrl.showToolbar = !ctrl.showToolbar"
+                           ng-show="ctrl.showToolbar" class="button-icon jarviswidget-toggle-btn" rel="tooltip" title="minimize">
+                            <i class="fa fa-minus"></i>
+                        </a>
+                        <a href="#" ng-click="ctrl.showToolbar = !ctrl.showToolbar"
+                           ng-show="!ctrl.showToolbar" class="button-icon jarviswidget-toggle-btn" rel="tooltip" title="maximize">
+                            <i class="fa fa-plus"></i>
+                        </a>
+                    </div>
+                </header>
+                <div role="content">
+                    <div class="jarviswidget-editbox"></div>
+                    <div class="widget-body no-padding">
+                        <div class="widget-body-toolbar" ng-show="ctrl.showToolbar">
+                            <form class="smart-form">
+                                <legend>Filter data</legend>
+                                <fieldset>
+                                    <div class="row">
+                                        <section class="col col-sm-12 col-md-12 col-lg-6">
+                                            <label class="input">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                                    <input datepicker class="form-control" placeholder="Dari Tanggal"
+                                                           id="from-transaction-date" type="text" ng-model="ctrl.filters.from" />
+                                                </div>
+                                            </label>
+                                        </section>
+                                        <section class="col col-sm-12 col-md-12 col-lg-6">
+                                            <label class="input">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                                    <input datepicker class="form-control" placeholder="Sampai Tanggal"
+                                                           id="to-transaction-date" type="text" ng-model="ctrl.filters.to" />
+                                                </div>
+                                            </label>
+                                        </section>
+                                    </div>
+                                </fieldset>
+                            </form>
+                        </div>
+                        <div class="widget-body-toolbar">
+                            <div class="row">
+                                <div class="col-xs-9 col-sm-5 col-md-5 col-lg-6">
+                                    <a href="#" class="btn btn-default" style="color: black;" ng-click="ctrl.filter()">
+                                        <i class="fa fa-search"></i> Cari
+                                    </a>
+                                </div>
+                                <div class="col-xs-9 col-sm-5 col-md-5 col-lg-6">
+                                    <select name="dt_basic_length" aria-controls="dt_basic" class="form-control" ng-model="ctrl.paging.max"
+                                            ng-change="ctrl.filter()" style="float:right; width:15%;" to-number>
+                                        <option value="10">10</option>
+                                        <option value="25">25</option>
+                                        <option value="50">50</option>
+                                        <option value="100">100</option>
+                                        <option value="500">500</option>
+                                        <option value="1000">1000</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped table-condensed table-hover smart-form has-tickbox">
+                                <thead>
+                                    <tr style="color:black;">
+                                        <th style="text-align: center; width: 5%;">Jenis</th>
+                                        <th style="text-align: center; width: 5%;">Tanggal</th>
+                                        <th style="text-align: center; width: 25%;">Event</th>
+                                        <th style="text-align: center; width: 5%;">Petugas</th>
+                                        <th style="text-align: center; width: 8%;">Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-show="ctrl.loadingData" style="color:black;">
+                                        <td style="text-align: center; margin: 10px 0px;" colspan="100">
+                                            <img src="../assets/img/ajax-loader.gif">
+                                        </td>
+                                    </tr>
+                                    <tr ng-repeat="entity in ctrl.entities" ng-show="!ctrl.loadingData">
+                                        <td>
+                                            {{entity.type}}
+                                        </td>
+                                        <td>
+                                            {{entity.date | date:'dd-MM-yyyy'}}
+                                        </td>
+                                        <td>
+                                            {{entity.notes}}
+                                        </td>
+                                        <td>
+                                            {{entity.user.name}}
+                                        </td>
+                                        <td style="text-align:center;">
+                                            <a href="#" class="txt-color-white btn-sm btn-primary" title="Remove" ng-click="ctrl.process('approved', entity)">
+                                                <i class="fa fa-check"></i> Approve
+                                            </a>
+                                            &nbsp;
+                                            <a href="#" class="txt-color-white btn-sm btn-primary" title="Remove" ng-click="ctrl.process('rejected', entity)">
+                                                <i class="fa fa-remove"></i> Reject
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="widget-footer" ng-show="ctrl.viewType == 1 && ctrl.entities.length >= ctrl.paging.max">
+                        <div class="input-group">
+                            <button ng-disabled="(ctrl.paging.page) == 1" href="#" class="btn btn-link" ng-click="ctrl.prev()">
+                                <i class="fa fa-backward"></i>
+                            </button>
+                            {{ctrl.paging.page}}
+                            <button ng-disabled="ctrl.entities.length == 0" href="#" class="btn btn-link" ng-click="ctrl.next()">
+                                <i class="fa fa-forward"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+         </article>
+    </div>
+</section>

@@ -155,6 +155,16 @@
         }
     }
 
+    export class audit {
+        static getAll(query: any) {
+            return http.get('/lois/api/audit/getAll?query=' + JSON.stringify(query));
+        }
+
+        static process(data: any) {
+            return http.post('/lois/api/audit/process', JSON.stringify(data));
+        }
+    }
+
     export class autocomplete {
         static getAll(name: string, keyword: string) {
             return http.get('/lois/api/' + name + '/getAll?query=' + JSON.stringify({ "name": keyword }));
