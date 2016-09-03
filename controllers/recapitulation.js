@@ -1,5 +1,6 @@
 ﻿var mongoose = require('mongoose');
 var model = require('../models/shipping');
+var notificationModel = require('../models/notification');
 var date = require('../utils/date');
 var defaultComponent = require('../utils/defaultComponent')
 var co = require('co');
@@ -131,6 +132,14 @@ Controller.prototype.recap = function (viewModels, user) {
             else
                 item.status = defaultComponent.terekapSebagian;
 
+            var notification = new notificationModel();
+            notification.event = 'Batal rekap spb ' + shipping.spbNumber + ' untuk barang ' + item.content + ' sebanyak ' +
+                viewModel.quantity + ' koli';
+
+            notification.date = new Date();
+            notification.user = user._id;
+
+            yield notification.save();
             yield shipping.save();
         });
     });

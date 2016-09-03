@@ -1,5 +1,6 @@
 ﻿var mongoose = require('mongoose');
 var model = require('../models/shipping');
+var notificationModel = require('../models/notification');
 var date = require('../utils/date');
 var defaultComponent = require('../utils/defaultComponent')
 var co = require('co');
@@ -53,7 +54,7 @@ Controller.prototype.getAll = function (query) {
 Controller.prototype.getAllCancel = function (query) {
     var limit = query['limit'] ? query['limit'] : 10;
     var skip = query['skip'] ? query['skip'] : 0;
-    var parameters = { "regions.destination": objectId(query['region']) };
+    var parameters = { "regions.destination": objectId(query['region']), "returned": false};
     var recapParameters = {};
     var deliveryParameters = {};
 
@@ -152,7 +153,7 @@ Controller.prototype.delivery = function (viewModels, user) {
     });
 };
 
-Controller.prototype.cancelDelivery = function (viewModels) {
+Controller.prototype.cancelDelivery = function (viewModels, user) {
     var self = this;
 
     return co(function* () {
@@ -204,6 +205,14 @@ Controller.prototype.cancelDelivery = function (viewModels) {
             else
                 item.status = defaultComponent.terekapSebagian;
 
+            var notification = new notificationModel();
+            notification.event = 'Batal kirim spb ' + shipping.spbNumber + ' untuk barang ' + item.content + ' sebanyak ' +
+                viewModel.quantity + ' koli';
+
+            notification.date = new Date();
+            notification.user = user._id;
+        
+            yield notification.save();
             yield shipping.save();
         });
     });
