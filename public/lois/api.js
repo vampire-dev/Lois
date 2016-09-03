@@ -161,6 +161,42 @@ var app;
             report.getDeliveriesReport = function (data) {
                 return app.http.post('/lois/api/reportData/getDeliveriesReport', JSON.stringify(data));
             };
+            report.getReturns = function (query) {
+                return app.http.get('/lois/api/reportData/getReturns?query=' + JSON.stringify(query));
+            };
+            report.getReturnsReport = function (data) {
+                return app.http.post('/lois/api/reportData/getReturnsReport', JSON.stringify(data));
+            };
+            report.getUnconfirmed = function (query) {
+                return app.http.get('/lois/api/reportData/getUnconfirmed?query=' + JSON.stringify(query));
+            };
+            report.getUnconfirmedReport = function (data) {
+                return app.http.post('/lois/api/reportData/getUnconfirmedReport', JSON.stringify(data));
+            };
+            report.getPaid = function (query) {
+                return app.http.get('/lois/api/reportData/getPaid?query=' + JSON.stringify(query));
+            };
+            report.getPaidReport = function (data) {
+                return app.http.post('/lois/api/reportData/getPaidReport', JSON.stringify(data));
+            };
+            report.getUnpaid = function (query) {
+                return app.http.get('/lois/api/reportData/getUnpaid?query=' + JSON.stringify(query));
+            };
+            report.getUnpaidReport = function (data) {
+                return app.http.post('/lois/api/reportData/getUnpaidReport', JSON.stringify(data));
+            };
+            report.getDeliveryList = function (query) {
+                return app.http.get('/lois/api/reportData/getDeliveryList?query=' + JSON.stringify(query));
+            };
+            report.getDeliveryListReport = function (data) {
+                return app.http.post('/lois/api/reportData/getDeliveryListReport', JSON.stringify(data));
+            };
+            report.getCommisions = function (query) {
+                return app.http.get('/lois/api/reportData/getCommisions?query=' + JSON.stringify(query));
+            };
+            report.getCommisionsReport = function (data, query) {
+                return app.http.post('/lois/api/reportData/getCommisionsReport?query=' + JSON.stringify(query), JSON.stringify(data));
+            };
             return report;
         }());
         api.report = report;

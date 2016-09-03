@@ -153,6 +153,54 @@
         static getDeliveriesReport(data: any) {
             return http.post('/lois/api/reportData/getDeliveriesReport', JSON.stringify(data));
         }
+
+        static getReturns(query: any) {
+            return http.get('/lois/api/reportData/getReturns?query=' + JSON.stringify(query));
+        }
+
+        static getReturnsReport(data: any) {
+            return http.post('/lois/api/reportData/getReturnsReport', JSON.stringify(data));
+        }
+
+        static getUnconfirmed(query: any) {
+            return http.get('/lois/api/reportData/getUnconfirmed?query=' + JSON.stringify(query));
+        }
+
+        static getUnconfirmedReport(data: any) {
+            return http.post('/lois/api/reportData/getUnconfirmedReport', JSON.stringify(data));
+        }
+
+        static getPaid(query: any) {
+            return http.get('/lois/api/reportData/getPaid?query=' + JSON.stringify(query));
+        }
+
+        static getPaidReport(data: any) {
+            return http.post('/lois/api/reportData/getPaidReport', JSON.stringify(data));
+        }
+
+        static getUnpaid(query: any) {
+            return http.get('/lois/api/reportData/getUnpaid?query=' + JSON.stringify(query));
+        }
+
+        static getUnpaidReport(data: any) {
+            return http.post('/lois/api/reportData/getUnpaidReport', JSON.stringify(data));
+        }
+
+        static getDeliveryList(query: any) {
+            return http.get('/lois/api/reportData/getDeliveryList?query=' + JSON.stringify(query));
+        }
+
+        static getDeliveryListReport(data: any) {
+            return http.post('/lois/api/reportData/getDeliveryListReport', JSON.stringify(data));
+        }
+
+        static getCommisions(query: any) {
+            return http.get('/lois/api/reportData/getCommisions?query=' + JSON.stringify(query));
+        }
+
+        static getCommisionsReport(data: any, query: any) {
+            return http.post('/lois/api/reportData/getCommisionsReport?query=' + JSON.stringify(query), JSON.stringify(data));
+        }
     }
 
     export class reportPrint {

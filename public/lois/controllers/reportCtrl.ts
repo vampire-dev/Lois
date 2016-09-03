@@ -27,13 +27,13 @@
 
             switch (report) {
                 case 'Belum Terbayar':
-                    //this.functions.load = api.report.getUnpaid;
-                    //this.dataFunc = api.report.getUnpaidReport;
+                    this.functions.load = api.report.getUnpaid;
+                    this.dataFunc = api.report.getUnpaidReport;
                     this.renderFunc = api.reportPrint.printUnpaid;
                     break;
                 case 'Terbayar':
-                    //this.functions.load = api.report.getPaid;
-                    //this.dataFunc = api.report.getPaidReport;
+                    this.functions.load = api.report.getPaid;
+                    this.dataFunc = api.report.getPaidReport;
                     this.renderFunc = api.reportPrint.printPaid;
                     break;
                 case 'Rekapitulasi':
@@ -47,23 +47,23 @@
                     this.renderFunc = api.reportPrint.printDelivery;
                     break;
                 case 'Retur':
-                    //this.functions.load = api.report.getReturn;
-                    //this.dataFunc = api.report.getReturnReport;
+                    this.functions.load = api.report.getReturns;
+                    this.dataFunc = api.report.getReturnsReport;
                     this.renderFunc = api.reportPrint.printReturn;
                     break;
                 case 'SJ Belum Kembali':
-                    //this.functions.load = api.report.getUnconfirmed;
-                    //this.dataFunc = api.report.getUnconfirmedReport;
+                    this.functions.load = api.report.getUnconfirmed;
+                    this.dataFunc = api.report.getUnconfirmedReport;
                     this.renderFunc = api.reportPrint.printUnconfirmed;
                     break;
                 case 'Daftar Kiriman':
-                   // this.functions.load = api.report.getDeliveryList;
-                    //this.dataFunc = api.report.getDeliveryListReport;
+                    this.functions.load = api.report.getDeliveryList;
+                    this.dataFunc = api.report.getDeliveryListReport;
                     this.renderFunc = api.reportPrint.printDeliveryList;
                     break;
                 case 'Komisi':
-                    //this.functions.load = api.report.getCommisions;
-                    //this.dataFunc = api.report.getCommisionsReport;
+                    this.functions.load = api.report.getCommisions;
+                    this.dataFunc = api.report.getCommisionsReport;
                     this.renderFunc = api.reportPrint.printCommision;
                     break;
             }
@@ -83,7 +83,13 @@
 
             var ctrl = this;
             ctrl.loadingData = true;
-            ctrl.dataFunc(checkedEntities).then(result => {
+
+            var dataFunction = ctrl.dataFunc(checkedEntities);
+
+            if (ctrl.activeReport === 'Komisi')
+                dataFunction = ctrl.dataFunc(checkedEntities, ctrl.query);
+
+            dataFunction.then(result => {
                 ctrl.renderFunc(result.data).then(buffer => {
                     var blob = new Blob([buffer.data], { type: 'application/pdf' });
                     var url = URL.createObjectURL(blob);

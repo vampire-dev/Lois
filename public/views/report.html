@@ -890,7 +890,7 @@
                                                 <th style="text-align: center; width: 8%;">Harga</th>
                                                 <th style="text-align: center; width: 8%;">No Relasi</th>
                                                 <th style="text-align: center; width: 8%;">Tgl Terima</th>
-                                                <th style="text-align: center; width: 12%;">Yang Bersangkutan</th>
+                                                <th style="text-align: center; width: 3%;">Ybs</th>
                                                 <th style="text-align: center; width: 3%;">Diterima</th>
                                                 <th style="text-align: center; width: 3%;">TTD</th>
                                                 <th style="text-align: center; width: 3%;">Cap</th>
@@ -911,31 +911,31 @@
                                                 <td> {{entity.sender.name}} </td>
                                                 <td> {{entity.cost.total | currency: 'Rp ' : 0}} </td>
                                                 <td> {{entity.returnInfo.relationCode}} </td>
-                                                <td> {{entity.returnInfo.date | date:'dd-MM-yyyy'}} </td>
+                                                <td> {{entity.returnInfo.created.date | date:'dd-MM-yyyy'}} </td>
                                                 <td> {{entity.returnInfo.concernedPerson}} </td>
 
-                                                <td style="text-align:center;" ng-if="entity.items.return.received">
+                                                <td style="text-align:center;" ng-if="entity.returnInfo.accepted">
                                                     <i class="fa fa-check" />
                                                 </td>
-                                                <td style="text-align:center;" ng-if="!entity.items.return.received">
+                                                <td style="text-align:center;" ng-if="!entity.returnInfo.accepted">
                                                     <i class="fa fa-remove" />
                                                 </td>
-                                                <td style="text-align:center;" ng-if="entity.items.return.signed">
+                                                <td style="text-align:center;" ng-if="entity.returnInfo.signed">
                                                     <i class="fa fa-check" />
                                                 </td>
-                                                <td style="text-align:center;" ng-if="!entity.items.return.signed">
+                                                <td style="text-align:center;" ng-if="!entity.returnInfo.signed">
                                                     <i class="fa fa-remove" />
                                                 </td>
-                                                <td style="text-align:center;" ng-if="entity.items.return.stamped">
+                                                <td style="text-align:center;" ng-if="entity.returnInfo.stamped">
                                                     <i class="fa fa-check" />
                                                 </td>
-                                                <td style="text-align:center;" ng-if="!entity.items.return.stamped">
+                                                <td style="text-align:center;" ng-if="!entity.returnInfo.stamped">
                                                     <i class="fa fa-remove" />
                                                 </td>
-                                                <td style="text-align:center;" ng-if="entity.items.return.receipt">
+                                                <td style="text-align:center;" ng-if="entity.returnInfo.receipt">
                                                     <i class="fa fa-check" />
                                                 </td>
-                                                <td style="text-align:center;" ng-if="!entity.items.return.receipt">
+                                                <td style="text-align:center;" ng-if="!entity.returnInfo.receipt">
                                                     <i class="fa fa-remove" />
                                                 </td>
                                             </tr>
@@ -1025,14 +1025,14 @@
                                         <thead>
                                             <tr style="color:black;">
                                                 <th style="text-align: center; width: 1%;">
-                                                    <input type="checkbox" ng-click="ctrl.toggleCheckAll()" ng-true-value="true" ng-false-value="false" />
+                                                    <input type="checkbox" ng-model="ctrl.checkedAll" ng-click="ctrl.toggleCheckAll()" ng-true-value="true" ng-false-value="false" />
                                                 </th>
                                                 <th style="text-align: center; width: 8%;">Spb</th>
                                                 <th style="text-align: center; width: 10%;">Pengirim</th>
                                                 <th style="text-align: center; width: 8%;">Harga</th>
                                                 <th style="text-align: center; width: 8%;">No Relasi</th>
                                                 <th style="text-align: center; width: 8%;">Tgl Terima</th>
-                                                <th style="text-align: center; width: 12%;">Yang Bersangkutan</th>
+                                                <th style="text-align: center; width: 3%;">Ybs</th>
                                                 <th style="text-align: center; width: 3%;">Diterima</th>
                                                 <th style="text-align: center; width: 3%;">TTD</th>
                                                 <th style="text-align: center; width: 3%;">Cap</th>
@@ -1056,28 +1056,28 @@
                                                 <td> {{entity.returnInfo.date | date:'dd-MM-yyyy'}} </td>
                                                 <td> {{entity.returnInfo.concernedPerson}} </td>
 
-                                                <td style="text-align:center;" ng-if="entity.items.return.received">
+                                                <td style="text-align:center;" ng-if="entity.returnInfo.accepted">
                                                     <i class="fa fa-check" />
                                                 </td>
-                                                <td style="text-align:center;" ng-if="!entity.items.return.received">
+                                                <td style="text-align:center;" ng-if="!entity.returnInfo.accepted">
                                                     <i class="fa fa-remove" />
                                                 </td>
-                                                <td style="text-align:center;" ng-if="entity.items.return.signed">
+                                                <td style="text-align:center;" ng-if="entity.returnInfo.signed">
                                                     <i class="fa fa-check" />
                                                 </td>
-                                                <td style="text-align:center;" ng-if="!entity.items.return.signed">
+                                                <td style="text-align:center;" ng-if="!entity.returnInfo.signed">
                                                     <i class="fa fa-remove" />
                                                 </td>
-                                                <td style="text-align:center;" ng-if="entity.items.return.stamped">
+                                                <td style="text-align:center;" ng-if="entity.returnInfo.stamped">
                                                     <i class="fa fa-check" />
                                                 </td>
-                                                <td style="text-align:center;" ng-if="!entity.items.return.stamped">
+                                                <td style="text-align:center;" ng-if="!entity.returnInfo.stamped">
                                                     <i class="fa fa-remove" />
                                                 </td>
-                                                <td style="text-align:center;" ng-if="entity.items.return.receipt">
+                                                <td style="text-align:center;" ng-if="entity.returnInfo.receipt">
                                                     <i class="fa fa-check" />
                                                 </td>
-                                                <td style="text-align:center;" ng-if="!entity.items.return.receipt">
+                                                <td style="text-align:center;" ng-if="!entity.returnInfo.receipt">
                                                     <i class="fa fa-remove" />
                                                 </td>
                                             </tr>
