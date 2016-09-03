@@ -35,6 +35,18 @@ var app;
             return shipping;
         }());
         api.shipping = shipping;
+        var deliveryOrder = (function () {
+            function deliveryOrder() {
+            }
+            deliveryOrder.getAll = function (query) {
+                return app.http.get('/lois/api/deliveryOrder/getAll?query=' + JSON.stringify(query));
+            };
+            deliveryOrder.getDataReport = function (data) {
+                return app.http.post('/lois/api/deliveryOrder/getDataReport', JSON.stringify(data));
+            };
+            return deliveryOrder;
+        }());
+        api.deliveryOrder = deliveryOrder;
         var recapitulation = (function () {
             function recapitulation() {
             }
@@ -115,6 +127,9 @@ var app;
             };
             invoice.create = function (data) {
                 return app.http.post('/lois/api/invoice/create', JSON.stringify(data));
+            };
+            invoice.getInvoiceReport = function (data) {
+                return app.http.post('/lois/api/invoice/getInvoiceReport', JSON.stringify(data));
             };
             return invoice;
         }());

@@ -31,6 +31,16 @@
         }
     }
 
+    export class deliveryOrder {
+        static getAll(query: any) {
+            return http.get('/lois/api/deliveryOrder/getAll?query=' + JSON.stringify(query));
+        }
+
+        static getDataReport(data: any) {
+            return http.post('/lois/api/deliveryOrder/getDataReport', JSON.stringify(data));
+        }
+    }
+
     export class recapitulation {
         static getAll(query: any) {
             return http.get('/lois/api/recapitulation/getAll?query=' + JSON.stringify(query));
@@ -110,6 +120,10 @@
 
         static create(data: any) {
             return http.post('/lois/api/invoice/create', JSON.stringify(data));
+        }
+
+        static getInvoiceReport(data: any) {
+            return http.post('/lois/api/invoice/getInvoiceReport', JSON.stringify(data));
         }
     }
 

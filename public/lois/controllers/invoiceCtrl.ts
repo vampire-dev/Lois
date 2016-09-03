@@ -61,6 +61,17 @@
                 ctrl.notify('error', 'Tagihan gagal dibuat ' + error.data);
             });
         }
+
+        print(entity): void {
+            var ctrl = this;
+            api.invoice.getInvoiceReport(entity).then(result => {
+                api.reportPrint.printInvoice(result.data).then(buffer => {
+                    var blob = new Blob([buffer.data], { type: 'application/pdf' });
+                    var url = URL.createObjectURL(blob);
+                    window.open(url, '_blank');
+                });
+            });
+        }
     }
 
     app.lois.controller('invoiceCtrl', invoiceCtrl);

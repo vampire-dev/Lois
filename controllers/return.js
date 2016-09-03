@@ -85,7 +85,7 @@ Controller.prototype.return = function (viewModels, user) {
 
                 var notification = new notificationModel();
 
-                notification.event = 'Retur spb ' + shipping.spbNumber + ' ' + (viewModel.accepted ? 'diterima' : 'ditolak');
+                notification.event = 'Retur spb ' + shipping.spbNumber + ' ' + (viewModel.returnInfo.accepted ? 'diterima' : 'ditolak');
                 notification.filePath = shipping.returnInfo.filePath;
                 notification.date = new Date();
                 notification.user = user._id;

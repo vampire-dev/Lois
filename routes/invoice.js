@@ -34,4 +34,12 @@ router.post(config.api + 'invoice/create', auth.isAuthenticated, function (req, 
     });
 });
 
+router.post(config.api + 'invoice/getInvoiceReport', auth.isAuthenticated, function (req, res) {
+    controller.getInvoiceReport(req.body, req.session.user).then(function (result) {
+        return res.status(200).send(result);
+    }).catch(function (error) {
+        return res.status(500).send(error.message);
+    });
+});
+
 module.exports = router;

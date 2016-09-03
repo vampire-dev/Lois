@@ -26,6 +26,7 @@ app.use(require('./routes/report'));
 app.use(require('./routes/roleMenu'));
 app.use(require('./routes/roleReport'));
 app.use(require('./routes/shipping'));
+app.use(require('./routes/deliveryOrder'));
 app.use(require('./routes/recapitulation'));
 app.use(require('./routes/delivery'));
 app.use(require('./routes/return'));

@@ -33,6 +33,10 @@ var app;
                 url: '/shipping',
                 templateUrl: '/views/shipping.html',
                 controller: 'shippingCtrl as ctrl'
+            }).state('site.main.deliveryOrder', {
+                url: '/delivery-order',
+                templateUrl: '/views/deliveryOrder.html',
+                controller: 'deliveryOrderCtrl as ctrl'
             }).state('site.main.recapitulation', {
                 url: '/recapitulation',
                 templateUrl: '/views/recapitulation.html',

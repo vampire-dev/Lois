@@ -59,6 +59,16 @@ var app;
                     ctrl.notify('error', 'Tagihan gagal dibuat ' + error.data);
                 });
             };
+            invoiceCtrl.prototype.print = function (entity) {
+                var ctrl = this;
+                app.api.invoice.getInvoiceReport(entity).then(function (result) {
+                    app.api.reportPrint.printInvoice(result.data).then(function (buffer) {
+                        var blob = new Blob([buffer.data], { type: 'application/pdf' });
+                        var url = URL.createObjectURL(blob);
+                        window.open(url, '_blank');
+                    });
+                });
+            };
             invoiceCtrl.$inject = ['$scope', 'Notification'];
             return invoiceCtrl;
         }(controllers.baseCtrl));
