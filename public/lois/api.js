@@ -53,6 +53,45 @@ var app;
             return recapitulation;
         }());
         api.recapitulation = recapitulation;
+        var delivery = (function () {
+            function delivery() {
+            }
+            delivery.getAll = function (query) {
+                return app.http.get('/lois/api/delivery/getAll?query=' + JSON.stringify(query));
+            };
+            delivery.getAllCancel = function (query) {
+                return app.http.get('/lois/api/delivery/getAllCancel?query=' + JSON.stringify(query));
+            };
+            delivery.delivery = function (data) {
+                return app.http.post('/lois/api/delivery/delivery', JSON.stringify(data));
+            };
+            delivery.cancelDelivery = function (data) {
+                return app.http.post('/lois/api/delivery/cancelDelivery', JSON.stringify(data));
+            };
+            return delivery;
+        }());
+        api.delivery = delivery;
+        var _return = (function () {
+            function _return() {
+            }
+            _return.getAll = function (query) {
+                return app.http.get('/lois/api/return/getAll?query=' + JSON.stringify(query));
+            };
+            _return.getAllConfirm = function (query) {
+                return app.http.get('/lois/api/return/getAllConfirm?query=' + JSON.stringify(query));
+            };
+            _return.return = function (data) {
+                return app.http.post('/lois/api/return/return', JSON.stringify(data));
+            };
+            _return.confirm = function (data) {
+                return app.http.post('/lois/api/return/confirm', JSON.stringify(data));
+            };
+            _return.upload = function (data) {
+                return app.http.post('/lois/api/return/uploads', data, { headers: { 'Content-Type': undefined } });
+            };
+            return _return;
+        }());
+        api._return = _return;
         var configuration = (function () {
             function configuration() {
             }

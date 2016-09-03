@@ -1,5 +1,3 @@
-/// <reference path="../lois" />
-/// <reference path="../api" />
 var app;
 (function (app) {
     var controllers;

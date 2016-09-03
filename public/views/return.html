@@ -3,8 +3,8 @@
         <article class="col col-sm-12 col-md-12 col-lg-12">
             <div class="jarviswidget jarviswidget-color-blueDark" role="widget">
                 <header role="heading" data-block="header">
-                    <span class="widget-icon"> <i class="fa fa-check"></i></span>
-                    <h2>Rekapitulasi</h2>
+                    <span class="widget-icon"> <i class="fa fa-exchange"></i></span>
+                    <h2>Retur</h2>
                     <div class="jarviswidget-ctrls" role="menu">
                         <a href="#" ng-click="ctrl.showToolbar = !ctrl.showToolbar"
                            ng-show="ctrl.showToolbar" class="button-icon jarviswidget-toggle-btn" rel="tooltip" title="minimize">
@@ -24,23 +24,28 @@
                                 <legend>Filter data</legend>
                                 <fieldset>
                                     <div class="row">
-                                        <section class="col col-sm-12 col-md-12 col-lg-4">
+                                        <section class="col col-sm-12 col-md-12 col-lg-3">
                                             <label class="input">
                                                 <input type="text" class="form-control" placeholder="Spb" ng-model="ctrl.filters.spbNumber" />
                                             </label>
                                         </section>
-                                        <section class="col col-sm-12 col-md-12 col-lg-4">
+                                        <section class="col col-sm-12 col-md-12 col-lg-3">
                                             <label class="input">
-                                                <input type="text"
-                                                       ng-model="ctrl.filters.regionDest"
-                                                       placeholder="Regional Tujuan"
-                                                       uib-typeahead="data as data.name for data in ctrl.suggest('region', $viewValue)"
-                                                       typeahead-min-length="2"
-                                                       typeahead-loading="regionDestFilter" class="form-control" />
-                                                <i ng-show="regionDestFilter" class="glyphicon glyphicon-refresh"></i>
+                                                <input type="text" class="form-control" placeholder="Penerima" ng-model="ctrl.filters.receiverName" />
                                             </label>
                                         </section>
-                                        <section class="col col-sm-12 col-md-12 col-lg-4">
+                                        <section class="col col-sm-12 col-md-12 col-lg-3">
+                                            <label class="input">
+                                                <input type="text"
+                                                       ng-model="ctrl.filters.regionSource"
+                                                       placeholder="Regional Asal"
+                                                       uib-typeahead="data as data.name for data in ctrl.suggest('region', $viewValue)"
+                                                       typeahead-min-length="2"
+                                                       typeahead-loading="regionSourceFilter" class="form-control" />
+                                                <i ng-show="regionSourceFilter" class="glyphicon glyphicon-refresh"></i>
+                                            </label>
+                                        </section>
+                                        <section class="col col-sm-12 col-md-12 col-lg-3">
                                             <label class="input">
                                                 <input type="text"
                                                        ng-model="ctrl.filters.destination"
@@ -69,79 +74,6 @@
                                                 </div>
                                             </label>
                                         </section>
-                                        <section class="col col-sm-12 col-md-12 col-lg-6" ng-show="ctrl.filterType == 1">
-                                            <label class="input">
-                                                <div class="input-group">
-                                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                                    <input datepicker class="form-control" placeholder="Tanggal rekap"
-                                                           id="recap-date" type="text" ng-model="ctrl.filters.recapDate" />
-                                                </div>
-                                            </label>
-                                        </section>
-                                        <section class="col col-sm-12 col-md-12 col-lg-6" ng-show="ctrl.filterType == 1">
-                                            <label class="input">
-                                                <input type="text"
-                                                       ng-model="ctrl.filters.driver"
-                                                       placeholder="Supir rekap"
-                                                       uib-typeahead="data as data.name for data in ctrl.suggest('driver', $viewValue)"
-                                                       typeahead-min-length="2"
-                                                       typeahead-loading="driverFilter" class="form-control" />
-                                                <i ng-show="driverFilter" class="glyphicon glyphicon-refresh"></i>
-                                            </label>
-                                        </section>
-                                    </div>
-                                </fieldset>
-                            </form>
-                        </div>
-                        <div class="widget-body-toolbar">
-                            <form class="smart-form">
-                                <legend>Silahkan isi data berikut</legend>
-                                <fieldset>
-                                    <div class="row">
-                                        <section class="col col-sm-12 col-md-12 col-lg-3">
-                                            <label class="input">
-                                                <input type="text" class="form-control" placeholder="No Mobil" ng-model="ctrl.vehicleNumber" />
-                                            </label>
-                                        </section>
-                                        <section class="col col-sm-12 col-md-12 col-lg-3">
-                                            <label class="input">
-                                                <input type="text"
-                                                       ng-model="ctrl.driver"
-                                                       placeholder="Supir"
-                                                       uib-typeahead="data as data.name for data in ctrl.suggest('driver', $viewValue)"
-                                                       typeahead-min-length="2"
-                                                       typeahead-loading="driverInput" class="form-control" />
-                                                <i ng-show="driverInput" class="glyphicon glyphicon-refresh"></i>
-                                            </label>
-                                        </section>
-                                        <section class="col col-sm-12 col-md-12 col-lg-3">
-                                            <label class="input">
-                                                <input type="text"
-                                                       ng-model="ctrl.trainType"
-                                                       placeholder="Jenis Kereta"
-                                                       uib-typeahead="data as data.name for data in ctrl.suggest('trainType', $viewValue)"
-                                                       typeahead-min-length="2"
-                                                       typeahead-loading="trainTypeInput" class="form-control" />
-                                                <i ng-show="trainTypeInput" class="glyphicon glyphicon-refresh"></i>
-                                            </label>
-                                        </section>
-                                        <section class="col col-sm-12 col-md-12 col-lg-3">
-                                            <label class="input">
-                                                <div class="input-group">
-                                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                                    <input datepicker class="form-control" placeholder="Tanggal Berangkat"
-                                                           id="departure-date" type="text" ng-model="ctrl.departureDate" />
-                                                </div>
-                                            </label>
-                                        </section>
-                                        <section class="col col-sm-12 col-md-12 col-lg-12">
-                                            <label class="input-group">
-                                                <input type="radio" ng-value="0" ng-click="ctrl.filter()" ng-model="ctrl.filterType"><i></i> Rekap
-                                                <i></i>
-                                                <input type="radio" ng-value="1" ng-click="ctrl.filter()" ng-model="ctrl.filterType"><i></i> Batal Rekap
-                                                <i></i>
-                                            </label>
-                                        </section>
                                     </div>
                                 </fieldset>
                             </form>
@@ -153,7 +85,7 @@
                                         <i class="fa fa-search"></i> Cari
                                     </a>
                                     <a href="#" class="btn btn-default" style="color: black;" ng-click="ctrl.process()">
-                                        <i class="fa fa-check"></i> Proses
+                                        <i class="fa fa-exchange"></i> Proses
                                     </a>
                                 </div>
                                 <div class="col-xs-9 col-sm-5 col-md-5 col-lg-6">
@@ -168,7 +100,6 @@
                                     </select>
                                 </div>
                             </div>
-
                         </div>
                         <div class="table-responsive">
                             <table class="table table-bordered table-striped table-condensed table-hover smart-form has-tickbox">
@@ -177,64 +108,89 @@
                                         <th style="text-align: center; width: 1%;">
                                             <input type="checkbox" ng-model="ctrl.checkedAll" ng-click="ctrl.toggleCheckAll()" ng-true-value="true" ng-false-value="false" />
                                         </th>
-                                        <th style="text-align: center; width: 5%;">Spb</th>
-                                        <th style="text-align: center; width: 10%;">Isi</th>
-                                        <th style="text-align: center; width: 3%;">Tersedia</th>
+                                        <th style="text-align: center; width: 8%;">Spb</th>
+                                        <th style="text-align: center; width: 5%;">Koli</th>
                                         <th style="text-align: center; width: 10%;">Warna Limas</th>
                                         <th style="text-align: center; width: 10%;">Warna Relasi</th>
+                                        <th style="text-align: center; width: 10%;">Kode Relasi</th>
                                         <th style="text-align: center; width: 10%;">Keterangan</th>
-                                        <th style="text-align: center; width: 5%;">Qty</th>
+                                        <th style="text-align: center; width: 10%;">Berita Acara</th>
+                                        <th style="text-align: center; width: 10%;">Ybs</th>
+                                        <th style="text-align: center; width: 5%;">Diterima</th>
+                                        <th style="text-align: center; width: 5%;">Kwitansi</th>
+                                        <th style="text-align: center; width: 5%;">Ttd</th>
+                                        <th style="text-align: center; width: 5%;">Cap</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr ng-show="ctrl.loadingData">
+                                    <tr ng-show="ctrl.loadingData" style="color:black;">
                                         <td style="text-align: center; margin: 10px 0px;" colspan="100">
                                             <img src="../assets/img/ajax-loader.gif">
                                         </td>
                                     </tr>
-                                    <tr ng-repeat="entity in ctrl.entities" ng-show="!ctrl.loadingData" style="color:black;">
+                                    <tr ng-repeat="entity in ctrl.entities" ng-show="!ctrl.loadingData">
                                         <td style="text-align: center;">
                                             <input type="checkbox" ng-model="entity.checked" />
                                         </td>
                                         <td>
-                                            {{entity.spbNumber}}
+                                            {{entity.shipping[0].spbNumber}}
                                         </td>
                                         <td>
-                                            {{entity.items.content}}
-                                        </td>
-                                        <td style="text-align:right;">
-                                            {{ctrl.filterType == 0 ? entity.items.colli.available : entity.items.recapitulations.available}}
+                                            {{entity.colli}}
                                         </td>
                                         <td>
-                                            <input type="text" class="form-control" ng-model="entity.viewModel.limasColor" />
+                                            <input type="text" class="form-control" ng-model="entity.shipping[0].returnInfo.limasColor" />
                                         </td>
                                         <td>
-                                            <input type="text" class="form-control" ng-model="entity.viewModel.relationColor" />
+                                            <input type="text" class="form-control" ng-model="entity.shipping[0].returnInfo.relationColor" />
                                         </td>
                                         <td>
-                                            <input type="text" class="form-control" ng-model="entity.viewModel.notes" />
+                                            <input type="text" class="form-control" ng-model="entity.shipping[0].returnInfo.relationCode" />
                                         </td>
-                                        <td style="text-align:right;">
-                                            <input type="text" class="form-control" ng-model="entity.viewModel.quantity" />
+                                        <td>
+                                            <input type="text" class="form-control" ng-model="entity.shipping[0].returnInfo.notes" />
+                                        </td>
+                                        <td tyle="text-align:center;">
+                                            <a href="#" ng-if="entity.shipping[0].returnInfo.filePath == null" ngf-select="ctrl.upload($file, entity)" ng-model="ctrl.files">
+                                                Upload
+                                            </a>
+                                            <a href="#" ng-if="entity.shipping[0].returnInfo.filePath != null" ngf-select="ctrl.upload($file, entity)" ng-model="ctrl.files">
+                                                {{entity.shipping[0].returnInfo.filePath}}
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control" ng-model="entity.shipping[0].returnInfo.concernedPerson" />
+                                        </td>
+                                        <td style="text-align: center;">
+                                            <input type="checkbox" ng-true-value="true" ng-false-value="false" ng-model="entity.shipping[0].returnInfo.accepted" />
+                                        </td>
+                                        <td style="text-align: center;">
+                                            <input type="checkbox" ng-true-value="true" ng-false-value="false" ng-model="entity.shipping[0].returnInfo.receipt" />
+                                        </td>
+                                        <td style="text-align: center;">
+                                            <input type="checkbox" ng-true-value="true" ng-false-value="false" ng-model="entity.shipping[0].returnInfo.signed" />
+                                        </td>
+                                        <td style="text-align: center;">
+                                            <input type="checkbox" ng-true-value="true" ng-false-value="false" ng-model="entity.shipping[0].returnInfo.stamped" />
                                         </td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
                     </div>
-                    <div class="widget-footer">
+                    <div class="widget-footer" ng-show="ctrl.entities.length >= ctrl.paging.max">
                         <div class="input-group">
                             <button ng-disabled="(ctrl.paging.page) == 1" href="#" class="btn btn-link" ng-click="ctrl.prev()">
                                 <i class="fa fa-backward"></i>
                             </button>
                             {{ctrl.paging.page}}
-                            <button ng-disabled="ctrl.entities.length < ctrl.paging.max" href="#" class="btn btn-link" ng-click="ctrl.next()">
+                            <button ng-disabled="ctrl.entities.length == 0" href="#" class="btn btn-link" ng-click="ctrl.next()">
                                 <i class="fa fa-forward"></i>
                             </button>
                         </div>
                     </div>
                 </div>
             </div>
-        </article>
+         </article>
     </div>
 </section>

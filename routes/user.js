@@ -28,7 +28,7 @@ router.get(config.api + 'user/getAll', auth.isAuthenticated, function (req, res)
 router.get(config.api + 'user/logout', auth.isAuthenticated, function (req, res) {
     req.session.destroy(function (err) {
         if (err)
-            return res.status(500).send(err);
+            return res.status(500).send(err.message);
 
         return res.status(200).send('Ok');
     });

@@ -9,25 +9,25 @@ var app;
     (function (controllers) {
         var FilterType;
         (function (FilterType) {
-            FilterType[FilterType["recap"] = 0] = "recap";
-            FilterType[FilterType["cancelRecap"] = 1] = "cancelRecap";
+            FilterType[FilterType["delivery"] = 0] = "delivery";
+            FilterType[FilterType["cancelDelivery"] = 1] = "cancelDelivery";
         })(FilterType || (FilterType = {}));
         ;
-        var recapitulationCtrl = (function (_super) {
-            __extends(recapitulationCtrl, _super);
-            function recapitulationCtrl($scope, Notification) {
+        var deliveryCtrl = (function (_super) {
+            __extends(deliveryCtrl, _super);
+            function deliveryCtrl($scope, Notification) {
                 _super.call(this, Notification);
-                this.functions.load = app.api.recapitulation.getAll;
+                this.functions.load = app.api.delivery.getAll;
                 this.functions.autocomplete = app.api.autocomplete.getAll;
-                this.filterType = FilterType.recap;
+                this.filterType = FilterType.delivery;
                 this.filter();
             }
-            recapitulationCtrl.prototype.filter = function () {
+            deliveryCtrl.prototype.filter = function () {
                 var ctrl = this;
                 ctrl.checkedAll = false;
                 ctrl.createQuery();
                 ctrl.loadingData = true;
-                ctrl.functions.load = ctrl.filterType === FilterType.recap ? app.api.recapitulation.getAll : app.api.recapitulation.getAllCancel;
+                ctrl.functions.load = ctrl.filterType === FilterType.delivery ? app.api.delivery.getAll : app.api.delivery.getAllCancel;
                 ctrl.functions.load(ctrl.query).then(function (result) {
                     ctrl.entities = result.data;
                     ctrl.entities.map(function (e) {
@@ -35,7 +35,7 @@ var app;
                         e['viewModel']['limasColor'] = null;
                         e['viewModel']['relationColor'] = null;
                         e['viewModel']['notes'] = null;
-                        e['viewModel']['quantity'] = ctrl.filterType === FilterType.recap ? e.items.colli.available : e.items.recapitulations.available;
+                        e['viewModel']['quantity'] = ctrl.filterType === FilterType.delivery ? e.items.recapitulations.available : e.items.deliveries.available;
                     });
                 }).catch(function (error) {
                     ctrl.notify('error', error.data);
@@ -43,24 +43,16 @@ var app;
                     ctrl.loadingData = false;
                 });
             };
-            recapitulationCtrl.prototype.process = function () {
-                if (this.filterType === FilterType.recap)
-                    this.recap();
-                else if (this.filterType === FilterType.cancelRecap)
-                    this.cancelRecap();
+            deliveryCtrl.prototype.process = function () {
+                if (this.filterType === FilterType.delivery)
+                    this.delivery();
+                else if (this.filterType === FilterType.cancelDelivery)
+                    this.cancelDelivery();
             };
-            recapitulationCtrl.prototype.recap = function () {
+            deliveryCtrl.prototype.delivery = function () {
                 var _this = this;
                 if (!this.driver) {
                     this.notify('warning', 'Supir harus diisi');
-                    return;
-                }
-                if (!this.trainType) {
-                    this.notify('warning', 'Jenis kereta harus diisi');
-                    return;
-                }
-                if (!this.departureDate || this.departureDate == '') {
-                    this.notify('warning', 'Tanggal berangkat harus diisi');
                     return;
                 }
                 if (!this.vehicleNumber || this.vehicleNumber == '') {
@@ -74,33 +66,30 @@ var app;
                 }
                 var viewModels = [];
                 checkedEntities.forEach(function (entity) {
-                    var departureDate = new Date(_this.departureDate);
                     var viewModel = {
                         shipping: entity._id,
                         item: entity.items._id,
+                        recapitulation: entity.items.recapitulations._id,
                         quantity: entity.viewModel.quantity,
                         limasColor: entity.viewModel.limasColor,
                         relationColor: entity.viewModel.relationColor,
-                        notes: entity.viewModel.notes,
+                        deliveryCode: entity.viewModel.deliveryCode,
                         driver: _this.driver._id,
-                        trainType: _this.trainType._id,
-                        vehicleNumber: _this.vehicleNumber,
-                        departureDate: Date.UTC(departureDate.getFullYear(), departureDate.getMonth(), departureDate.getDate())
+                        vehicleNumber: _this.vehicleNumber
                     };
                     viewModels.push(viewModel);
                 });
                 var ctrl = this;
-                app.api.recapitulation.recap(viewModels).then(function (result) {
-                    ctrl.notify('success', 'Proses rekapitulasi berhasil');
+                app.api.delivery.delivery(viewModels).then(function (result) {
+                    ctrl.notify('success', 'Proses delivery berhasil');
                     ctrl.filter();
                 }).catch(function (error) {
-                    ctrl.notify('error', 'Rekapitulasi gagal ' + error.data);
+                    ctrl.notify('error', 'Delivery gagal ' + error.data);
                 }).finally(function () {
                     ctrl.loadingData = false;
                 });
             };
-            recapitulationCtrl.prototype.cancelRecap = function () {
-                var _this = this;
+            deliveryCtrl.prototype.cancelDelivery = function () {
                 var checkedEntities = this.entities.filter(function (e) { return e.checked; });
                 if (checkedEntities.length === 0) {
                     this.notify('warning', 'Tidak ada item yang dipilih');
@@ -108,29 +97,29 @@ var app;
                 }
                 var viewModels = [];
                 checkedEntities.forEach(function (entity) {
-                    var departureDate = new Date(_this.departureDate);
                     var viewModel = {
                         shipping: entity._id,
                         item: entity.items._id,
                         recapitulation: entity.items.recapitulations._id,
-                        quantity: entity.viewModel.quantity
+                        quantity: entity.viewModel.quantity,
+                        delivery: entity.items.deliveries._id
                     };
                     viewModels.push(viewModel);
                 });
                 var ctrl = this;
-                app.api.recapitulation.cancelRecap(viewModels).then(function (result) {
-                    ctrl.notify('success', 'Proses cancel rekapitulasi berhasil');
+                app.api.delivery.cancelDelivery(viewModels).then(function (result) {
+                    ctrl.notify('success', 'Proses cancel delivery berhasil');
                     ctrl.filter();
                 }).catch(function (error) {
-                    ctrl.notify('error', 'Cancel rekapitulasi gagal ' + error.data);
+                    ctrl.notify('error', 'Cancel delivery gagal ' + error.data);
                 }).finally(function () {
                     ctrl.loadingData = false;
                 });
             };
-            recapitulationCtrl.$inject = ['$scope', 'Notification'];
-            return recapitulationCtrl;
+            deliveryCtrl.$inject = ['$scope', 'Notification'];
+            return deliveryCtrl;
         }(controllers.baseCtrl));
-        app.lois.controller('recapitulationCtrl', recapitulationCtrl);
+        app.lois.controller('deliveryCtrl', deliveryCtrl);
     })(controllers = app.controllers || (app.controllers = {}));
 })(app || (app = {}));
-//# sourceMappingURL=recapitulationCtrl.js.map
+//# sourceMappingURL=deliveryCtrl.js.map

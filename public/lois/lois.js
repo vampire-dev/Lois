@@ -37,6 +37,18 @@ var app;
                 url: '/recapitulation',
                 templateUrl: '/views/recapitulation.html',
                 controller: 'recapitulationCtrl as ctrl'
+            }).state('site.main.delivery', {
+                url: '/delivery',
+                templateUrl: '/views/delivery.html',
+                controller: 'deliveryCtrl as ctrl'
+            }).state('site.main.return', {
+                url: '/return',
+                templateUrl: '/views/return.html',
+                controller: 'returnCtrl as ctrl'
+            }).state('site.main.confirmReturn', {
+                url: '/confirm-return',
+                templateUrl: '/views/confirmReturn.html',
+                controller: 'confirmReturnCtrl as ctrl'
             }).state('site.main.configuration', {
                 url: '/configuration',
                 templateUrl: '/views/configuration.html',

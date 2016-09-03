@@ -49,6 +49,46 @@
         }
     }
 
+    export class delivery {
+        static getAll(query: any) {
+            return http.get('/lois/api/delivery/getAll?query=' + JSON.stringify(query));
+        }
+
+        static getAllCancel(query: any) {
+            return http.get('/lois/api/delivery/getAllCancel?query=' + JSON.stringify(query));
+        }
+
+        static delivery(data: any) {
+            return http.post('/lois/api/delivery/delivery', JSON.stringify(data));
+        }
+
+        static cancelDelivery(data: any) {
+            return http.post('/lois/api/delivery/cancelDelivery', JSON.stringify(data));
+        }
+    }
+
+    export class _return {
+        static getAll(query: any) {
+            return http.get('/lois/api/return/getAll?query=' + JSON.stringify(query));
+        }
+
+        static getAllConfirm(query: any) {
+            return app.http.get('/lois/api/return/getAllConfirm?query=' + JSON.stringify(query));
+        }
+
+        static return(data: any) {
+            return app.http.post('/lois/api/return/return', JSON.stringify(data));
+        }
+
+        static confirm(data: any) {
+            return app.http.post('/lois/api/return/confirm', JSON.stringify(data));
+        }
+
+        static upload(data: any) {
+            return app.http.post('/lois/api/return/uploads', data, { headers: { 'Content-Type': undefined } });
+        }
+    }
+
     export class configuration {
         static get(config: string, id: any) {
             return app.http.get('/lois/api/' + config + '/get?id=' + id);

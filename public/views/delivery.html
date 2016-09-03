@@ -3,8 +3,8 @@
         <article class="col col-sm-12 col-md-12 col-lg-12">
             <div class="jarviswidget jarviswidget-color-blueDark" role="widget">
                 <header role="heading" data-block="header">
-                    <span class="widget-icon"> <i class="fa fa-check"></i></span>
-                    <h2>Rekapitulasi</h2>
+                    <span class="widget-icon"> <i class="fa fa-truck"></i></span>
+                    <h2>Delivery</h2>
                     <div class="jarviswidget-ctrls" role="menu">
                         <a href="#" ng-click="ctrl.showToolbar = !ctrl.showToolbar"
                            ng-show="ctrl.showToolbar" class="button-icon jarviswidget-toggle-btn" rel="tooltip" title="minimize">
@@ -43,12 +43,63 @@
                                         <section class="col col-sm-12 col-md-12 col-lg-4">
                                             <label class="input">
                                                 <input type="text"
+                                                       ng-model="ctrl.filters.regionSource"
+                                                       placeholder="Regional Asal"
+                                                       uib-typeahead="data as data.name for data in ctrl.suggest('region', $viewValue)"
+                                                       typeahead-min-length="2"
+                                                       typeahead-loading="regionSourceFilter" class="form-control" />
+                                                <i ng-show="regionSourceFilter" class="glyphicon glyphicon-refresh"></i>
+                                            </label>
+                                        </section>
+                                        <section class="col col-sm-12 col-md-12 col-lg-4">
+                                            <label class="input">
+                                                <input type="text"
                                                        ng-model="ctrl.filters.destination"
                                                        placeholder="Kota Tujuan"
                                                        uib-typeahead="data as data.name for data in ctrl.suggest('location', $viewValue)"
                                                        typeahead-min-length="2"
                                                        typeahead-loading="destinationFilter" class="form-control" />
                                                 <i ng-show="destinationFilter" class="glyphicon glyphicon-refresh"></i>
+                                            </label>
+                                        </section>
+                                        <section class="col col-sm-12 col-md-12 col-lg-4" ng-show="ctrl.filterType == 0">
+                                            <label class="input">
+                                                <input type="text"
+                                                       ng-model="ctrl.filters.driver"
+                                                       placeholder="Supir rekap"
+                                                       uib-typeahead="data as data.name for data in ctrl.suggest('driver', $viewValue)"
+                                                       typeahead-min-length="2"
+                                                       typeahead-loading="driverFilter" class="form-control" />
+                                                <i ng-show="driverFilter" class="glyphicon glyphicon-refresh"></i>
+                                            </label>
+                                        </section>
+                                        <section class="col col-sm-12 col-md-12 col-lg-4" ng-show="ctrl.filterType == 0">
+                                            <label class="input">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                                    <input datepicker class="form-control" placeholder="Tanggal Rekap"
+                                                           id="recap-date" type="text" ng-model="ctrl.filters.recapDate" />
+                                                </div>
+                                            </label>
+                                        </section>
+                                        <section class="col col-sm-12 col-md-12 col-lg-4" ng-show="ctrl.filterType == 1">
+                                            <label class="input">
+                                                <input type="text"
+                                                       ng-model="ctrl.filters.deliveryDriver"
+                                                       placeholder="Supir kirim"
+                                                       uib-typeahead="data as data.name for data in ctrl.suggest('driver', $viewValue)"
+                                                       typeahead-min-length="2"
+                                                       typeahead-loading="deliveryDriverFilter" class="form-control" />
+                                                <i ng-show="deliveryDriverFilter" class="glyphicon glyphicon-refresh"></i>
+                                            </label>
+                                        </section>
+                                        <section class="col col-sm-12 col-md-12 col-lg-4" ng-show="ctrl.filterType == 1">
+                                            <label class="input">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                                    <input datepicker class="form-control" placeholder="Tanggal kirim"
+                                                           id="delivery-date" type="text" ng-model="ctrl.filters.deliveryDate" />
+                                                </div>
                                             </label>
                                         </section>
                                         <section class="col col-sm-12 col-md-12 col-lg-6">
@@ -69,26 +120,7 @@
                                                 </div>
                                             </label>
                                         </section>
-                                        <section class="col col-sm-12 col-md-12 col-lg-6" ng-show="ctrl.filterType == 1">
-                                            <label class="input">
-                                                <div class="input-group">
-                                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                                    <input datepicker class="form-control" placeholder="Tanggal rekap"
-                                                           id="recap-date" type="text" ng-model="ctrl.filters.recapDate" />
-                                                </div>
-                                            </label>
-                                        </section>
-                                        <section class="col col-sm-12 col-md-12 col-lg-6" ng-show="ctrl.filterType == 1">
-                                            <label class="input">
-                                                <input type="text"
-                                                       ng-model="ctrl.filters.driver"
-                                                       placeholder="Supir rekap"
-                                                       uib-typeahead="data as data.name for data in ctrl.suggest('driver', $viewValue)"
-                                                       typeahead-min-length="2"
-                                                       typeahead-loading="driverFilter" class="form-control" />
-                                                <i ng-show="driverFilter" class="glyphicon glyphicon-refresh"></i>
-                                            </label>
-                                        </section>
+                                      
                                     </div>
                                 </fieldset>
                             </form>
@@ -98,12 +130,12 @@
                                 <legend>Silahkan isi data berikut</legend>
                                 <fieldset>
                                     <div class="row">
-                                        <section class="col col-sm-12 col-md-12 col-lg-3">
+                                        <section class="col col-sm-12 col-md-12 col-lg-4">
                                             <label class="input">
                                                 <input type="text" class="form-control" placeholder="No Mobil" ng-model="ctrl.vehicleNumber" />
                                             </label>
                                         </section>
-                                        <section class="col col-sm-12 col-md-12 col-lg-3">
+                                        <section class="col col-sm-12 col-md-12 col-lg-4">
                                             <label class="input">
                                                 <input type="text"
                                                        ng-model="ctrl.driver"
@@ -114,31 +146,16 @@
                                                 <i ng-show="driverInput" class="glyphicon glyphicon-refresh"></i>
                                             </label>
                                         </section>
-                                        <section class="col col-sm-12 col-md-12 col-lg-3">
+                                        <section class="col col-sm-12 col-md-12 col-lg-4">
                                             <label class="input">
-                                                <input type="text"
-                                                       ng-model="ctrl.trainType"
-                                                       placeholder="Jenis Kereta"
-                                                       uib-typeahead="data as data.name for data in ctrl.suggest('trainType', $viewValue)"
-                                                       typeahead-min-length="2"
-                                                       typeahead-loading="trainTypeInput" class="form-control" />
-                                                <i ng-show="trainTypeInput" class="glyphicon glyphicon-refresh"></i>
-                                            </label>
-                                        </section>
-                                        <section class="col col-sm-12 col-md-12 col-lg-3">
-                                            <label class="input">
-                                                <div class="input-group">
-                                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                                    <input datepicker class="form-control" placeholder="Tanggal Berangkat"
-                                                           id="departure-date" type="text" ng-model="ctrl.departureDate" />
-                                                </div>
+                                                <input type="text" class="form-control" placeholder="Kode pengiriman" ng-model="ctrl.deliveryCode" />
                                             </label>
                                         </section>
                                         <section class="col col-sm-12 col-md-12 col-lg-12">
                                             <label class="input-group">
-                                                <input type="radio" ng-value="0" ng-click="ctrl.filter()" ng-model="ctrl.filterType"><i></i> Rekap
+                                                <input type="radio" ng-value="0" ng-click="ctrl.filter()" ng-model="ctrl.filterType"><i></i> Kirim
                                                 <i></i>
-                                                <input type="radio" ng-value="1" ng-click="ctrl.filter()" ng-model="ctrl.filterType"><i></i> Batal Rekap
+                                                <input type="radio" ng-value="1" ng-click="ctrl.filter()" ng-model="ctrl.filterType"><i></i> Batal Kirim
                                                 <i></i>
                                             </label>
                                         </section>
@@ -203,7 +220,7 @@
                                             {{entity.items.content}}
                                         </td>
                                         <td style="text-align:right;">
-                                            {{ctrl.filterType == 0 ? entity.items.colli.available : entity.items.recapitulations.available}}
+                                            {{ctrl.filterType == 0 ? entity.items.recapitulations.available : entity.items.deliveries.available}}
                                         </td>
                                         <td>
                                             <input type="text" class="form-control" ng-model="entity.viewModel.limasColor" />

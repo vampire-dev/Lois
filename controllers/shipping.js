@@ -127,9 +127,10 @@ Controller.prototype.save = function (data) {
     var self = this;
 
     return co(function* () {
+        
         var sender = yield self.clientController.get(data.sender._id);
         var tariff = yield self.tariffController.getClientTariff(sender._id, data.destination._id);   
-        var source = yield self.locationController.get(sender.location ? sender.location._id : null);
+        var source = yield self.locationController.get(sender.location);
 
         data.cost.total = 0;
 

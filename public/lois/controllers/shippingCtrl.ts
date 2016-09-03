@@ -1,7 +1,4 @@
-﻿/// <reference path="../lois" />
-/// <reference path="../api" />
-
-module app.controllers {
+﻿module app.controllers {
     enum ViewType { shipping = 1, item = 2 };
 
     class shippingCtrl extends baseCtrl {
@@ -48,6 +45,36 @@ module app.controllers {
                 ctrl.notify('error', error.data);
             });
         }
+
+        edit(entity: any): void {
+            if (entity.confirmed) {
+                this.notify('warning', 'Pengiriman ini telah dikonfirmasi');
+                return;
+            }
+
+            if (entity.returned) {
+                this.notify('warning', 'Pengiriman ini telah diretur');
+                return;
+            }
+
+            if (entity.audited) {
+                this.notify('warning', 'Pengiriman ini sedang diaudit oleh manager');
+                return;
+            }
+
+            var ctrl = this;
+            ctrl.processing = true;
+            ctrl.showForm = true;
+
+            ctrl.functions.get(entity._id).then(result => {
+                ctrl.entity = result.data;
+            }).catch(exception => {
+                ctrl.notify('error', exception.data);
+            }).finally(() => {
+                ctrl.processing = false;
+            });
+        }
+
 
         addItem(): void {
             this.selectedItem = this.constructItem();

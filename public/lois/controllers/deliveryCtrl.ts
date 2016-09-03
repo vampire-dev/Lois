@@ -1,20 +1,19 @@
 ﻿module app.controllers {
-    enum FilterType { recap = 0, cancelRecap = 1 };
+    enum FilterType { delivery = 0, cancelDelivery = 1 };
 
-    class recapitulationCtrl extends baseCtrl {
+    class deliveryCtrl extends baseCtrl {
         filterType: FilterType;
         vehicleNumber: string;
         driver: any;
-        trainType: any;
-        departureDate: any;
+        deliveryCode: string;
 
         static $inject = ['$scope', 'Notification'];
 
         constructor($scope, Notification) {
             super(Notification);
-            this.functions.load = api.recapitulation.getAll;
+            this.functions.load = api.delivery.getAll;
             this.functions.autocomplete = api.autocomplete.getAll;
-            this.filterType = FilterType.recap;
+            this.filterType = FilterType.delivery;
             this.filter();
         }
 
@@ -24,7 +23,7 @@
             ctrl.checkedAll = false;
             ctrl.createQuery();
             ctrl.loadingData = true;
-            ctrl.functions.load = ctrl.filterType === FilterType.recap ? app.api.recapitulation.getAll : app.api.recapitulation.getAllCancel;
+            ctrl.functions.load = ctrl.filterType === FilterType.delivery ? app.api.delivery.getAll : app.api.delivery.getAllCancel;
 
             ctrl.functions.load(ctrl.query).then(result => {
                 ctrl.entities = result.data;
@@ -33,7 +32,7 @@
                     e['viewModel']['limasColor'] = null;
                     e['viewModel']['relationColor'] = null;
                     e['viewModel']['notes'] = null;
-                    e['viewModel']['quantity'] = ctrl.filterType === FilterType.recap ? e.items.colli.available : e.items.recapitulations.available;
+                    e['viewModel']['quantity'] = ctrl.filterType === FilterType.delivery ? e.items.recapitulations.available : e.items.deliveries.available;
                 });
             }).catch(error => {
                 ctrl.notify('error', error.data);
@@ -43,25 +42,15 @@
         }
 
         process(): void {
-            if (this.filterType === FilterType.recap)
-                this.recap();
-            else if (this.filterType === FilterType.cancelRecap)
-                this.cancelRecap();
+            if (this.filterType === FilterType.delivery)
+                this.delivery();
+            else if (this.filterType === FilterType.cancelDelivery)
+                this.cancelDelivery();
         }
 
-        recap(): void {
+        delivery(): void {
             if (!this.driver) {
                 this.notify('warning', 'Supir harus diisi');
-                return;
-            }
-
-            if (!this.trainType) {
-                this.notify('warning', 'Jenis kereta harus diisi');
-                return;
-            }
-
-            if (!this.departureDate || this.departureDate == '') {
-                this.notify('warning', 'Tanggal berangkat harus diisi')
                 return;
             }
 
@@ -78,19 +67,18 @@
             }
 
             var viewModels = [];
+
             checkedEntities.forEach(entity => {
-                var departureDate = new Date(this.departureDate);
                 var viewModel = {
                     shipping: entity._id,
                     item: entity.items._id,
+                    recapitulation: entity.items.recapitulations._id,
                     quantity: entity.viewModel.quantity,
                     limasColor: entity.viewModel.limasColor,
                     relationColor: entity.viewModel.relationColor,
-                    notes: entity.viewModel.notes,
+                    deliveryCode: entity.viewModel.deliveryCode,
                     driver: this.driver._id,
-                    trainType: this.trainType._id,
-                    vehicleNumber: this.vehicleNumber,
-                    departureDate: Date.UTC(departureDate.getFullYear(), departureDate.getMonth(), departureDate.getDate())
+                    vehicleNumber: this.vehicleNumber
                 };
 
                 viewModels.push(viewModel);
@@ -98,17 +86,17 @@
 
             var ctrl = this;
 
-            app.api.recapitulation.recap(viewModels).then(result => {
-                ctrl.notify('success', 'Proses rekapitulasi berhasil');
+            app.api.delivery.delivery(viewModels).then(result => {
+                ctrl.notify('success', 'Proses delivery berhasil');
                 ctrl.filter();
             }).catch(error => {
-                ctrl.notify('error', 'Rekapitulasi gagal ' + error.data);
+                ctrl.notify('error', 'Delivery gagal ' + error.data);
             }).finally(() => {
                 ctrl.loadingData = false;
             });
         }
 
-        cancelRecap(): void {
+        cancelDelivery(): void {
             var checkedEntities = this.entities.filter(e => e.checked);
 
             if (checkedEntities.length === 0) {
@@ -117,13 +105,14 @@
             }
 
             var viewModels = [];
+
             checkedEntities.forEach(entity => {
-                var departureDate = new Date(this.departureDate);
                 var viewModel = {
                     shipping: entity._id,
                     item: entity.items._id,
                     recapitulation: entity.items.recapitulations._id,
-                    quantity: entity.viewModel.quantity
+                    quantity: entity.viewModel.quantity,
+                    delivery: entity.items.deliveries._id
                 };
 
                 viewModels.push(viewModel);
@@ -131,16 +120,16 @@
 
             var ctrl = this;
 
-            app.api.recapitulation.cancelRecap(viewModels).then(result => {
-                ctrl.notify('success', 'Proses cancel rekapitulasi berhasil');
+            app.api.delivery.cancelDelivery(viewModels).then(result => {
+                ctrl.notify('success', 'Proses cancel delivery berhasil');
                 ctrl.filter();
             }).catch(error => {
-                ctrl.notify('error', 'Cancel rekapitulasi gagal ' + error.data);
+                ctrl.notify('error', 'Cancel delivery gagal ' + error.data);
             }).finally(() => {
                 ctrl.loadingData = false;
             });
         }
     }
 
-    app.lois.controller('recapitulationCtrl', recapitulationCtrl);
+    app.lois.controller('deliveryCtrl', deliveryCtrl);
 }

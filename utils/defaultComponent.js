@@ -14,5 +14,6 @@
     belumTerekap: 'Belum Terekap',
     terekap: 'Terekap',
     terekapSebagian: 'Terekap Sebagian',
-    terkirimSebagian: 'Terkirim Sebagian'
+    terkirimSebagian: 'Terkirim Sebagian',
+    terkirim: 'Terkirim'
 };

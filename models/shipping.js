@@ -106,6 +106,26 @@ var model = new Schema({
     tariff: { type: Number, default: 0 },
     audited: { type: Boolean, default: false },
     returned: { type: Boolean, default: false },
+    returnInfo: {
+        filePath: { type: String, default: null },
+        stamped: { type: Boolean, default: false },
+        signed: { type: Boolean, default: false },
+        receipt: { type: Boolean, default: false },
+        accepted: { type: Boolean, default: false },
+        limasColor: { type: String, default: null },
+        relationColor: { type: String, default: null },
+        relationCode: { type: String, default: null },
+        notes: { type: String, default: null },
+        concernedPerson: { type: String, default: null },
+        created: {
+            date: { type: Date, default: null },
+            user: { type: refId, ref: 'User' }
+        },
+        modified: {
+            date: { type: Date, default: Date.now },
+            user: { type: refId, ref: 'User' }
+        },
+    },
     confirmed: { type: Boolean, default: false },
     inputLocation: { type: refId, ref: 'Location' },
     created: {
