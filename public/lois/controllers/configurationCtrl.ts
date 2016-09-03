@@ -1,7 +1,4 @@
-﻿/// <reference path="../lois" />
-/// <reference path="../api" />
-
-module app.controllers {
+﻿module app.controllers {
     class configurationCtrl extends baseCtrl {
         config: string;
 

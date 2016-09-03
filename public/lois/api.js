@@ -92,6 +92,18 @@ var app;
             return _return;
         }());
         api._return = _return;
+        var payment = (function () {
+            function payment() {
+            }
+            payment.getAll = function (query) {
+                return app.http.get('/lois/api/payment/getAll?query=' + JSON.stringify(query));
+            };
+            payment.pay = function (data) {
+                return app.http.post('/lois/api/payment/pay', JSON.stringify(data));
+            };
+            return payment;
+        }());
+        api.payment = payment;
         var configuration = (function () {
             function configuration() {
             }

@@ -73,43 +73,53 @@
         }
 
         static getAllConfirm(query: any) {
-            return app.http.get('/lois/api/return/getAllConfirm?query=' + JSON.stringify(query));
+            return http.get('/lois/api/return/getAllConfirm?query=' + JSON.stringify(query));
         }
 
         static return(data: any) {
-            return app.http.post('/lois/api/return/return', JSON.stringify(data));
+            return http.post('/lois/api/return/return', JSON.stringify(data));
         }
 
         static confirm(data: any) {
-            return app.http.post('/lois/api/return/confirm', JSON.stringify(data));
+            return http.post('/lois/api/return/confirm', JSON.stringify(data));
         }
 
         static upload(data: any) {
-            return app.http.post('/lois/api/return/uploads', data, { headers: { 'Content-Type': undefined } });
+            return http.post('/lois/api/return/uploads', data, { headers: { 'Content-Type': undefined } });
+        }
+    }
+
+    export class payment {
+        static getAll(query: any) {
+            return http.get('/lois/api/payment/getAll?query=' + JSON.stringify(query));
+        }
+
+        static pay(data: any) {
+            return http.post('/lois/api/payment/pay', JSON.stringify(data));
         }
     }
 
     export class configuration {
         static get(config: string, id: any) {
-            return app.http.get('/lois/api/' + config + '/get?id=' + id);
+            return http.get('/lois/api/' + config + '/get?id=' + id);
         }
 
         static getAll(config: string, query: any) {
-            return app.http.get('/lois/api/' + config + '/getAll?query=' + JSON.stringify(query));
+            return http.get('/lois/api/' + config + '/getAll?query=' + JSON.stringify(query));
         }
 
         static save(config: string, data: any) {
-            return app.http.post('/lois/api/' + config + '/save', JSON.stringify(data));
+            return http.post('/lois/api/' + config + '/save', JSON.stringify(data));
         }
 
         static delete(config: string, id: any) {
-            return app.http.delete('/lois/api/' + config + '/delete?id=' + id);
+            return http.delete('/lois/api/' + config + '/delete?id=' + id);
         }
     }
 
     export class autocomplete {
         static getAll(name: string, keyword: string) {
-            return app.http.get('/lois/api/' + name + '/getAll?query=' + JSON.stringify({ "name": keyword }));
+            return http.get('/lois/api/' + name + '/getAll?query=' + JSON.stringify({ "name": keyword }));
         }
     }
 }

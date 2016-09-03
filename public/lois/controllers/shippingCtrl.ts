@@ -75,7 +75,6 @@
             });
         }
 
-
         addItem(): void {
             this.selectedItem = this.constructItem();
             this.showForm = true;

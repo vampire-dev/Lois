@@ -15,5 +15,8 @@
     terekap: 'Terekap',
     terekapSebagian: 'Terekap Sebagian',
     terkirimSebagian: 'Terkirim Sebagian',
-    terkirim: 'Terkirim'
+    terkirim: 'Terkirim',
+    belumTerbayar: 'Belum Terbayar',
+    terbayarSebagian: 'Terbayar Sebagian',
+    terbayar: 'Terbayar'
 };

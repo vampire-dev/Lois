@@ -57,6 +57,10 @@ module app {
             url: '/confirm-return',
             templateUrl: '/views/confirmReturn.html',
             controller: 'confirmReturnCtrl as ctrl'
+        }).state('site.main.payment', {
+            url: '/payment',
+            templateUrl: '/views/payment.html',
+            controller: 'paymentCtrl as ctrl'
         }).state('site.main.configuration', {
             url: '/configuration',
             templateUrl: '/views/configuration.html',

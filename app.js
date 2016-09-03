@@ -29,6 +29,7 @@ app.use(require('./routes/shipping'));
 app.use(require('./routes/recapitulation'));
 app.use(require('./routes/delivery'));
 app.use(require('./routes/return'));
+app.use(require('./routes/payment'));
 
 app.listen(config.port, function (err) {
     mongoose.connect(config.dsn);
