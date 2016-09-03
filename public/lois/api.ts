@@ -136,4 +136,114 @@
             return http.get('/lois/api/' + name + '/getAll?query=' + JSON.stringify({ "name": keyword }));
         }
     }
+
+    export class report {
+        static getRecapitulations(query: any) {
+            return http.get('/lois/api/reportData/getRecapitulations?query=' + JSON.stringify(query));
+        }
+
+        static getRecapitulationsReport(data: any) {
+            return http.post('/lois/api/reportData/getRecapitulationsReport', JSON.stringify(data));
+        }
+
+        static getDeliveries(query: any) {
+            return http.get('/lois/api/reportData/getDeliveries?query=' + JSON.stringify(query));
+        }
+
+        static getDeliveriesReport(data: any) {
+            return http.post('/lois/api/reportData/getDeliveriesReport', JSON.stringify(data));
+        }
+    }
+
+    export class reportPrint {
+        static printDeliveryOrder(data: any) {
+            var config = {
+                "headers": { "content-type": "application/x-www-form-urlencoded; charset=UTF-8" },
+                "responseType": "arraybuffer"
+            };
+
+            return app.http.post('http://limassentosa.net:8000/report-engine/suratjalan', JSON.stringify(data), config);
+        }
+
+        static printPaid(data: any) {
+            var config = {
+                "headers": { "content-type": "application/x-www-form-urlencoded; charset=UTF-8" },
+                "responseType": "arraybuffer"
+            };
+
+            return app.http.post('http://limassentosa.net:8000/report-engine/paid', JSON.stringify(data), config);
+        }
+
+        static printUnpaid(data: any) {
+            var config = {
+                "headers": { "content-type": "application/x-www-form-urlencoded; charset=UTF-8" },
+                "responseType": "arraybuffer"
+            };
+
+            return app.http.post('http://limassentosa.net:8000/report-engine/unpaid', JSON.stringify(data), config);
+        }
+
+        static printRecapitulation(data: any) {
+            var config = {
+                "headers": { "content-type": "application/x-www-form-urlencoded; charset=UTF-8" },
+                "responseType": "arraybuffer"
+            };
+
+            return app.http.post('http://limassentosa.net:8000/report-engine/recapitulation', JSON.stringify(data), config);
+        }
+
+        static printDelivery(data: any) {
+            var config = {
+                "headers": { "content-type": "application/x-www-form-urlencoded; charset=UTF-8" },
+                "responseType": "arraybuffer"
+            };
+
+            return app.http.post('http://limassentosa.net:8000/report-engine/delivery', JSON.stringify(data), config);
+        }
+
+        static printReturn(data: any) {
+            var config = {
+                "headers": { "content-type": "application/x-www-form-urlencoded; charset=UTF-8" },
+                "responseType": "arraybuffer"
+            };
+
+            return app.http.post('http://limassentosa.net:8000/report-engine/return', JSON.stringify(data), config);
+        }
+
+        static printUnconfirmed(data: any) {
+            var config = {
+                "headers": { "content-type": "application/x-www-form-urlencoded; charset=UTF-8" },
+                "responseType": "arraybuffer"
+            };
+
+            return app.http.post('http://limassentosa.net:8000/report-engine/suratbelumkembali', JSON.stringify(data), config);
+        }
+
+        static printDeliveryList(data: any) {
+            var config = {
+                "headers": { "content-type": "application/x-www-form-urlencoded; charset=UTF-8" },
+                "responseType": "arraybuffer"
+            };
+
+            return app.http.post('http://limassentosa.net:8000/report-engine/shipment', JSON.stringify(data), config);
+        }
+
+        static printCommision(data: any) {
+            var config = {
+                "headers": { "content-type": "application/x-www-form-urlencoded; charset=UTF-8" },
+                "responseType": "arraybuffer"
+            };
+
+            return app.http.post('http://limassentosa.net:8000/report-engine/commision', JSON.stringify(data), config);
+        }
+
+        static printInvoice(data: any) {
+            var config = {
+                "headers": { "content-type": "application/x-www-form-urlencoded; charset=UTF-8" },
+                "responseType": "arraybuffer"
+            };
+
+            return app.http.post('http://limassentosa.net:8000/report-engine/invoice', JSON.stringify(data), config);
+        }
+    }
 }

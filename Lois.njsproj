@@ -49,6 +49,7 @@
     <Compile Include="controllers\recapitulation.js" />
     <Compile Include="controllers\region.js" />
     <Compile Include="controllers\report.js" />
+    <Compile Include="controllers\reportData.js" />
     <Compile Include="controllers\return.js" />
     <Compile Include="controllers\role.js" />
     <Compile Include="controllers\roleMenu.js" />
@@ -111,6 +112,7 @@
     <Compile Include="routes\recapitulation.js" />
     <Compile Include="routes\region.js" />
     <Compile Include="routes\report.js" />
+    <Compile Include="routes\reportData.js" />
     <Compile Include="routes\return.js" />
     <Compile Include="routes\role.js" />
     <Compile Include="routes\roleMenu.js" />
@@ -356,6 +358,7 @@
     <Content Include="public\views\main.html" />
     <Content Include="public\views\payment.html" />
     <Content Include="public\views\recapitulation.html" />
+    <Content Include="public\views\report.html" />
     <Content Include="public\views\return.html" />
     <Content Include="public\views\shipping.html" />
     <Content Include="README.md" />
@@ -431,6 +434,7 @@
     <TypeScriptCompile Include="public\lois\controllers\invoiceCtrl.ts" />
     <TypeScriptCompile Include="public\lois\controllers\paymentCtrl.ts" />
     <TypeScriptCompile Include="public\lois\controllers\recapitulationCtrl.ts" />
+    <TypeScriptCompile Include="public\lois\controllers\reportCtrl.ts" />
     <TypeScriptCompile Include="public\lois\controllers\returnCtrl.ts" />
     <TypeScriptCompile Include="public\lois\controllers\shippingCtrl.ts" />
     <TypeScriptCompile Include="public\lois\lois.ts" />

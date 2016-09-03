@@ -57,6 +57,10 @@ var app;
                 url: '/invoice',
                 templateUrl: '/views/invoice.html',
                 controller: 'invoiceCtrl as ctrl'
+            }).state('site.main.report', {
+                url: '/report',
+                templateUrl: '/views/report.html',
+                controller: 'reportCtrl as ctrl'
             }).state('site.main.configuration', {
                 url: '/configuration',
                 templateUrl: '/views/configuration.html',
