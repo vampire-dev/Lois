@@ -80,7 +80,7 @@
 
             ctrl.functions.delete(id).then(result => {
                 ctrl.notify('success', 'Data berhasil dihapus');
-                ctrl.showForm = false;
+                ctrl.filter();
             }).catch(error => {
                 ctrl.notify('error', error.message);
             }).finally(() => {

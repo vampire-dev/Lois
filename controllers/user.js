@@ -33,12 +33,17 @@ Controller.prototype.getAll = function (query) {
 };
 
 Controller.prototype.save = function (data) {
+    if (data['password']) {
+        data['salt'] = crypto.randomBytes(16).toString('base64');
+        data['hash'] = crypto.createHmac('sha256', data['salt']).update(data['password']).digest('hex');
+    }
+
     var entity = new model(data);
 
     if (!data['_id'])
         return entity.save();
 
-    return model.update({ "_id": objectId(entity._id) }, entity);
+    return model.update({ _id: objectId(entity._id) }, entity);
 };
 
 Controller.prototype.delete = function (id) {

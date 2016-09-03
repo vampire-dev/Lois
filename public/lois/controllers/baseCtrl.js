@@ -63,7 +63,7 @@ var app;
                 ctrl.loadingData = true;
                 ctrl.functions.delete(id).then(function (result) {
                     ctrl.notify('success', 'Data berhasil dihapus');
-                    ctrl.showForm = false;
+                    ctrl.filter();
                 }).catch(function (error) {
                     ctrl.notify('error', error.message);
                 }).finally(function () {

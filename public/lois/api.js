@@ -152,6 +152,18 @@ var app;
             return configuration;
         }());
         api.configuration = configuration;
+        var notification = (function () {
+            function notification() {
+            }
+            notification.getAll = function (query) {
+                return app.http.get('/lois/api/notification/getAll?query=' + JSON.stringify(query));
+            };
+            notification.delete = function (id) {
+                return app.http.delete('/lois/api/notification/delete?id=' + id);
+            };
+            return notification;
+        }());
+        api.notification = notification;
         var autocomplete = (function () {
             function autocomplete() {
             }

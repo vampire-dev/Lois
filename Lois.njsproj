@@ -43,6 +43,7 @@
     <Compile Include="controllers\itemType.js" />
     <Compile Include="controllers\location.js" />
     <Compile Include="controllers\menu.js" />
+    <Compile Include="controllers\notification.js" />
     <Compile Include="controllers\packingType.js" />
     <Compile Include="controllers\partner.js" />
     <Compile Include="controllers\payment.js" />
@@ -107,6 +108,7 @@
     <Compile Include="routes\itemType.js" />
     <Compile Include="routes\location.js" />
     <Compile Include="routes\menu.js" />
+    <Compile Include="routes\notification.js" />
     <Compile Include="routes\packingType.js" />
     <Compile Include="routes\partner.js" />
     <Compile Include="routes\payment.js" />
@@ -359,6 +361,7 @@
     <Content Include="public\views\invoice.html" />
     <Content Include="public\views\login.html" />
     <Content Include="public\views\main.html" />
+    <Content Include="public\views\notification.html" />
     <Content Include="public\views\payment.html" />
     <Content Include="public\views\recapitulation.html" />
     <Content Include="public\views\report.html" />
@@ -436,6 +439,7 @@
     <TypeScriptCompile Include="public\libs\typings\angularjs\angular.d.ts" />
     <TypeScriptCompile Include="public\libs\typings\jquery\jquery.d.ts" />
     <TypeScriptCompile Include="public\lois\controllers\invoiceCtrl.ts" />
+    <TypeScriptCompile Include="public\lois\controllers\notificationCtrl.ts" />
     <TypeScriptCompile Include="public\lois\controllers\paymentCtrl.ts" />
     <TypeScriptCompile Include="public\lois\controllers\recapitulationCtrl.ts" />
     <TypeScriptCompile Include="public\lois\controllers\reportCtrl.ts" />

@@ -145,6 +145,16 @@
         }
     }
 
+    export class notification {
+        static getAll(query: any) {
+            return http.get('/lois/api/notification/getAll?query=' + JSON.stringify(query));
+        }
+
+        static delete(id: any) {
+            return http.delete('/lois/api/notification/delete?id=' + id);
+        }
+    }
+
     export class autocomplete {
         static getAll(name: string, keyword: string) {
             return http.get('/lois/api/' + name + '/getAll?query=' + JSON.stringify({ "name": keyword }));

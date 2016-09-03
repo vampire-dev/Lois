@@ -102,6 +102,8 @@ Controller.prototype.calculateCost = function (item, tariff, quota, option) {
             return colliCost + cost.additional - cost.discount;
         case defaultComponent.maxOfMultiple:
             return (colli - 1) * colliCost + cost.additional - cost.discount + minimum;
+        case defaultComponent.motor:
+            return cost.additional - cost.discount;
         case defaultComponent.jakartaMinWeight:
             limit = (dimensions.weight * price) + cost.additional;
             if (limit > minimum)
