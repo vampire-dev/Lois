@@ -23,7 +23,7 @@
     <OutputPath>.</OutputPath>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <ProjectTypeGuids>{3AF33F2E-1136-4D97-BBB7-1795711AC8B8};{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}</ProjectTypeGuids>
-    <ProjectView>ShowAllFiles</ProjectView>
+    <ProjectView>ProjectFiles</ProjectView>
     <StartWebBrowser>false</StartWebBrowser>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
@@ -39,11 +39,16 @@
     <Compile Include="controllers\driver.js" />
     <Compile Include="controllers\itemType.js" />
     <Compile Include="controllers\location.js" />
+    <Compile Include="controllers\menu.js" />
     <Compile Include="controllers\packingType.js" />
     <Compile Include="controllers\partner.js" />
     <Compile Include="controllers\paymentType.js" />
     <Compile Include="controllers\region.js" />
+    <Compile Include="controllers\report.js" />
     <Compile Include="controllers\role.js" />
+    <Compile Include="controllers\roleMenu.js" />
+    <Compile Include="controllers\roleReport.js" />
+    <Compile Include="controllers\shipping.js" />
     <Compile Include="controllers\tariff.js" />
     <Compile Include="controllers\trainType.js" />
     <Compile Include="controllers\user.js" />
@@ -51,11 +56,17 @@
     <Compile Include="models\driver.js" />
     <Compile Include="models\itemType.js" />
     <Compile Include="models\location.js" />
+    <Compile Include="models\menu.js" />
     <Compile Include="models\packingType.js" />
     <Compile Include="models\partner.js" />
     <Compile Include="models\paymentType.js" />
     <Compile Include="models\region.js" />
+    <Compile Include="models\report.js" />
     <Compile Include="models\role.js" />
+    <Compile Include="models\roleMenu.js" />
+    <Compile Include="models\roleReport.js" />
+    <Compile Include="models\shipping.js" />
+    <Compile Include="models\shippingItem.js" />
     <Compile Include="models\tariff.js" />
     <Compile Include="models\trainType.js" />
     <Compile Include="models\user.js" />
@@ -79,6 +90,23 @@
     <Compile Include="public\libs\smartadmin\app.min.js" />
     <Compile Include="public\libs\smartadmin\bootstrap.min.js" />
     <Compile Include="public\libs\smartadmin\jarvis.widget.min.js" />
+    <Compile Include="routes\client.js" />
+    <Compile Include="routes\driver.js" />
+    <Compile Include="routes\location.js" />
+    <Compile Include="routes\menu.js" />
+    <Compile Include="routes\packingType.js" />
+    <Compile Include="routes\partner.js" />
+    <Compile Include="routes\paymentType.js" />
+    <Compile Include="routes\region.js" />
+    <Compile Include="routes\report.js" />
+    <Compile Include="routes\role.js" />
+    <Compile Include="routes\roleMenu.js" />
+    <Compile Include="routes\roleReport.js" />
+    <Compile Include="routes\tariff.js" />
+    <Compile Include="routes\trainType.js" />
+    <Compile Include="utils\authentication.js" />
+    <Compile Include="routes\user.js" />
+    <Compile Include="utils\defaultComponent.js" />
     <Content Include="env.json" />
     <Content Include="package.json" />
     <Content Include="public\assets\css\app.css" />
@@ -304,11 +332,16 @@
     <Content Include="public\lois\tsconfig.json" />
     <Content Include="public\typings\globals\angular\typings.json" />
     <Content Include="public\typings\globals\jquery\typings.json" />
+    <Content Include="public\views\configuration.html" />
+    <Content Include="public\views\index.html" />
+    <Content Include="public\views\login.html" />
+    <Content Include="public\views\main.html" />
     <Content Include="README.md" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="models\" />
     <Folder Include="controllers\" />
+    <Folder Include="utils\" />
     <Folder Include="public\" />
     <Folder Include="public\assets\" />
     <Folder Include="public\assets\css\" />
@@ -340,6 +373,7 @@
     <Folder Include="public\libs\typings\angularjs\" />
     <Folder Include="public\libs\typings\jquery\" />
     <Folder Include="public\lois\" />
+    <Folder Include="public\lois\controllers\" />
     <Folder Include="public\typings\" />
     <Folder Include="public\typings\globals\angular\" />
     <Folder Include="public\typings\globals\" />
@@ -357,6 +391,10 @@
     <Folder Include="typings\globals\node\" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="public\lois\api.ts" />
+    <TypeScriptCompile Include="public\lois\controllers\baseCtrl.ts" />
+    <TypeScriptCompile Include="public\lois\controllers\configurationCtrl.ts" />
+    <TypeScriptCompile Include="public\lois\controllers\indexCtrl.ts" />
     <TypeScriptCompile Include="public\libs\typings\angularjs\angular-animate.d.ts" />
     <TypeScriptCompile Include="public\libs\typings\angularjs\angular-cookies.d.ts" />
     <TypeScriptCompile Include="public\libs\typings\angularjs\angular-mocks.d.ts" />
@@ -365,7 +403,8 @@
     <TypeScriptCompile Include="public\libs\typings\angularjs\angular-sanitize.d.ts" />
     <TypeScriptCompile Include="public\libs\typings\angularjs\angular.d.ts" />
     <TypeScriptCompile Include="public\libs\typings\jquery\jquery.d.ts" />
-    <TypeScriptCompile Include="public\lois\app.ts" />
+    <TypeScriptCompile Include="public\lois\lois.ts" />
+    <TypeScriptCompile Include="public\lois\controllers\loginCtrl.ts" />
     <TypeScriptCompile Include="public\typings\globals\angular\index.d.ts" />
     <TypeScriptCompile Include="public\typings\globals\jquery\index.d.ts" />
     <TypeScriptCompile Include="public\typings\index.d.ts" />

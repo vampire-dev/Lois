@@ -12,11 +12,6 @@ Controller.prototype.get = function (id) {
 };
 
 Controller.prototype.getAll = function (query) {
-    if (!query['location'])
-        throw new Error('Base location is not found');
-
-    var limit = query['limit'] ? query['limit'] : 10;
-    var skip = query['skip'] ? query['skip'] : 0;
     var parameters = {};
 
     if (query['menu'])
@@ -25,13 +20,12 @@ Controller.prototype.getAll = function (query) {
     if (query['role'])
         parameters['role'] = objectId(query['role']);
 
-    return model.find(parameters)
-        .populate('menu')
-        .populate('role')
-        .skip(skip)
-        .limit(limit)
-        .lean()
-        .exec();
+    var entities = model.find(parameters).populate('menu').populate('role');
+
+    if (query['limit'] && (query['skip'] || query['skip'] == 0)) 
+        entities.skip(query['skip']).limit(query['limit']);
+    
+    return entities.lean().exec();
 };
 
 Controller.prototype.save = function (data) {
@@ -40,7 +34,7 @@ Controller.prototype.save = function (data) {
     if (!data['_id'])
         return entity.save();
 
-    return entity.update({ "_id": objectId(data['_id']), entity });
+    return model.update({ "_id": objectId(entity._id) }, entity);
 };
 
 Controller.prototype.delete = function (id) {

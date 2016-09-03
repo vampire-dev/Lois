@@ -1,10 +1,11 @@
-﻿/// <reference path="../app" />
+﻿/// <reference path="../lois" />
 /// <reference path="../api" />
 
 module app.controllers {
-    import api = app.api;
-
     class indexCtrl {
+        user: any;
+        menus: any[];
+
         static $inject = ['$scope', 'Notification'];
 
         constructor($scope, public Notification) {
@@ -12,9 +13,26 @@ module app.controllers {
         }
 
         init(): void {
+            var ctrl = this;
 
+            api.user.getSession().then(result => {
+                ctrl.user = result.data['name'];
+                ctrl.menus = result.data['menus'].map(e => e.menu);
+            }).catch(error => {
+                ctrl.Notification.error(error.message);
+            });
+        }
+
+        logout(): void {
+            var ctrl = this;
+
+            api.user.logout().then(result => {
+                window.location.href = '/lois';
+            }).catch(error => {
+                ctrl.Notification.error(error.message);
+            });
         }
     }
 
-    app.controller('indexCtrl', indexCtrl);
+    app.lois.controller('indexCtrl', indexCtrl);
 }

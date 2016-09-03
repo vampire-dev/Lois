@@ -1,0 +1,42 @@
+﻿<header id="header">
+    <div id="logo-group">
+        <span id="logo" style="color: white; font-size: 20px;">
+            <img src="/assets/img/limas.png" style="width: 25px; height: 25px;" alt="SmartAdmin">
+            LSAN
+        </span>
+    </div>
+</header>
+<div id="main" role="main">
+    <div class="col-xs-12 col-sm-12 col-md-5 col-lg-6" style="margin-top:80px;margin-left:200px;">
+        <div class="well no-padding">
+            <form ng-submit="ctrl.login()" id="login-form" class="smart-form">
+                <header>
+                    <i class="fa fa-user"></i> Login
+                </header>
+                <fieldset>
+                    <section>
+                        <label class="label">Username</label>
+                        <label class="input">
+                            <i class="icon-append fa fa-user"></i>
+                            <input type="username" name="username" ng-model="ctrl.user.userName" class="ng-untouched ng-valid ng-not-empty ng-dirty ng-valid-parse">
+                            <b class="tooltip tooltip-top-right"><i class="fa fa-user txt-color-teal"></i> Please enter username</b>
+                        </label>
+                    </section>
+                    <section>
+                        <label class="label">Password</label>
+                        <label class="input">
+                            <i class="icon-append fa fa-lock"></i>
+                            <input type="password" name="password" ng-model="ctrl.user.password" class="ng-untouched ng-valid ng-not-empty ng-dirty ng-valid-parse">
+                            <b class="tooltip tooltip-top-right"><i class="fa fa-lock txt-color-teal"></i> Enter your password</b>
+                        </label>
+                    </section>
+                </fieldset>
+                <footer>
+                    <button type="submit" class="btn btn-default">
+                        <i class="fa fa-sign-in"></i> Login
+                    </button>
+                </footer>
+            </form>
+        </div>
+    </div>
+</div>

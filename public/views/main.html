@@ -1,0 +1,56 @@
+﻿<header id="header">
+    <div id="logo-group">
+        <span id="logo" style="color: white; font-size: 20px;">
+            <img src="/assets/img/limas.png" style="width: 30px; height:30px;" alt="SmartAdmin">
+            LSAN
+        </span>
+    </div>
+    <div class="pull-right">
+        <div id="hide-menu" class="btn-header pull-right">
+            <span>
+                <a href="javascript:void(0);" data-action="toggleMenu" title="Collapse Menu">
+                    <i class="fa fa-reorder"></i>
+                </a>
+            </span>
+        </div>
+        <div id="fullscreen" class="btn-header transparent pull-right">
+            <span>
+                <a href="javascript:void(0);" data-action="launchFullscreen" title="Full Screen">
+                    <i class="fa fa-arrows-alt"></i>
+                </a>
+            </span>
+        </div>
+        <div id="logout" class="btn-header transparent pull-right">
+            <span>
+                <a href="#" title="Sign Out" ng-click="ctrl.logout()">
+                    <i class="fa fa-power-off"></i>
+                </a>
+            </span>
+        </div>
+    </div>
+</header>
+<aside id="left-panel">
+    <div class="login-info">
+        <span>
+            <a href="javascript:void(0);" id="show-shortcut">
+                <img src="/assets/img/avatars/male.png" alt="me" class="online">
+                <span>
+                    {{ctrl.user}}
+                </span>
+            </a>
+        </span>
+    </div>
+    <nav>
+        <ul>
+            <li ng-repeat="menu in ctrl.menus" ui-sref-active="active">
+                <a ui-sref="{{menu.state}}">
+                    <i class="fa fa-lg fa-fw {{menu.icon}}"></i>
+                    <span class="menu-item-parent">{{menu.name}}</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</aside>
+<div id="main" role="main">
+    <div ui-view id="content"></div>
+</div>
