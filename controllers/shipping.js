@@ -136,10 +136,13 @@ Controller.prototype.save = function (data) {
         yield _co.coEach(data.items, function* (item) {
             var audit = self.auditComponent(item);
 
-            if(audit === null)
-                item.cost.shipping = self.calculateCost(item, tariff, data.sender.quota, data.tariff);
+            if (audit === null) {
+                if (item.status === defaultComponent.belumTerekap)
+                    item.colli.available = item.colli.quantity;
 
-            data.cost.total += item.cost.shipping;
+                item.cost.shipping = self.calculateCost(item, tariff, data.sender.quota, data.tariff);
+                data.cost.total += item.cost.shipping;
+            }
         });
 
         data.cost.total += data.cost.worker;

@@ -26,6 +26,7 @@ app.use(require('./routes/report'));
 app.use(require('./routes/roleMenu'));
 app.use(require('./routes/roleReport'));
 app.use(require('./routes/shipping'));
+app.use(require('./routes/recapitulation'));
 
 app.listen(config.port, function (err) {
     mongoose.connect(config.dsn);

@@ -35,6 +35,24 @@ var app;
             return shipping;
         }());
         api.shipping = shipping;
+        var recapitulation = (function () {
+            function recapitulation() {
+            }
+            recapitulation.getAll = function (query) {
+                return app.http.get('/lois/api/recapitulation/getAll?query=' + JSON.stringify(query));
+            };
+            recapitulation.getAllCancel = function (query) {
+                return app.http.get('/lois/api/recapitulation/getAllCancel?query=' + JSON.stringify(query));
+            };
+            recapitulation.recap = function (data) {
+                return app.http.post('/lois/api/recapitulation/recap', JSON.stringify(data));
+            };
+            recapitulation.cancelRecap = function (data) {
+                return app.http.post('/lois/api/recapitulation/cancelRecap', JSON.stringify(data));
+            };
+            return recapitulation;
+        }());
+        api.recapitulation = recapitulation;
         var configuration = (function () {
             function configuration() {
             }

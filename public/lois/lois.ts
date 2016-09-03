@@ -41,6 +41,10 @@ module app {
             url: '/shipping',
             templateUrl: '/views/shipping.html',
             controller: 'shippingCtrl as ctrl'
+        }).state('site.main.recapitulation', {
+            url: '/recapitulation',
+            templateUrl: '/views/recapitulation.html',
+            controller: 'recapitulationCtrl as ctrl'
         }).state('site.main.configuration', {
             url: '/configuration',
             templateUrl: '/views/configuration.html',

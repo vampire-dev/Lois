@@ -43,6 +43,7 @@
     <Compile Include="controllers\packingType.js" />
     <Compile Include="controllers\partner.js" />
     <Compile Include="controllers\paymentType.js" />
+    <Compile Include="controllers\recapitulation.js" />
     <Compile Include="controllers\region.js" />
     <Compile Include="controllers\report.js" />
     <Compile Include="controllers\role.js" />
@@ -97,6 +98,7 @@
     <Compile Include="routes\packingType.js" />
     <Compile Include="routes\partner.js" />
     <Compile Include="routes\paymentType.js" />
+    <Compile Include="routes\recapitulation.js" />
     <Compile Include="routes\region.js" />
     <Compile Include="routes\report.js" />
     <Compile Include="routes\role.js" />
@@ -338,6 +340,7 @@
     <Content Include="public\views\index.html" />
     <Content Include="public\views\login.html" />
     <Content Include="public\views\main.html" />
+    <Content Include="public\views\recapitulation.html" />
     <Content Include="public\views\shipping.html" />
     <Content Include="README.md" />
   </ItemGroup>
@@ -406,6 +409,7 @@
     <TypeScriptCompile Include="public\libs\typings\angularjs\angular-sanitize.d.ts" />
     <TypeScriptCompile Include="public\libs\typings\angularjs\angular.d.ts" />
     <TypeScriptCompile Include="public\libs\typings\jquery\jquery.d.ts" />
+    <TypeScriptCompile Include="public\lois\controllers\recapitulationCtrl.ts" />
     <TypeScriptCompile Include="public\lois\controllers\shippingCtrl.ts" />
     <TypeScriptCompile Include="public\lois\lois.ts" />
     <TypeScriptCompile Include="public\lois\controllers\loginCtrl.ts" />

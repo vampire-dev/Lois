@@ -11,4 +11,8 @@
     region: '57c6840b421af819527520d8',
     paymentType: '57c46a82398059b414b37864',
     partner: '57c46a80398059b414b37854',
+    belumTerekap: 'Belum Terekap',
+    terekap: 'Terekap',
+    terekapSebagian: 'Terekap Sebagian',
+    terkirimSebagian: 'Terkirim Sebagian'
 };

@@ -37,14 +37,8 @@ var shippingItem = {
         notes: { type: String, default: null },
         trainType: { type: refId, ref: 'TrainType' },
         driver: { type: refId, ref: 'Driver' },
-        created: {
-            date: { type: Date, default: null },
-            user: { type: refId, ref: 'User' }
-        },
-        modified: {
-            date: { type: Date, default: null },
-            user: { type: refId, ref: 'User' }
-        }
+        date: { type: Date, default: Date.now },
+        user: { type: refId, ref: 'User' }
     }],
     deliveries: [{
         item: { type: refId },
@@ -58,14 +52,8 @@ var shippingItem = {
         deliveryCode: { type: String, default: null },
         notes: { type: String, default: null },
         driver: { type: refId, ref: 'Driver' },
-        created: {
-            date: { type: Date, default: null },
-            user: { type: refId, ref: 'User' }
-        },
-        modified: {
-            date: { type: Date, default: null },
-            user: { type: refId, ref: 'User' }
-        }
+        date: { type: Date, default: Date.now },
+        user: { type: refId, ref: 'User' }
     }]
 };
 
@@ -125,7 +113,7 @@ var model = new Schema({
         user: { type: refId, ref: 'User' }
     },
     modified: {
-        date: { type: Date, default: null },
+        date: { type: Date, default: Date.now },
         user: { type: refId, ref: 'User' }
     },
     items: [shippingItem]
