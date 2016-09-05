@@ -16,7 +16,7 @@ function Controller() {
 };
 
 Controller.prototype.get = function (id) {
-    return this.schema.findOne({ "_id": ObjectId(id) }).populate('sender destination payment.type payment.location partner')
+    return this.schema.findOne({ "_id": ObjectId(id) }).populate('sender destination payment.type payment.location partner items.itemType items.packingType')
         .lean().exec();
 };
 
