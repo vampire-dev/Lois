@@ -30,7 +30,6 @@ Controller.prototype.approve = function (viewModel) {
 
     return co(function* () {
         var audit = yield schemas.audits.findOne({ "_id": ObjectId(viewModel._id) }).exec();
-        var shipping = yield schemas.shippings.findOne({ "_id": ObjectId(viewModel.data.shippingId) }).exec();
 
         if (!audit)
             throw new Error('Audit data is not found');
@@ -40,10 +39,10 @@ Controller.prototype.approve = function (viewModel) {
 
         switch (viewModel['type']) {
             case "payment":
-                yield self.paymentProcess(viewModel.data, shipping);
+                yield self.paymentProcess(viewModel.data);
                 break;
             case "price":
-                yield self.processPrice(viewModel.data, shipping);
+                yield self.priceProcess(viewModel.data);
                 break;
         };
 
@@ -78,28 +77,39 @@ Controller.prototype.reject = function (viewModel) {
     });
 };
 
-Controller.prototype.paymentProcess = function (data, shipping) {
-    var totalPaid = shipping.payment.paid + parseFloat(data.amount);
+Controller.prototype.paymentProcess = function (data) {
+    return co(function* () {
+        var shipping = yield schemas.shippings.findOne({ "_id": ObjectId(viewModel.data.shippingId) }).exec();
 
-    if (totalPaid >= shipping.cost.total)
-        shipping.payment.status = static.terbayar;
-    else if (totalPaid > 0)
-        shipping.payment.status = static.terbayarSebagian;
-    else if (totalPaid <= 0)
-        shipping.payment.status = static.belumTerbayar;
+        if (!shipping)
+            return;
 
-    shipping.payment.phases.push({
-        transferDate: new Date(_.parseInt(data.transferDate)),
-        date: new Date(_.parseInt(data.date)),
-        bank: data.bank,
-        notes: data.notes,
-        amount: parseFloat(data.amount)
+        var totalPaid = shipping.payment.paid + parseFloat(data.amount);
+
+        if (totalPaid >= shipping.cost.total)
+            shipping.payment.status = static.terbayar;
+        else if (totalPaid > 0)
+            shipping.payment.status = static.terbayarSebagian;
+        else if (totalPaid <= 0)
+            shipping.payment.status = static.belumTerbayar;
+
+        shipping.payment.phases.push({
+            transferDate: new Date(_.parseInt(data.transferDate)),
+            date: new Date(_.parseInt(data.date)),
+            bank: data.bank,
+            notes: data.notes,
+            amount: parseFloat(data.amount)
+        });
+
+        shipping.payment.paid += parseFloat(data.amount);
+        shipping.audited = false;
+        shipping.payment.type = ObjectId(data.paymentTypeId);
+        return shipping.save();
     });
+};
 
-    shipping.payment.paid += parseFloat(data.amount);
-    shipping.audited = false;
-    shipping.payment.type = ObjectId(data.paymentTypeId);
-    return shipping.save();
+Controller.prototype.priceProcess = function (data) {
+    return this.shippingController.save(data, true);
 };
 
 Controller.prototype.delete = function (id) {
