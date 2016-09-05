@@ -4,6 +4,7 @@
     class homeCtrl extends baseCtrl {
         overall: any;
         type: string;
+        summary: string;
         viewType: ViewType;
 
         static $inject = ['$scope', 'Notification'];
@@ -48,16 +49,26 @@
                     break;
             }
 
+            this.summary = summary;
             this.viewType = ViewType.summary;
+            this.paging.page = 1;
             this.loadOverall();
             this.filter();
         }
 
-        getDetails(id): void {
+        viewDetails(id): void {
             this.filters[this.type] = id;
             this.functions.load = api.home.getAll;
             this.viewType = ViewType.detail;
+            this.paging.page = 1;
             this.filter();
+        }
+
+        viewSummary(): void {
+            delete this.filters[this.type];
+            this.viewType = ViewType.summary;
+           
+            this.onSummaryChanges(this.summary);
         }
     }
 

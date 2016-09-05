@@ -34,9 +34,6 @@ Controller.prototype.approve = function (viewModel) {
         if (!audit)
             throw new Error('Audit data is not found');
 
-        if (!shipping)
-            throw new Error('Shipping is not found');
-
         switch (viewModel['type']) {
             case "payment":
                 yield self.paymentProcess(viewModel.data);
@@ -55,21 +52,19 @@ Controller.prototype.reject = function (viewModel) {
 
     return co(function* () {
         var audit = yield schemas.audits.findOne({ "_id": ObjectId(viewModel._id) }).exec();
-        var shipping = yield schemas.shippings.findOne({ "_id": ObjectId(viewModel.data.shippingId) }).exec();
 
         if (!audit)
             throw new Error('Audit data is not found');
 
-        if (!shipping)
-            throw new Error('Shipping is not found');
-
         switch (viewModel['type']) {
             case "payment":
+                shipping = yield schemas.shippings.findOne({ "_id": ObjectId(viewModel.data.shippingId) }).exec();
                 shipping.audited = false;
                 yield shipping.save();
                 break;
             case "price":
-
+                shipping = yield schemas.shippings.findOne({ "_id": ObjectId(viewModel.data._id) }).exec();
+                yield self.shippingController.save(shipping, true);
                 break;
         };
 
@@ -79,7 +74,7 @@ Controller.prototype.reject = function (viewModel) {
 
 Controller.prototype.paymentProcess = function (data) {
     return co(function* () {
-        var shipping = yield schemas.shippings.findOne({ "_id": ObjectId(viewModel.data.shippingId) }).exec();
+        var shipping = yield schemas.shippings.findOne({ "_id": ObjectId(data.shippingId) }).exec();
 
         if (!shipping)
             return;
@@ -115,12 +110,12 @@ Controller.prototype.priceProcess = function (data) {
 Controller.prototype.delete = function (id) {
     var self = this;
     return co(function* () {
-        var model = yield self.get(id);
+        var entity = yield self.get(id);
 
-        if (!model)
+        if (!entity)
             throw new Error('Data is not found');
 
-        return model.remove({ _id: ObjectId(id) });
+        return schemas.audits.remove({ _id: ObjectId(id) });
     });
 };
 

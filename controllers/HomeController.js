@@ -170,22 +170,10 @@ Controller.prototype.getAll = function (query) {
     var skip = query['skip'] ? query['skip'] : 0;
     var parameters = { "inputLocation": ObjectId(query['location']) };
 
-    if (query['destination'])
-        parameters['destination'] = ObjectId(query['destination']);
+    if (query['date'])
+        parameters['date'] = { "$gte": date.createLower(query['date']), "$lte": date.createUpper(query['date']) };
 
-    if (query['sender'])
-        parameters['sender'] = ObjectId(query['sender']);
-
-    if (query['paymentType'])
-        parameters['payment.type'] = ObjectId(query['paymentType']);
-
-    if (query['paymentStatus'])
-        parameters['payment.status'] = query['paymentStatus'];
-
-    if (query['regionDest'])
-        parameters['regions.destination'] = ObjectId(query['regionDest']);
-
-    return this.schema.find(parameters).populate('sender payment.type').skip(skip).limit(limit).exec();
+    return this.schema.find(parameters).populate('sender destination payment.type').skip(skip).limit(limit).exec();
 };
 
 module.exports = new Controller();

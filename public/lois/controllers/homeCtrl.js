@@ -52,15 +52,23 @@ var app;
                         this.type = 'regions.destination';
                         break;
                 }
+                this.summary = summary;
                 this.viewType = ViewType.summary;
+                this.paging.page = 1;
                 this.loadOverall();
                 this.filter();
             };
-            homeCtrl.prototype.getDetails = function (id) {
+            homeCtrl.prototype.viewDetails = function (id) {
                 this.filters[this.type] = id;
                 this.functions.load = app.api.home.getAll;
                 this.viewType = ViewType.detail;
+                this.paging.page = 1;
                 this.filter();
+            };
+            homeCtrl.prototype.viewSummary = function () {
+                delete this.filters[this.type];
+                this.viewType = ViewType.summary;
+                this.onSummaryChanges(this.summary);
             };
             homeCtrl.$inject = ['$scope', 'Notification'];
             return homeCtrl;

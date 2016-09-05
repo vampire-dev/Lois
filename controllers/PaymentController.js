@@ -49,7 +49,7 @@ Controller.prototype.pay = function (viewModels, user) {
     return co(function* () {
         yield* _co.coEach(viewModels, function* (viewModel) {
 
-            var shipping = yield schema.findOne({ _id: viewModel.shippingId });
+            var shipping = yield self.schema.findOne({ _id: viewModel.shippingId });
 
             if (!shipping)
                 return;

@@ -29,7 +29,7 @@ router.get(config.api + 'shipping/getAll', auth.isAuthenticated, function (req, 
 router.post(config.api + 'shipping/save', auth.isAuthenticated, function (req, res) {
     var data = req.body;
     data['inputLocation'] = req.session.user.location._id;
-    data['modified.user'] = req.session.user._id;
+    data['modified']['user'] = req.session.user._id;
 
     controller.save(data, false).then(function (result) {
         res.status(200).send(result);

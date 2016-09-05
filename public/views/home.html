@@ -70,7 +70,7 @@
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                                                     <input datepicker class="form-control" placeholder="Tanggal"
-                                                           id="transaction-date" type="text" ng-model="ctrl.filters.date" />
+                                                           id="summary-date" type="text" ng-model="ctrl.filters.date" />
                                                 </div>
                                             </label>
                                         </section>
@@ -119,11 +119,115 @@
                                         </tr>
                                         <tr ng-repeat="entity in ctrl.entities" ng-show="!ctrl.loadingData" style="color:black;">
                                             <td> {{((ctrl.paging.page - 1) * ctrl.paging.max) + $index + 1}} </td>
-                                            <td> <a href="#" ng-click="ctrl.getDetails(entity._id)">{{entity.category[0].name ? entity.category[0].name : entity._id}} </a></td>
+                                            <td> <a href="#" ng-click="ctrl.viewDetails(entity._id)">{{entity.category[0].name ? entity.category[0].name : entity._id}} </a></td>
                                             <td> {{entity.colli}} </td>
                                             <td> {{entity.weight}} </td>
                                             <td> {{entity.price | currency: 'Rp ' : 0}} </td>
                                             <td> {{entity.shippings}} </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="widget-footer">
+                            <div class="input-group">
+                                <button ng-disabled="(ctrl.paging.page) == 1" href="#" class="btn btn-link" ng-click="ctrl.prev()">
+                                    <i class="fa fa-backward"></i>
+                                </button>
+                                {{ctrl.paging.page}}
+                                <button ng-disabled="ctrl.entities.length < ctrl.paging.max" href="#" class="btn btn-link" ng-click="ctrl.next()">
+                                    <i class="fa fa-forward"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </article>
+        <article class="col col-sm-12 col-md-12 col-lg-12" ng-show="ctrl.viewType == 2">
+            <div class="jarviswidget jarviswidget-color-blueDark" role="widget">
+                <header role="heading" data-block="header">
+                    <span class="widget-icon"> <i class="fa fa-bar-chart-o"></i> </span>
+                    <h2>Summary</h2>
+                </header>
+                <div role="content">
+                    <!-- widget edit box -->
+                    <div class="jarviswidget-editbox">
+                        <!-- This area used as dropdown edit box -->
+                    </div>
+                    <div class="widget-body no-padding" data-block="widget-content">
+                        <div class="widget-body-toolbar" data-block="toolbar">
+                            <form class="smart-form">
+                                <fieldset>
+                                    <div class="row">
+                                        <section class="col col-sm-12 col-md-12 col-lg-12">
+                                            <label class="input">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                                    <input datepicker class="form-control" placeholder="Tanggal"
+                                                           id="detail-date" type="text" ng-model="ctrl.filters.date" />
+                                                </div>
+                                            </label>
+                                        </section>
+                                    </div>
+                                </fieldset>
+                            </form>
+                        </div>
+                        <div class="widget-body-toolbar">
+                            <div class="row">
+                                <div class="col-xs-9 col-sm-5 col-md-5 col-lg-6">
+                                    <a href="#" class="btn btn-default" style="color: black;" ng-click="ctrl.viewSummary()">
+                                        <i class="fa fa-arrow-left"></i> Kembali
+                                    </a>
+                                    <a href="#" class="btn btn-default" style="color: black;" ng-click="ctrl.filter()">
+                                        <i class="fa fa-search"></i> Cari
+                                    </a>
+                                </div>
+                                <div class="col-xs-9 col-sm-5 col-md-5 col-lg-6">
+                                    <select name="dt_basic_length" aria-controls="dt_basic" class="form-control" ng-model="ctrl.paging.max"
+                                            ng-change="ctrl.filter()" style="float:right; width:15%;" to-number>
+                                        <option value="10">10</option>
+                                        <option value="25">25</option>
+                                        <option value="50">50</option>
+                                        <option value="100">100</option>
+                                        <option value="500">500</option>
+                                        <option value="1000">1000</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-content">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped table-condensed table-hover smart-form has-tickbox">
+                                    <thead>
+                                        <tr style="color:black;">
+                                            <th style="text-align: center; width: 1%;">No</th>
+                                            <th style="text-align: center; width: 10%;">Tanggal</th>
+                                            <th style="text-align: center; width: 10%;">Spb</th>
+                                            <th style="text-align: center; width: 10%;">Pengirim</th>
+                                            <th style="text-align: center; width: 10%;">Tujuan</th>
+                                            <th style="text-align: center; width: 3%;">Koli</th>
+                                            <th style="text-align: center; width: 3%;">Berat</th>
+                                            <th style="text-align: center; width: 5%;">Harga</th>
+                                            <th style="text-align: center; width: 5%;">Cara Bayar</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-show="ctrl.loadingData">
+                                            <td style="text-align: center; margin: 10px 0px;" colspan="100">
+                                                <img src="../assets/img/ajax-loader.gif">
+                                            </td>
+                                        </tr>
+                                        <tr ng-repeat="entity in ctrl.entities" ng-show="!ctrl.loadingData" style="color:black;">
+                                            <td> {{((ctrl.paging.page - 1) * ctrl.paging.max) + $index + 1}} </td>
+                                            <td> {{entity.date | date:'dd-MM-yyyy'}}</td>
+                                            <td> {{entity.spbNumber}}</td>
+                                            <td> {{entity.sender.name}}</td>
+                                            <td> {{entity.destination.name}}</td>
+                                            <td> {{entity.colli}} </td>
+                                            <td> {{entity.weight}} </td>
+                                            <td> {{entity.price | currency: 'Rp ' : 0}} </td>
+                                            <td> {{entity.payment.type.name}} </td>
                                         </tr>
                                     </tbody>
                                 </table>
