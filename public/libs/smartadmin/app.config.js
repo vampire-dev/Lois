@@ -78,7 +78,7 @@
  * Turn on JarvisWidget functionality
  * Global JarvisWidget Settings
  * For a greater control of the widgets, please check app.js file
- * found within configurator_ASSETS/UNMINIFIED_JS folder and see from line 1355
+ * found within COMMON_ASSETS/UNMINIFIED_JS folder and see from line 1355
  * dependency: js/jarviswidget/jarvis.widget.min.js
  */
 	enableJarvisWidgets = true,
