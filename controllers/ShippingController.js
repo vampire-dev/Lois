@@ -91,7 +91,7 @@ Controller.prototype.add = function (user) {
     });
 };
 
-Controller.prototype.calculateCost = function (item, tariff, quo35ta, option) {
+Controller.prototype.calculateCost = function (item, tariff, quota, option) {
     var self = this;
     var price = 0;
     var minimum = 0;
@@ -162,11 +162,10 @@ Controller.prototype.calculateCost = function (item, tariff, quo35ta, option) {
     };
 };
 
-Controller.prototype.save = function (data) {
+Controller.prototype.save = function (data, fromManager) {
     var self = this;
 
     return co(function* () {
-
         var sender = yield self.clientSchema.findOne({ "_id": ObjectId(data.sender._id) }).exec();
         var tariff = yield self.tariffSchema.findOne({ "client": ObjectId(sender._id), "destination": data.destination._id }).exec();
         var source = yield self.locationSchema.findOne({ "_id": ObjectId(sender.location) }).exec();
@@ -174,6 +173,14 @@ Controller.prototype.save = function (data) {
         data.cost.total = 0;
 
         yield _co.coEach(data.items, function* (item) {
+
+            if (!fromManager) {
+                yield self.auditComponent(data, item);
+                item.audited = true;
+
+                return;
+            }
+
             item.cost.shipping = self.calculateCost(item, tariff, data.sender.quota, data.tariff);
             data.cost.total += item.cost.shipping;
         });
@@ -191,6 +198,63 @@ Controller.prototype.save = function (data) {
 
         var entity = new self.schema(data);
         return self.schema.update({ "_id": ObjectId(entity._id) }, entity);
+    });
+};
+
+Controller.prototype.auditComponent = function (data, item) {
+    var self = this;
+
+    return co(function* () {
+        var prevShipping = yield self.schema.findOne({ "_id": ObjectId(data._id) });
+
+        if (!prevShipping)
+            return;
+
+        var notes = [];
+        var self = this;
+        var prevItem = _.find(prevShipping.items, function (prevItem) {
+            return prevItem._id.toString() === item._id.toString();
+        });
+
+        if (!prevItem)
+            return null;
+
+        if ((item.dimensions.length !== prevItem.dimensions.length) && item.dimensions.length > 0) 
+            notes.push("Perubahan dimensi panjang dari " + prevItem.dimensions.length + " ke " + item.dimensions.length);
+
+        if ((item.dimensions.width !== prevItem.dimensions.width) && item.dimensions.width > 0) 
+            notes.push("Perubahan dimensi lebar dari " + prevItem.dimensions.width + " ke " + item.dimensions.width);
+        
+        if ((item.dimensions.height !== prevItem.dimensions.height) && item.dimensions.height > 0) 
+            notes.push("Perubahan dimensi tinggi dari " + prevItem.dimensions.height + " ke " + item.dimensions.height);
+
+        if ((item.dimensions.weight !== prevItem.dimensions.weight) && item.dimensions.weight > 0) 
+            notes.push("Perubahan dimensi berat dari " + prevItem.dimensions.weight + " ke " + item.dimensions.weight);
+
+        if ((item.colli.quantity !== prevItem.colli.quantity) && item.colli.quantity > 0)
+            notes.push("Perubahan koli dari " + prevItem.colli.quantity + " ke " + item.colli.quantity);
+
+        if ((item.cost.additional !== prevItem.cost.additional) && item.cost.additional > 0)
+            notes.push("Perubahan bea tambahan dari " + prevItem.cost.additional + " ke " + item.cost.additional);
+
+        if ((item.cost.discount !== prevItem.cost.discount) && item.cost.discount > 0)
+            notes.push("Perubahan diskon dari " + prevItem.cost.discount + " ke " + item.cost.discount);
+
+        if (item.itemType._id.toString() !== prevItem.itemType._id.toString())
+            notes.push("Perubahan jenis barang dari " + prevItem.itemType.name + " ke " + item.itemType.name);
+
+        if (notes.length > 0) {
+            var audit = new schemas.audits({
+                "type": "price",
+                "date": new Date(),
+                "data": data,
+                "user": data.modified.user
+            });
+
+            yield audit.save();
+        }
+
+        return null;
     });
 };
 

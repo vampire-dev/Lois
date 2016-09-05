@@ -12,6 +12,7 @@
     client: '57ccac761e605e32740447fe',
     location: '57ccac091e605e32740447fb',
     region: '57ccabed1e605e32740447fa',
+    itemType: '57ccac531e605e32740447fd',
     paymentType: '57ccac531e605e32740447fd',
     partner: '57c46a80398059b414b37854',
     belumTerekap: 'Belum Terekap',
