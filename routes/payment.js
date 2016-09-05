@@ -1,7 +1,7 @@
 ﻿var router = require('express').Router();
-var config = require('../common').config();
+var config = require('../configurator').config();
 var auth = require('../utils/authentication');
-var controller = require('../controllers/payment');
+var controller = require('../controllers/PaymentController');
 
 router.get('/lois/payment', function (req, res) {
     res.redirect('/lois');

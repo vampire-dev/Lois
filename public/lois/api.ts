@@ -41,6 +41,36 @@
         }
     }
 
+    export class home {
+        static getOverall(query: any) {
+            return app.http.get('/lois/api/home/getOverall?query=' + JSON.stringify(query));
+        }
+
+        static getDestinations(query: any) {
+            return app.http.get('/lois/api/home/getDestinations?query=' + JSON.stringify(query));
+        }
+
+        static getSenders(query: any) {
+            return app.http.get('/lois/api/home/getSenders?query=' + JSON.stringify(query));
+        }
+
+        static getPaymentTypes(query: any) {
+            return app.http.get('/lois/api/home/getPaymentTypes?query=' + JSON.stringify(query));
+        }
+
+        static getPaymentStatuses(query: any) {
+            return app.http.get('/lois/api/home/getPaymentStatuses?query=' + JSON.stringify(query));
+        }
+
+        static getRegions(query: any) {
+            return app.http.get('/lois/api/home/getRegions?query=' + JSON.stringify(query));
+        }
+
+        static getAll(query: any) {
+            return app.http.get('/lois/api/home/getAll?query=' + JSON.stringify(query));
+        }
+    }
+
     export class recapitulation {
         static getAll(query: any) {
             return http.get('/lois/api/recapitulation/getAll?query=' + JSON.stringify(query));

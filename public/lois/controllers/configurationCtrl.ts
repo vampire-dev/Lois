@@ -31,7 +31,7 @@
             ctrl.functions.load(ctrl.config, ctrl.query).then(result => {
                 ctrl.entities = result.data;
             }).catch(error => {
-                ctrl.notify('error', error.message);
+                ctrl.notify('error', error.data);
             }).finally(() => {
                 ctrl.loadingData = false;
             });
@@ -59,8 +59,8 @@
                 ctrl.notify('success', 'Data berhasil disimpan');
                 ctrl.showForm = false;
                 ctrl.filter();
-            }).catch(exception => {
-                ctrl.notify('error', exception.data);
+            }).catch(error => {
+                ctrl.notify('error', error.data);
             }).finally(() => {
                 ctrl.processing = false;
             });
@@ -76,8 +76,8 @@
             ctrl.functions.delete(ctrl.config, id).then(result => {
                 ctrl.notify('success', 'Data berhasil dihapus');
                 ctrl.filter();
-            }).catch(exception => {
-                ctrl.notify('error', exception.data);
+            }).catch(error => {
+                ctrl.notify('error', error.data);
             });
         }
     }

@@ -5,26 +5,23 @@
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
     <Name>Lois</Name>
     <RootNamespace>Lois</RootNamespace>
-    <EnableTypeScript>true</EnableTypeScript>
-    <TypeScriptSourceMap>true</TypeScriptSourceMap>
-    <TypeScriptModuleKind>CommonJS</TypeScriptModuleKind>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>f6e0e46e-d5e5-41d0-885e-4c2c487d6eea</ProjectGuid>
+    <ProjectGuid>9f9ef860-683a-4277-b733-35abaa1fb584</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>app.js</StartupFile>
-    <StartWebBrowser>False</StartWebBrowser>
+    <StartupFile>bin\www</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <ProjectTypeGuids>{3AF33F2E-1136-4D97-BBB7-1795711AC8B8};{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}</ProjectTypeGuids>
-    <ProjectView>ProjectFiles</ProjectView>
-    <StartWebBrowser>false</StartWebBrowser>
+    <ProjectTypeGuids>{3AF33F2E-1136-4D97-BBB7-1795711AC8B8};{349c5851-65df-11da-9384-00065b846f21};{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}</ProjectTypeGuids>
+    <ProjectView>ShowAllFiles</ProjectView>
+    <NodejsPort>1337</NodejsPort>
+    <StartWebBrowser>true</StartWebBrowser>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -34,53 +31,37 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="app.js" />
-    <Compile Include="common.js" />
-    <Compile Include="controllers\audit.js" />
-    <Compile Include="controllers\client.js" />
-    <Compile Include="controllers\delivery.js" />
-    <Compile Include="controllers\deliveryOrder.js" />
-    <Compile Include="controllers\driver.js" />
-    <Compile Include="controllers\invoice.js" />
-    <Compile Include="controllers\itemType.js" />
-    <Compile Include="controllers\location.js" />
-    <Compile Include="controllers\menu.js" />
-    <Compile Include="controllers\notification.js" />
-    <Compile Include="controllers\packingType.js" />
-    <Compile Include="controllers\partner.js" />
-    <Compile Include="controllers\payment.js" />
-    <Compile Include="controllers\paymentType.js" />
-    <Compile Include="controllers\recapitulation.js" />
-    <Compile Include="controllers\region.js" />
-    <Compile Include="controllers\report.js" />
-    <Compile Include="controllers\reportData.js" />
-    <Compile Include="controllers\return.js" />
-    <Compile Include="controllers\role.js" />
-    <Compile Include="controllers\roleMenu.js" />
-    <Compile Include="controllers\roleReport.js" />
-    <Compile Include="controllers\shipping.js" />
-    <Compile Include="controllers\tariff.js" />
-    <Compile Include="controllers\trainType.js" />
-    <Compile Include="controllers\user.js" />
-    <Compile Include="models\audit.js" />
-    <Compile Include="models\client.js" />
-    <Compile Include="models\driver.js" />
-    <Compile Include="models\invoice.js" />
-    <Compile Include="models\itemType.js" />
-    <Compile Include="models\location.js" />
-    <Compile Include="models\menu.js" />
-    <Compile Include="models\notification.js" />
-    <Compile Include="models\packingType.js" />
-    <Compile Include="models\partner.js" />
-    <Compile Include="models\paymentType.js" />
-    <Compile Include="models\region.js" />
-    <Compile Include="models\report.js" />
-    <Compile Include="models\role.js" />
-    <Compile Include="models\roleMenu.js" />
-    <Compile Include="models\roleReport.js" />
-    <Compile Include="models\shipping.js" />
-    <Compile Include="models\tariff.js" />
-    <Compile Include="models\trainType.js" />
-    <Compile Include="models\user.js" />
+    <Compile Include="bin\www" />
+    <Compile Include="configurator.js" />
+    <Compile Include="controllers\AuditController.js" />
+    <Compile Include="controllers\ClientController.js" />
+    <Compile Include="controllers\DeliveryController.js" />
+    <Compile Include="controllers\DeliveryOrderController.js" />
+    <Compile Include="controllers\DriverController.js" />
+    <Compile Include="controllers\HomeController.js" />
+    <Compile Include="controllers\InvoiceController.js" />
+    <Compile Include="controllers\ItemTypeController.js" />
+    <Compile Include="controllers\LocationController.js" />
+    <Compile Include="controllers\MenuController.js" />
+    <Compile Include="controllers\NotificationController.js" />
+    <Compile Include="controllers\PackingTypeController.js" />
+    <Compile Include="controllers\PartnerController.js" />
+    <Compile Include="controllers\PaymentController.js" />
+    <Compile Include="controllers\PaymentTypeController.js" />
+    <Compile Include="controllers\RecapitulationController.js" />
+    <Compile Include="controllers\RegionController.js" />
+    <Compile Include="controllers\ReportController.js" />
+    <Compile Include="controllers\ReportDataController.js" />
+    <Compile Include="controllers\ReturnController.js" />
+    <Compile Include="controllers\RoleController.js" />
+    <Compile Include="controllers\RoleMenuController.js" />
+    <Compile Include="controllers\RoleReportController.js" />
+    <Compile Include="controllers\ShippingController.js" />
+    <Compile Include="controllers\TariffController.js" />
+    <Compile Include="controllers\TrainTypeController.js" />
+    <Compile Include="controllers\UserController.js" />
+    <Compile Include="migration.js" />
+    <Compile Include="models\schemas.js" />
     <Compile Include="public\libs\angular\angular-animate.min.js" />
     <Compile Include="public\libs\angular\angular-aria.min.js" />
     <Compile Include="public\libs\angular\angular-filter.js" />
@@ -101,11 +82,14 @@
     <Compile Include="public\libs\smartadmin\app.min.js" />
     <Compile Include="public\libs\smartadmin\bootstrap.min.js" />
     <Compile Include="public\libs\smartadmin\jarvis.widget.min.js" />
+    <Compile Include="public\lois\api.js" />
+    <Compile Include="public\lois\lois.js" />
     <Compile Include="routes\audit.js" />
     <Compile Include="routes\client.js" />
     <Compile Include="routes\delivery.js" />
     <Compile Include="routes\deliveryOrder.js" />
     <Compile Include="routes\driver.js" />
+    <Compile Include="routes\home.js" />
     <Compile Include="routes\invoice.js" />
     <Compile Include="routes\itemType.js" />
     <Compile Include="routes\location.js" />
@@ -126,10 +110,10 @@
     <Compile Include="routes\shipping.js" />
     <Compile Include="routes\tariff.js" />
     <Compile Include="routes\trainType.js" />
-    <Compile Include="utils\authentication.js" />
     <Compile Include="routes\user.js" />
+    <Compile Include="utils\authentication.js" />
     <Compile Include="utils\date.js" />
-    <Compile Include="utils\defaultComponent.js" />
+    <Compile Include="utils\static.js" />
     <Content Include="env.json" />
     <Content Include="package.json" />
     <Content Include="public\assets\css\app.css" />
@@ -352,6 +336,13 @@
     <Content Include="public\assets\img\violate.jpg" />
     <Content Include="public\assets\img\voicecommand\active-btn.gif" />
     <Content Include="public\assets\img\vt-menu.png" />
+    <Content Include="public\berita_acara\1472926744683.pdf" />
+    <Content Include="public\berita_acara\1472926786339.pdf" />
+    <Content Include="public\berita_acara\1472926853750.pdf" />
+    <Content Include="public\berita_acara\1472926895496.pdf" />
+    <Content Include="public\berita_acara\1472939486906.pdf" />
+    <Content Include="public\lois\api.js.map" />
+    <Content Include="public\lois\lois.js.map" />
     <Content Include="public\lois\tsconfig.json" />
     <Content Include="public\typings\globals\angular\typings.json" />
     <Content Include="public\typings\globals\jquery\typings.json" />
@@ -360,6 +351,7 @@
     <Content Include="public\views\confirmReturn.html" />
     <Content Include="public\views\delivery.html" />
     <Content Include="public\views\deliveryOrder.html" />
+    <Content Include="public\views\home.html" />
     <Content Include="public\views\index.html" />
     <Content Include="public\views\invoice.html" />
     <Content Include="public\views\login.html" />
@@ -371,13 +363,12 @@
     <Content Include="public\views\return.html" />
     <Content Include="public\views\shipping.html" />
     <Content Include="README.md" />
+    <Content Include="typings.json" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="bin\" />
     <Folder Include="models\" />
     <Folder Include="controllers\" />
-    <Folder Include="public\berita_acara\" />
-    <Folder Include="utils\" />
-    <Folder Include="public\" />
     <Folder Include="public\assets\" />
     <Folder Include="public\assets\css\" />
     <Folder Include="public\assets\fonts\" />
@@ -399,6 +390,7 @@
     <Folder Include="public\assets\img\superbox\" />
     <Folder Include="public\assets\img\versions\" />
     <Folder Include="public\assets\img\voicecommand\" />
+    <Folder Include="public\berita_acara\" />
     <Folder Include="public\libs\" />
     <Folder Include="public\libs\angular\" />
     <Folder Include="public\libs\jquery\" />
@@ -410,30 +402,34 @@
     <Folder Include="public\lois\" />
     <Folder Include="public\lois\controllers\" />
     <Folder Include="public\typings\" />
-    <Folder Include="public\typings\globals\angular\" />
     <Folder Include="public\typings\globals\" />
+    <Folder Include="public\typings\globals\angular\" />
     <Folder Include="public\typings\globals\jquery\" />
     <Folder Include="public\views\" />
+    <Folder Include="typings\globals\express-session\" />
+    <Folder Include="typings\globals\multer\" />
+    <Folder Include="utils\" />
+    <Folder Include="public\" />
     <Folder Include="routes\" />
     <Folder Include="typings\" />
     <Folder Include="typings\globals\" />
     <Folder Include="typings\globals\body-parser\" />
-    <Folder Include="typings\globals\express-session\" />
+    <Folder Include="typings\globals\cookie-parser\" />
+    <Folder Include="typings\globals\debug\" />
+    <Folder Include="typings\globals\express-serve-static-core\" />
     <Folder Include="typings\globals\express\" />
+    <Folder Include="typings\globals\jade\" />
     <Folder Include="typings\globals\lodash\" />
+    <Folder Include="typings\globals\mime\" />
     <Folder Include="typings\globals\mongoose\" />
     <Folder Include="typings\globals\morgan\" />
     <Folder Include="typings\globals\node\" />
+    <Folder Include="typings\globals\serve-favicon\" />
+    <Folder Include="typings\globals\serve-static\" />
+    <Folder Include="typings\globals\stylus\" />
+    <Folder Include="views\" />
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="public\lois\api.ts" />
-    <TypeScriptCompile Include="public\lois\controllers\auditCtrl.ts" />
-    <TypeScriptCompile Include="public\lois\controllers\baseCtrl.ts" />
-    <TypeScriptCompile Include="public\lois\controllers\configurationCtrl.ts" />
-    <TypeScriptCompile Include="public\lois\controllers\confirmReturnCtrl.ts" />
-    <TypeScriptCompile Include="public\lois\controllers\deliveryCtrl.ts" />
-    <TypeScriptCompile Include="public\lois\controllers\deliveryOrderCtrl.ts" />
-    <TypeScriptCompile Include="public\lois\controllers\indexCtrl.ts" />
     <TypeScriptCompile Include="public\libs\typings\angularjs\angular-animate.d.ts" />
     <TypeScriptCompile Include="public\libs\typings\angularjs\angular-cookies.d.ts" />
     <TypeScriptCompile Include="public\libs\typings\angularjs\angular-mocks.d.ts" />
@@ -442,7 +438,17 @@
     <TypeScriptCompile Include="public\libs\typings\angularjs\angular-sanitize.d.ts" />
     <TypeScriptCompile Include="public\libs\typings\angularjs\angular.d.ts" />
     <TypeScriptCompile Include="public\libs\typings\jquery\jquery.d.ts" />
+    <TypeScriptCompile Include="public\lois\api.ts" />
+    <TypeScriptCompile Include="public\lois\controllers\auditCtrl.ts" />
+    <TypeScriptCompile Include="public\lois\controllers\baseCtrl.ts" />
+    <TypeScriptCompile Include="public\lois\controllers\configurationCtrl.ts" />
+    <TypeScriptCompile Include="public\lois\controllers\confirmReturnCtrl.ts" />
+    <TypeScriptCompile Include="public\lois\controllers\deliveryCtrl.ts" />
+    <TypeScriptCompile Include="public\lois\controllers\deliveryOrderCtrl.ts" />
+    <TypeScriptCompile Include="public\lois\controllers\homeCtrl.ts" />
+    <TypeScriptCompile Include="public\lois\controllers\indexCtrl.ts" />
     <TypeScriptCompile Include="public\lois\controllers\invoiceCtrl.ts" />
+    <TypeScriptCompile Include="public\lois\controllers\loginCtrl.ts" />
     <TypeScriptCompile Include="public\lois\controllers\notificationCtrl.ts" />
     <TypeScriptCompile Include="public\lois\controllers\paymentCtrl.ts" />
     <TypeScriptCompile Include="public\lois\controllers\recapitulationCtrl.ts" />
@@ -450,20 +456,66 @@
     <TypeScriptCompile Include="public\lois\controllers\returnCtrl.ts" />
     <TypeScriptCompile Include="public\lois\controllers\shippingCtrl.ts" />
     <TypeScriptCompile Include="public\lois\lois.ts" />
-    <TypeScriptCompile Include="public\lois\controllers\loginCtrl.ts" />
     <TypeScriptCompile Include="public\typings\globals\angular\index.d.ts" />
     <TypeScriptCompile Include="public\typings\globals\jquery\index.d.ts" />
     <TypeScriptCompile Include="public\typings\index.d.ts" />
     <TypeScriptCompile Include="typings\globals\body-parser\index.d.ts" />
+    <TypeScriptCompile Include="typings\globals\cookie-parser\index.d.ts" />
+    <TypeScriptCompile Include="typings\globals\debug\index.d.ts" />
+    <TypeScriptCompile Include="typings\globals\express-serve-static-core\index.d.ts" />
     <TypeScriptCompile Include="typings\globals\express-session\index.d.ts" />
     <TypeScriptCompile Include="typings\globals\express\index.d.ts" />
+    <TypeScriptCompile Include="typings\globals\jade\index.d.ts" />
     <TypeScriptCompile Include="typings\globals\lodash\index.d.ts" />
+    <TypeScriptCompile Include="typings\globals\mime\index.d.ts" />
     <TypeScriptCompile Include="typings\globals\mongoose\index.d.ts" />
     <TypeScriptCompile Include="typings\globals\morgan\index.d.ts" />
+    <TypeScriptCompile Include="typings\globals\multer\index.d.ts" />
     <TypeScriptCompile Include="typings\globals\node\index.d.ts" />
+    <TypeScriptCompile Include="typings\globals\serve-favicon\index.d.ts" />
+    <TypeScriptCompile Include="typings\globals\serve-static\index.d.ts" />
+    <TypeScriptCompile Include="typings\globals\stylus\index.d.ts" />
     <TypeScriptCompile Include="typings\index.d.ts" />
   </ItemGroup>
   <!-- Do not delete the following Import Project.  While this appears to do nothing it is a marker for setting TypeScript properties before our import that depends on them. -->
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="False" />
   <Import Project="$(VSToolsPath)\Node.js Tools\Microsoft.NodejsTools.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:48022/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>True</UseCustomServer>
+          <CustomServerUrl>http://localhost:1337</CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}" User="">
+        <WebProjectProperties>
+          <StartPageUrl>
+          </StartPageUrl>
+          <StartAction>CurrentPage</StartAction>
+          <AspNetDebugging>True</AspNetDebugging>
+          <SilverlightDebugging>False</SilverlightDebugging>
+          <NativeDebugging>False</NativeDebugging>
+          <SQLDebugging>False</SQLDebugging>
+          <ExternalProgram>
+          </ExternalProgram>
+          <StartExternalURL>
+          </StartExternalURL>
+          <StartCmdLineArguments>
+          </StartCmdLineArguments>
+          <StartWorkingDirectory>
+          </StartWorkingDirectory>
+          <EnableENC>False</EnableENC>
+          <AlwaysStartWebServerOnDebug>False</AlwaysStartWebServerOnDebug>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
 </Project>

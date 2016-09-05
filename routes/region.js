@@ -1,7 +1,7 @@
 ﻿var router = require('express').Router();
-var config = require('../common').config();
+var config = require('../configurator').config();
 var auth = require('../utils/authentication');
-var controller = require('../controllers/region');
+var controller = require('../controllers/RegionController');
 
 router.get(config.api + 'region/get', auth.isAuthenticated, function (req, res) {
     controller.get(req.query.id).then(function (result) {

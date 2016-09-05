@@ -1,7 +1,7 @@
 ﻿var router = require('express').Router();
-var config = require('../common').config();
+var config = require('../configurator').config();
 var auth = require('../utils/authentication');
-var controller = require('../controllers/return');
+var controller = require('../controllers/ReturnController');
 var multer = require('multer');
 
 var storage = multer.diskStorage({

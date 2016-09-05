@@ -1,6 +1,6 @@
 ﻿var mysql = require('mysql-promise')();
 var mongoose = require('mongoose');
-var config = require('./common').config();
+var config = require('./configurator').config();
 var co = require('co');
 var _co = require('co-lodash');
 var _ = require('lodash');
@@ -16,19 +16,11 @@ mysql.configure({
 });
 
 function Migration() {
-    this.regionModel = require('./models/region');
-    this.locationModel = require('./models/location');
-    this.paymentTypeModel = require('./models/paymentType');
-    this.itemTypeModel = require('./models/itemType');
-    this.packingTypeModel = require('./models/packingType');
-    this.trainTypeModel = require('./models/trainType');
-    this.clientModel = require('./models/client');
-    this.tariffModel = require('./models/tariff');
-    this.shippingModel = require('./models/shipping');
-};
+    this.schemas = require('./schemas/schemas');
+}
 
 Migration.prototype.regions = function () {
-    var query = 'SELECT * FROM regional';
+    var query = 'select * from regional';
     var self = this;
 
     mysql.query(query).spread(function (rows) {
@@ -36,14 +28,16 @@ Migration.prototype.regions = function () {
             yield* _co.coEach(rows, function* (row) {
                 try {
                     console.log('Mysql data --> ', row);
-                    var entity = new self.regionModel({ "number": row.id, "name": row.name });
-                    yield entity.save();
-                    console.log('MongoDB data --> ', entity);
+                    var schema = new self.schemas.regions({ "number": row.id, "name": row.name });
+                    yield schema.save();
+                    console.log('MongoDB data --> ', schema);
                 }
                 catch (error) {
                     console.log(error);
                 }
             });
+        }).catch(function (error) {
+            console.log(error.message);
         });
     }).catch(function (mysqlError) {
         console.log(mysqlError.message);
@@ -51,42 +45,50 @@ Migration.prototype.regions = function () {
 };
 
 Migration.prototype.locations = function () {
-    var query = 'SELECT * FROM kota';
+    var query = "select * from kota";
     var self = this;
 
-    mysql.query(query).spread(function (rows) {
-        co(function* () {
-            try {
-                console.log('Mysql data --> ', row);
-                var region = yield self.regionModel.findOne({ "number": row.regional });
-                var entity = new self.locationModel({ "number": row.id, "name": row.name, "prefix": null, "region": region._id });
-                yield entity.save();
-                console.log('MongoDB data --> ', entity);
-            }
-            catch (error) {
-                console.log(error);
-            }
-        });
-    }).catch(function (mysqlError) {
-        console.log(mysqlError.message);
-    });
-};
-
-Migration.prototype.paymentTypes = function () {
-    var query = 'SELECT * FROM payment_type';
     mysql.query(query).spread(function (rows) {
         co(function* () {
             yield* _co.coEach(rows, function* (row) {
                 try {
                     console.log('Mysql data --> ', row);
-                    var entity = new self.paymentTypeModel({ "number": row.id, "name": row.name });
-                    yield entity.save();
-                    console.log('MongoDB data --> ', entity);
+                    var region = yield self.schemas.regions.findOne({ "number": row.regional }).exec();
+
+                    if (!region)
+                        return;
+
+                    var schema = new self.schemas.locations({ "number": row.id, "prefix": null, "name": row.name, "region": region._id });
+                    yield schema.save();
+                    console.log('MongoDB data --> ', schema);
                 }
                 catch (error) {
                     console.log(error);
                 }
             });
+        });
+    });
+};
+
+Migration.prototype.paymentTypes = function () {
+    var query = 'select * from payment_type';
+    var self = this;
+
+    mysql.query(query).spread(function (rows) {
+        co(function* () {
+            yield* _co.coEach(rows, function* (row) {
+                try {
+                    console.log('Mysql data --> ', row);
+                    var schema = new self.schemas.paymentTypes({ "number": row.id, "name": row.name });
+                    yield schema.save();
+                    console.log('MongoDB data --> ', schema);
+                }
+                catch (error) {
+                    console.log(error);
+                }
+            });
+        }).catch(function (error) {
+            console.log(error.message);
         });
     }).catch(function (mysqlError) {
         console.log(mysqlError.message);
@@ -94,20 +96,24 @@ Migration.prototype.paymentTypes = function () {
 };
 
 Migration.prototype.itemTypes = function () {
-    var query = 'SELECT * FROM jenis_barang';
+    var query = 'select * from jenis_barang';
+    var self = this;
+
     mysql.query(query).spread(function (rows) {
         co(function* () {
             yield* _co.coEach(rows, function* (row) {
                 try {
                     console.log('Mysql data --> ', row);
-                    var entity = new self.itemTypeModel({ "number": row.id, "name": row.name });
-                    yield entity.save();
-                    console.log('MongoDB data --> ', entity);
+                    var schema = new self.schemas.itemTypes({ "number": row.id, "name": row.name });
+                    yield schema.save();
+                    console.log('MongoDB data --> ', schema);
                 }
                 catch (error) {
                     console.log(error);
                 }
             });
+        }).catch(function (error) {
+            console.log(error.message);
         });
     }).catch(function (mysqlError) {
         console.log(mysqlError.message);
@@ -115,20 +121,24 @@ Migration.prototype.itemTypes = function () {
 };
 
 Migration.prototype.packingTypes = function () {
-    var query = 'SELECT * FROM bungkus_barang';
+    var query = 'select * from bungkus_barang';
+    var self = this;
+
     mysql.query(query).spread(function (rows) {
         co(function* () {
             yield* _co.coEach(rows, function* (row) {
                 try {
                     console.log('Mysql data --> ', row);
-                    var entity = new self.packingTypeModel({ "number": row.id, "name": row.name });
-                    yield entity.save();
-                    console.log('MongoDB data --> ', entity);
+                    var schema = new self.schemas.packingTypes({ "number": row.id, "name": row.name });
+                    yield schema.save();
+                    console.log('MongoDB data --> ', schema);
                 }
                 catch (error) {
                     console.log(error);
                 }
             });
+        }).catch(function (error) {
+            console.log(error.message);
         });
     }).catch(function (mysqlError) {
         console.log(mysqlError.message);
@@ -136,20 +146,24 @@ Migration.prototype.packingTypes = function () {
 };
 
 Migration.prototype.trainTypes = function () {
-    var query = 'SELECT * FROM jenis_kereta';
+    var query = 'select * from jenis_kereta';
+    var self = this;
+
     mysql.query(query).spread(function (rows) {
         co(function* () {
             yield* _co.coEach(rows, function* (row) {
                 try {
                     console.log('Mysql data --> ', row);
-                    var entity = new self.trainTypeModel({ "number": row.id, "name": row.name });
-                    yield entity.save();
-                    console.log('MongoDB data --> ', entity);
+                    var schema = new self.schemas.trainTypes({ "number": row.id, "name": row.name });
+                    yield schema.save();
+                    console.log('MongoDB data --> ', schema);
                 }
                 catch (error) {
                     console.log(error);
                 }
             });
+        }).catch(function (error) {
+            console.log(error.message);
         });
     }).catch(function (mysqlError) {
         console.log(mysqlError.message);
@@ -157,17 +171,17 @@ Migration.prototype.trainTypes = function () {
 };
 
 Migration.prototype.clients = function () {
-    var query = 'SELECT * FROM clients WHERE lok_input IS NOT NULL AND lok_input <> ""';
-    console.log('Fetching clients, please wait');
+    var query = 'select * from clients where lok_input is not null and lok_input <> ""';
+    var self = this;
 
     mysql.query(query).spread(function (rows) {
         co(function* () {
             yield* _co.coEach(rows, function* (row) {
                 try {
                     console.log('Mysql data --> ', row);
-                    var location = yield self.locationModel.findOne({ "name": row.lok_input });
+                    var location = yield self.schemas.locations.findOne({ "name": row.lok_input });
 
-                    var entity = new self.clientModel({
+                    var schema = new self.schemas.clients({
                         "number": row.id,
                         "name": row.name == '' ? ' ' : row.name,
                         "address1": row.address,
@@ -177,13 +191,15 @@ Migration.prototype.clients = function () {
                         "location": location._id
                     });
 
-                    yield entity.save();
-                    console.log('MongoDB data --> ', entity);
+                    yield schema.save();
+                    console.log('MongoDB data --> ', schema);
                 }
                 catch (error) {
                     console.log(error);
                 }
             });
+        }).catch(function (error) {
+            console.log(error.message);
         });
     }).catch(function (mysqlError) {
         console.log(mysqlError.message);
@@ -191,40 +207,227 @@ Migration.prototype.clients = function () {
 };
 
 Migration.prototype.tariffs = function () {
-    var query = 'SELECT * FROM harga';
+    var query = 'select * from harga';
+    var self = this;
+
     mysql.query(query).spread(function (rows) {
         co(function* () {
             yield* _co.coEach(rows, function* (row) {
                 try {
                     console.log('Mysql data --> ', row);
-                    var client = yield self.clientModel.findOne({ "number": row.idclient });
-                    var location = yield self.locationModel.findOne({ "number": row.idkotatujuan });
+                    var client = yield self.schemas.clients.findOne({ "number": row.idclient });
+                    var location = yield self.schemas.locations.findOne({ "number": row.idkotatujuan });
 
-                    var entity = new self.tariffModel({
+                    if (!client || !location)
+                        return;
+
+                    var schema = new self.schemas.tariffs({
                         "client": client._id === 0 ? null : client._id,
                         "destination": location._id,
                         "minimum": row.hargaminimum,
                         "prices": [row.Harga, 0, 0]
                     });
 
-                    yield entity.save();
-                    console.log('MongoDB data --> ', entity);
+                    yield schema.save();
+                    console.log('MongoDB data --> ', schema);
+                }
+                catch (error) {
+                    console.log(error);
+                }
+            });
+        }).catch(function (error) {
+            console.log(error.message);
+        });
+    }).catch(function (mysqlError) {
+        console.log(mysqlError.message);
+    });
+}
+
+Migration.prototype.shippings = function (inputLocation, skip, limit) {
+    var query = "select t.*, s.no, c.name as colliCost FROM transaction t LEFT JOIN list_tagihan l ON l.transaction = t.id " +
+        "LEFT JOIN surat_tagihan s ON s.id = l.surat_tagihan LEFT JOIN biaya_coli c ON t.biaya_coli = c.id WHERE t.lokasi_input = '"
+        + inputLocation + "' LIMIT " + limit + " OFFSET " + skip;
+
+    var self = this;
+
+    mysql.query(query).spread(function (rows) {
+        co(function* () {
+            yield* _co.coEach(rows, function* (row) {
+                try {
+                    console.log('Mysql data --> ', row);
+                    if (row.lokasi_input < 1)
+                        return;
+                    if (row.sender < 1)
+                        return;
+                    if (row.kota < 1)
+                        return;
+                    if (row.jenis_barang < 1)
+                        return;
+
+                    var location = yield self.schemas.locations.findOne({ "name": row.lokasi_input }).exec();
+                    var sender = yield self.schemas.clients.findOne({ "number": row.sender }).populate('location').exec();
+                    var dest = yield self.schemas.locations.findOne({ "number": row.kota }).exec();
+  
+                    if(!sender)
+                        sender = yield self.schemas.clients.findOne({ "name": "Kosong" }).populate('location').exec();
+
+                    if (!dest)
+                        dest = yield self.schemas.locations.findOne({ "name": "Kosong" }).exec();
+
+                    var regionDest = yield self.schemas.regions.findOne({ "_id": mongoose.Types.ObjectId(dest.region)  }).exec();
+                    var regionSource = yield self.schemas.regions.findOne({ "_id": mongoose.Types.ObjectId(sender.location.region) }).exec();
+                    var itemType = yield self.schemas.itemTypes.findOne({ "number": row.jenis_barang }).exec();
+                    var paymentType = yield self.schemas.paymentTypes.findOne({ "number": row.payment_type }).exec();
+                    var packingType = yield self.schemas.packingTypes.findOne({ "number": row.bungkus_barang }).exec();
+                    var trainType = yield self.schemas.trainTypes.findOne({ "number": row.jenis_kereta }).exec();
+
+                    var schema = new self.schemas.shippings({
+                        "number": row.id,
+                        "spbNumber": row.spb_no,
+                        "date": Date.parse(row.date) || 0,
+                        "receiver": {
+                            "name": row.receiver,
+                            "address": row.receiver_address,
+                            "contact": null
+                        },
+                        "sender": sender._id,
+                        "destination": dest._id,
+                        "regions": {
+                            "source": regionSource._id,
+                            "destination": regionDest._id
+                        },
+                        "partner": null,
+                        "payment": {
+                            "type": paymentType._id,
+                            "location": null,
+                            "status": row.status_bayar === 2 ? "Terbayar" : "Belum Terbayar",
+                            "phases": row.status_bayar === 2 ? [{
+                                "transferDate": row.tgl_bayar,
+                                "date": row.tgl_bayar,
+                                "bank": null,
+                                "amount": row.price
+                            }] : [],
+                            "paid": row.status_bayar === 2 ? row.price : 0
+                        },
+                        "cost": {
+                            "pph": 0.0,
+                            "worker": 0,
+                            "expedition": row.biaya_ekspedisi,
+                            "total": row.price
+                        },
+                        "notes": {
+                            "shipping": row.notes,
+                            "partner": null,
+                            "po": row.PO
+                        },
+                        "invoice": {
+                            "all": row.no,
+                            "client": null,
+                            "partner": null
+                        },
+                        "tariff": 0,
+                        "colli": row.coli,
+                        "weight": row.weight,
+                        "audited": false,
+                        "returned": (row.status_transaksi == 5 || row.status_transaksi == 3) ? true : false,
+                        "confirmed": row.status_transaksi == 3 ? true : false,
+                        "returnInfo": {
+                            "accepted": row.status_transaksi >= 3 ? true : false,
+                            "created": {
+                                "date": Date.parse(row.created_time) || 0,
+                                "user": null
+                            },
+                            "modified": {
+                                "date": Date.parse(row.modified_time) || 0,
+                                "user": null
+                            },
+                        },
+                        "inputLocation": location._id,
+                        "created": {
+                            "date": Date.parse(row.created_time) || 0,
+                            "user": null
+                        },
+                        "modified": {
+                            "date": Date.parse(row.modified_time) || 0,
+                            "user": null
+                        },
+                        "items": {
+                            "itemType": itemType._id,
+                            "packingType": packingType._id,
+                            "content": row.isi,
+                            "dimensions": {
+                                "length": row.Panjang,
+                                "width": row.Lebar,
+                                "height": row.Tinggi,
+                                "weight": row.weight
+                            },
+                            "colli": {
+                                "quantity": row.coli,
+                                "available": row.status_transaksi == 1 ? row.coli : 0,
+                                "delivered": row.status_transaksi >= 4 ? row.coli : 0
+                            },
+                            "cost": {
+                                "colli": row.colliCost,
+                                "additional": row.bea_tambahan,
+                                "discount": row.diskon,
+                                "shipping": row.price
+                            },
+                            "status": row.status_transaksi <= 1 ? 'Belum Terekap' : row.status_transaksi == 2 ? 'Terekap' : 'Terkirim',
+                            "audited": false,
+                            "recapitulations": [],
+                            "deliveries": []
+                        }
+                    });
+
+                    if (schema.items[0].status == "Terekap") {
+                        schema.items[0].recapitulations.push({
+                            "item": schema.items[0]._id,
+                            "quantity": row.coli,
+                            "available": row.coli,
+                            "trainType": trainType._id,
+                            "date": Date.parse(row.modified_time) || 0
+                        });
+                    }
+                    else if (schema.items[0].status == "Terkirim") {
+                        schema.items[0].recapitulations.push({
+                            "item": schema.items[0]._id,
+                            "quantity": row.coli,
+                            "weight": row.weight,
+                            "available": 0,
+                            "trainType": trainType._id,
+                            "date": Date.parse(row.modified_time) || 0
+                        });
+
+                        schema.items[0].deliveries.push({
+                            "item": schema.items[0]._id,
+                            "recapitulation": schema.items[0].recapitulations[0]._id,
+                            "quantity": row.coli,
+                            "available": row.coli,
+                            "weight": row.weight,
+                            "date": Date.parse(row.modified_time) || 0
+                        });
+                    }
+
+                    yield schema.save();
+                    console.log('MongoDB data --> ', schema);
                 }
                 catch (error) {
                     console.log(error);
                 }
             });
         });
-    }).catch(function (mysqlError) {
-        console.log(mysqlError.message);
     });
-};
-
-Migration.prototype.shippings = function () {
-
 }
 
 var migration = new Migration();
 
-migration.regions();
+/*migration.regions();
 migration.locations();
+migration.paymentTypes();
+migration.itemTypes();
+migration.packingTypes();
+migration.trainTypes();
+migration.clients();
+migration.tariffs();*/
+
+migration.shippings("Jakarta", 0, 1000);

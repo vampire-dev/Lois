@@ -13,7 +13,7 @@
             api.user.login(ctrl.user).then(result => {
                 window.location.href = '/lois';
             }).catch(error => {
-                ctrl.Notification.error(error.message);
+                ctrl.Notification.error(error.data);
             });
         }
     }

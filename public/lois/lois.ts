@@ -37,6 +37,10 @@ module app {
             url: baseUrl,
             templateUrl: '/views/main.html',
             controller: 'indexCtrl as ctrl'
+        }).state('site.main.home', {
+            url: '/home',
+            templateUrl: '/views/home.html',
+            controller: 'homeCtrl as ctrl'
         }).state('site.main.shipping', {
             url: '/shipping',
             templateUrl: '/views/shipping.html',

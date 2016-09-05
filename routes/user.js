@@ -1,11 +1,9 @@
 ﻿var router = require('express').Router();
-var config = require('../common').config();
+var config = require('../configurator').config();
 var auth = require('../utils/authentication');
-var controller = require('../controllers/user');
-var roleMenuController = require('../controllers/roleMenu');
-var roleReportController = require('../controllers/roleReport');
+var controller = require('../controllers/UserController');
 
-router.get('/lois/login', auth.isAuthenticated, function (req, res) {
+router.get('/lois/login', function (req, res) {
     res.redirect('/lois');
 });
 
@@ -46,7 +44,10 @@ router.get(config.api + 'user/getSession', auth.isAuthenticated, function (req, 
 
 router.post(config.api + 'user/authenticate', function (req, res) {
     controller.authenticate(req.body.userName, req.body.password).then(function (user) {
+        var roleMenuController = require('../controllers/RoleMenuController');
         roleMenuController.getAll({ "role": user.role._id }).then(function (menus) {
+
+            var roleReportController = require('../controllers/RoleReportController');
             roleReportController.getAll({ "role": user.role._id }).then(function (reports) {
                 req.session.user = user;
                 req.session.menus = menus;

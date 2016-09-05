@@ -1,7 +1,7 @@
 ﻿var router = require('express').Router();
-var config = require('../common').config();
+var config = require('../configurator').config();
 var auth = require('../utils/authentication');
-var controller = require('../controllers/paymentType');
+var controller = require('../controllers/PaymentTypeController');
 
 router.get(config.api + 'paymentType/get', auth.isAuthenticated, function (req, res) {
     controller.get(req.query.id).then(function (result) {

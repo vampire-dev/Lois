@@ -33,7 +33,7 @@
             ctrl.functions.load(ctrl.query).then(result => {
                 ctrl.entities = result.data;
             }).catch(error => {
-                ctrl.notify('error', error.message);
+                ctrl.notify('error', error.data);
             }).finally(() => {
                 ctrl.loadingData = false;
             });
@@ -53,7 +53,7 @@
                 ctrl.entity = result.data;
             }).catch(error => {
                 ctrl.showForm = false;
-                ctrl.notify('error', error.message);
+                ctrl.notify('error', error.data);
             }).finally(() => {
                 ctrl.processing = false;
             });
@@ -68,7 +68,7 @@
                 ctrl.filter();
                 ctrl.showForm = false;
             }).catch(error => {
-                ctrl.notify('error', error.message);
+                ctrl.notify('error', error.data);
             }).finally(() => {;
                 ctrl.processing = false;
             });
@@ -82,7 +82,7 @@
                 ctrl.notify('success', 'Data berhasil dihapus');
                 ctrl.filter();
             }).catch(error => {
-                ctrl.notify('error', error.message);
+                ctrl.notify('error', error.data);
             }).finally(() => {
                 ctrl.loadingData = false;
             });

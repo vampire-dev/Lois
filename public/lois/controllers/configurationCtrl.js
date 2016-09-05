@@ -31,7 +31,7 @@ var app;
                 ctrl.functions.load(ctrl.config, ctrl.query).then(function (result) {
                     ctrl.entities = result.data;
                 }).catch(function (error) {
-                    ctrl.notify('error', error.message);
+                    ctrl.notify('error', error.data);
                 }).finally(function () {
                     ctrl.loadingData = false;
                 });
@@ -55,8 +55,8 @@ var app;
                     ctrl.notify('success', 'Data berhasil disimpan');
                     ctrl.showForm = false;
                     ctrl.filter();
-                }).catch(function (exception) {
-                    ctrl.notify('error', exception.data);
+                }).catch(function (error) {
+                    ctrl.notify('error', error.data);
                 }).finally(function () {
                     ctrl.processing = false;
                 });
@@ -69,8 +69,8 @@ var app;
                 ctrl.functions.delete(ctrl.config, id).then(function (result) {
                     ctrl.notify('success', 'Data berhasil dihapus');
                     ctrl.filter();
-                }).catch(function (exception) {
-                    ctrl.notify('error', exception.data);
+                }).catch(function (error) {
+                    ctrl.notify('error', error.data);
                 });
             };
             configurationCtrl.$inject = ['$scope', 'Notification'];

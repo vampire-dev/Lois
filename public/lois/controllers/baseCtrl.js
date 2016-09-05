@@ -22,7 +22,7 @@ var app;
                 ctrl.functions.load(ctrl.query).then(function (result) {
                     ctrl.entities = result.data;
                 }).catch(function (error) {
-                    ctrl.notify('error', error.message);
+                    ctrl.notify('error', error.data);
                 }).finally(function () {
                     ctrl.loadingData = false;
                 });
@@ -39,7 +39,7 @@ var app;
                     ctrl.entity = result.data;
                 }).catch(function (error) {
                     ctrl.showForm = false;
-                    ctrl.notify('error', error.message);
+                    ctrl.notify('error', error.data);
                 }).finally(function () {
                     ctrl.processing = false;
                 });
@@ -52,7 +52,7 @@ var app;
                     ctrl.filter();
                     ctrl.showForm = false;
                 }).catch(function (error) {
-                    ctrl.notify('error', error.message);
+                    ctrl.notify('error', error.data);
                 }).finally(function () {
                     ;
                     ctrl.processing = false;
@@ -65,7 +65,7 @@ var app;
                     ctrl.notify('success', 'Data berhasil dihapus');
                     ctrl.filter();
                 }).catch(function (error) {
-                    ctrl.notify('error', error.message);
+                    ctrl.notify('error', error.data);
                 }).finally(function () {
                     ctrl.loadingData = false;
                 });

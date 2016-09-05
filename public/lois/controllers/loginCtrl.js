@@ -11,7 +11,7 @@ var app;
                 app.api.user.login(ctrl.user).then(function (result) {
                     window.location.href = '/lois';
                 }).catch(function (error) {
-                    ctrl.Notification.error(error.message);
+                    ctrl.Notification.error(error.data);
                 });
             };
             loginCtrl.$inject = ['$scope', 'Notification'];
