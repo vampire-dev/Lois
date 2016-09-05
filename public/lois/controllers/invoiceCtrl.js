@@ -30,6 +30,7 @@ var app;
                     this.functions.load = app.api.invoice.getAll;
                 else if (this.tab === 'list')
                     this.functions.load = app.api.invoice.getList;
+                this.paging.page = 1;
                 this.filter();
             };
             invoiceCtrl.prototype.create = function () {

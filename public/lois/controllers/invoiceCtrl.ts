@@ -27,6 +27,7 @@
             else if (this.tab === 'list')
                 this.functions.load = api.invoice.getList;
 
+            this.paging.page = 1;
             this.filter();
         }
 
