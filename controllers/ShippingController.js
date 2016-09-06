@@ -188,6 +188,9 @@ Controller.prototype.save = function (data, fromManager) {
                 return;
             }
 
+            if (item.status === static.belumTerekap)
+                item.colli.available = item.colli.quantity;
+
             item.cost.shipping = self.calculateCost(item, tariff, data.sender.quota, data.tariff);
             data.cost.total += item.cost.shipping;
             count++;
@@ -205,7 +208,6 @@ Controller.prototype.save = function (data, fromManager) {
         data.regions.destination = dest === null ? data.regions.destination : dest.region._id;
         
         var entity = new self.schema(data);
-        console.log(entity.items);
         return self.schema.update({ "_id": ObjectId(entity._id) }, entity);
     });
 };
