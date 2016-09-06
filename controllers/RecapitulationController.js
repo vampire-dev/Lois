@@ -34,6 +34,7 @@ Controller.prototype.getAll = function (query) {
         { "$match": { "items": { "$elemMatch": { "colli.available": { "$gt": 0 } } } } },
         { "$sort": { "number": -1 } },
         { "$unwind": "$items" },
+        { "$match": { "items.colli.available": { "$gt": 0 } } },
         { "$skip": skip },
         { "$limit": limit }
     ]).exec();
