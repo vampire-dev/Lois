@@ -71,11 +71,11 @@ Controller.prototype.add = function (user) {
         var shipping = {
             "number": number,
             "spbNumber": spbNumber,
-            "sender": static.client,
-            "destination": static.location,
-            "regions": { "source": static.region, "destination": static.region },
-            "payment": { "type": static.paymentType, "location": static.location },
-            "partner": static.partner,
+            "sender": ObjectId(static.client),
+            "destination": ObjectId(static.location),
+            "regions": { "source": ObjectId(static.region), "destination": ObjectId(static.region) },
+            "payment": { "type": ObjectId(static.paymentType), "location": ObjectId(static.location) },
+            "partner": ObjectId(static.partner),
             "inputLocation": user.location._id,
             "created": { "user": user._id, "date": new Date() },
             "modified": { "user": user._id }
