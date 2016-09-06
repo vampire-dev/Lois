@@ -198,8 +198,8 @@ Controller.prototype.save = function (data, fromManager) {
         else if (data.cost.pph === 0.98)
             data.cost.total /= 0.98;
 
-        data.regions.source = source === null ? data.regions.source : source.region._id;
-        data.regions.destination = dest === null ? data.regions.destination : dest.region._id;
+        data.regions.source = source === null ? data.regions.source : source.region;
+        data.regions.destination = dest === null ? data.regions.destination : dest.region;
         
         var entity = new schemas.shippings(data);
         return schemas.shippings.update({ "_id": ObjectId(entity._id) }, entity);
