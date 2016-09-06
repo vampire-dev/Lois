@@ -96,6 +96,9 @@ Controller.prototype.getUnpaid = function (query) {
     if (query['paymentType'])
         parameters['payment.type'] = ObjectId(query['paymentType']);
 
+    if (query['sender'])
+        parameters['sender'] = ObjectId(query['sender']);
+
     if (query['invoice'])
         parameters['$or'] = [{ "invoice.all": query['invoice'] }, { "invoice.client": query['invoice'] }, { "invoice.partner": query['invoice'] }];
 
@@ -442,6 +445,9 @@ Controller.prototype.getUnconfirmed = function (query) {
     if (query['paymentType'])
         parameters['payment.type'] = ObjectId(query['paymentType']);
 
+    if (query['regionDest'])
+        parameters['regions.destination'] = ObjectId(query['regionDest']);
+
     if (query['returnDate'])
         parameters['returnInfo.created.date'] = { "$gte": date.createLower(query['returnDate']), "$lte": date.createUpper(query['returnDate']) };
 
@@ -484,6 +490,9 @@ Controller.prototype.getDeliveryList = function (query) {
 
     if (query['spbNumber'])
         parameters['spbNumber'] = new RegExp(query['spbNumber'], 'i');
+
+    if (query['paymentType'])
+        parameters['payment.type'] = ObjectId(query['paymentType']);
 
     if (query['from'] && query['to'])
         parameters['date'] = { "$gte": date.createLower(query['from']), "$lte": date.createUpper(query['to']) };

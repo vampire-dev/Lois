@@ -32,7 +32,7 @@
                                         <legend>Filter data</legend>
                                         <fieldset>
                                             <div class="row">
-                                                <section class="col col-sm-12 col-md-12 col-lg-4">
+                                                <section class="col col-sm-12 col-md-12 col-lg-3">
                                                     <label class="input">
                                                         <input type="text" placeholder="Spb" ng-model="ctrl.filters.spbNumber" />
                                                     </label>
@@ -42,7 +42,7 @@
                                                         <input type="text" placeholder="Invoice" ng-model="ctrl.filters.invoice" />
                                                     </label>
                                                 </section>
-                                                <section class="col col-sm-12 col-md-12 col-lg-4">
+                                                <section class="col col-sm-12 col-md-12 col-lg-3">
                                                     <label class="input">
                                                         <input type="text"
                                                                ng-model="ctrl.filters.paymentType"
@@ -51,6 +51,17 @@
                                                                typeahead-min-length="2"
                                                                typeahead-loading="paymentTypeFilter" class="form-control" />
                                                         <i ng-show="paymentTypeFilter" class="glyphicon glyphicon-refresh"></i>
+                                                    </label>
+                                                </section>
+                                                <section class="col col-sm-12 col-md-12 col-lg-3">
+                                                    <label class="input">
+                                                        <input type="text"
+                                                               ng-model="ctrl.filters.sender"
+                                                               placeholder="Pengirim"
+                                                               uib-typeahead="data as data.name for data in ctrl.suggest('client', $viewValue)"
+                                                               typeahead-min-length="2"
+                                                               typeahead-loading="senderFilter" class="form-control" />
+                                                        <i ng-show="senderFilter" class="glyphicon glyphicon-refresh"></i>
                                                     </label>
                                                 </section>
                                                 <section class="col col-sm-12 col-md-12 col-lg-6">
@@ -269,12 +280,23 @@
                                         <legend>Filter data</legend>
                                         <fieldset>
                                             <div class="row">
-                                                <section class="col col-sm-12 col-md-12 col-lg-4">
+                                                <section class="col col-sm-12 col-md-12 col-lg-3">
                                                     <label class="input">
                                                         <input type="text" placeholder="Spb" ng-model="ctrl.filters.spbNumber" />
                                                     </label>
                                                 </section>
-                                                <section class="col col-sm-12 col-md-12 col-lg-4">
+                                                <section class="col col-sm-12 col-md-12 col-lg-3">
+                                                    <label class="input">
+                                                        <input type="text"
+                                                               ng-model="ctrl.filters.paymentType"
+                                                               placeholder="Cara Bayar"
+                                                               uib-typeahead="data as data.name for data in ctrl.suggest('paymentType', $viewValue)"
+                                                               typeahead-min-length="2"
+                                                               typeahead-loading="paymentTypeFilter" class="form-control" />
+                                                        <i ng-show="paymentTypeFilter" class="glyphicon glyphicon-refresh"></i>
+                                                    </label>
+                                                </section>
+                                                <section class="col col-sm-12 col-md-12 col-lg-3">
                                                     <label class="input">
                                                         <div class="input-group">
                                                             <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
@@ -283,7 +305,7 @@
                                                         </div>
                                                     </label>
                                                 </section>
-                                                <section class="col col-sm-12 col-md-12 col-lg-4">
+                                                <section class="col col-sm-12 col-md-12 col-lg-3">
                                                     <label class="input">
                                                         <div class="input-group">
                                                             <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
@@ -950,23 +972,34 @@
                                         <legend>Filter data</legend>
                                         <fieldset>
                                             <div class="row">
-                                                <section class="col col-sm-12 col-md-12 col-lg-4">
+                                                <section class="col col-sm-12 col-md-12 col-lg-3">
                                                     <label class="input">
                                                         <input type="text" placeholder="Spb" ng-model="ctrl.filters.spbNumber" />
                                                     </label>
                                                 </section>
-                                                <section class="col col-sm-12 col-md-12 col-lg-4">
+                                                <section class="col col-sm-12 col-md-12 col-lg-3">
                                                     <label class="input">
                                                         <input type="text"
                                                                ng-model="ctrl.filters.paymentType"
-                                                               placeholder="Cara bayar"
+                                                               placeholder="Cara Bayar"
                                                                uib-typeahead="data as data.name for data in ctrl.suggest('paymentType', $viewValue)"
                                                                typeahead-min-length="2"
                                                                typeahead-loading="paymentTypeFilter" class="form-control" />
                                                         <i ng-show="paymentTypeFilter" class="glyphicon glyphicon-refresh"></i>
                                                     </label>
                                                 </section>
-                                                <section class="col col-sm-12 col-md-12 col-lg-4">
+                                                <section class="col col-sm-12 col-md-12 col-lg-3">
+                                                    <label class="input">
+                                                        <input type="text"
+                                                               ng-model="ctrl.filters.regionDest"
+                                                               placeholder="Regional Tujuan"
+                                                               uib-typeahead="data as data.name for data in ctrl.suggest('region', $viewValue)"
+                                                               typeahead-min-length="2"
+                                                               typeahead-loading="regionDestFilter" class="form-control" />
+                                                        <i ng-show="regionDestFilter" class="glyphicon glyphicon-refresh"></i>
+                                                    </label>
+                                                </section>
+                                                <section class="col col-sm-12 col-md-12 col-lg3">
                                                     <label class="input">
                                                         <div class="input-group">
                                                             <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
