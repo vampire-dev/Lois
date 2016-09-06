@@ -6,9 +6,7 @@ var _co = require('co-lodash');
 var _ = require('lodash');
 var ObjectId = mongoose.Types.ObjectId;
 
-function Controller() {
-    this.schema = schemas.shippings;
-};
+function Controller() {};
 
 Controller.prototype.getPaid = function (query) {
     var limit = query['limit'] ? query['limit'] : 10;
@@ -30,7 +28,7 @@ Controller.prototype.getPaid = function (query) {
     if (query['from'] && query['to'])
         parameters['date'] = { "$gte": date.createLower(query['from']), "$lte": date.createUpper(query['to']) };
 
-    return this.schema.find(parameters).sort({ "number": -1 }).populate('sender payment.type').skip(skip).limit(limit).exec();
+    return schemas.shippings.find(parameters).sort({ "number": -1 }).populate('sender payment.type').skip(skip).limit(limit).exec();
 };
 
 Controller.prototype.getPaidReport = function (viewModels, user) {
@@ -105,7 +103,7 @@ Controller.prototype.getUnpaid = function (query) {
     if (query['from'] && query['to'])
         parameters['date'] = { "$gte": date.createLower(query['from']), "$lte": date.createUpper(query['to']) };
 
-    return this.schema.find(parameters).sort({ "number": -1 }).populate('sender payment.type').skip(skip).limit(limit).exec();
+    return schemas.shippings.find(parameters).sort({ "number": -1 }).populate('sender payment.type').skip(skip).limit(limit).exec();
 };
 
 Controller.prototype.getUnpaidReport = function (viewModels, user) {
@@ -190,7 +188,7 @@ Controller.prototype.getRecapitulations = function (query) {
     if (query['recapDate'])
         recapParameters['items.recapitulations.date'] = { "$gte": date.createLower(query['recapDate']), "$lte": date.createUpper(query['recapDate']) };
 
-    return this.schema.aggregate([
+    return schemas.shippings.aggregate([
         { "$match": parameters },
         { "$sort": { "number": -1 } },
         { "$unwind": "$items" },
@@ -300,7 +298,7 @@ Controller.prototype.getDeliveries = function (query) {
     if (query['deliveryDate'])
         deliveryParameters['items.deliveries.date'] = { "$gte": date.createLower(query['deliveryDate']), "$lte": date.createUpper(query['deliveryDate']) };
 
-    return this.schema.aggregate([
+    return schemas.shippings.aggregate([
         { "$match": parameters },
         { "$sort": { "number": -1 } },
         { "$unwind": "$items" },
@@ -377,7 +375,7 @@ Controller.prototype.getReturns = function (query) {
     if (query['from'] && query['to'])
         parameters['date'] = { "$gte": date.createLower(query['from']), "$lte": date.createUpper(query['to']) };
 
-    return this.schema.find(parameters).sort({ "number": -1 }).populate('sender destination').skip(skip).limit(limit).exec();
+    return schemas.shippings.find(parameters).sort({ "number": -1 }).populate('sender destination').skip(skip).limit(limit).exec();
 };
 
 Controller.prototype.getReturnsReport = function (viewModels, user) {
@@ -454,7 +452,7 @@ Controller.prototype.getUnconfirmed = function (query) {
     if (query['from'] && query['to'])
         parameters['date'] = { "$gte": date.createLower(query['from']), "$lte": date.createUpper(query['to']) };
 
-    return this.schema.find(parameters).sort({ "number": 1 }).populate('sender').populate('destination').skip(skip).limit(limit).exec();
+    return schemas.shippings.find(parameters).sort({ "number": 1 }).populate('sender').populate('destination').skip(skip).limit(limit).exec();
 };
 
 Controller.prototype.getUnconfirmedReport = function (viewModels, user) {
@@ -497,7 +495,7 @@ Controller.prototype.getDeliveryList = function (query) {
     if (query['from'] && query['to'])
         parameters['date'] = { "$gte": date.createLower(query['from']), "$lte": date.createUpper(query['to']) };
 
-    return this.schema.find(parameters).sort({ "number": 1 }).populate('sender destination regions.destination payment.type').skip(skip).limit(limit).exec();
+    return schemas.shippings.find(parameters).sort({ "number": 1 }).populate('sender destination regions.destination payment.type').skip(skip).limit(limit).exec();
 };
 
 Controller.prototype.getDeliveryListReport = function (viewModels, user) {
@@ -562,7 +560,7 @@ Controller.prototype.getCommisions = function (query) {
     if (query['from'] && query['to'])
         parameters['date'] = { "$gte": date.createLower(query['from']), "$lte": date.createUpper(query['to']) };
 
-    return this.schema.find(parameters).sort({ "number": -1 }).populate('sender destination regions.destination payment.type').skip(skip).limit(limit).exec();
+    return schemas.shippings.find(parameters).sort({ "number": -1 }).populate('sender destination regions.destination payment.type').skip(skip).limit(limit).exec();
 };
 
 Controller.prototype.getCommisionsReport = function (viewModels, query, user) {

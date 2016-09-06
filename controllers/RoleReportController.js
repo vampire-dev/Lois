@@ -3,12 +3,10 @@ var mongoose = require('mongoose');
 var ObjectId = mongoose.Types.ObjectId;
 var schemas = require('../models/schemas');
 
-function Controller() {
-    this.schema = schemas.roleReports;
-};
+function Controller() {};
 
 Controller.prototype.get = function (id) {
-    return this.schema.findOne({ "_id": ObjectId(id) }).populate('report').populate('role').exec();
+    return schemas.roleReports.findOne({ "_id": ObjectId(id) }).populate('report').populate('role').exec();
 };
 
 Controller.prototype.getAll = function (query) {
@@ -20,7 +18,7 @@ Controller.prototype.getAll = function (query) {
     if (query['role'])
         parameters['role'] = ObjectId(query['role']);
 
-    var entities = this.schema.find(parameters).populate('report').populate('role');
+    var entities = schemas.roleReports.find(parameters).populate('report').populate('role');
 
     if (query['limit'] && (query['skip'] || query['skip'] == 0))
         entities.skip(query['skip']).limit(query['limit']);
@@ -29,19 +27,17 @@ Controller.prototype.getAll = function (query) {
 };
 
 Controller.prototype.save = function (data) {
-    var entity = new this.schema(data);
+    var entity = new schemas.roleReports(data);
 
     if (!data['_id'])
         return entity.save();
 
-    return this.schema.update({ "_id": entity._id }, entity);
+    return schemas.roleReports.update({ "_id": entity._id }, entity);
 };
 
 Controller.prototype.delete = function (id) {
-    var self = this;
-
     return co(function* () {
-        var entity = self.schema.findOne({ "_id": id }).exec();
+        var entity = schemas.roleReports.findOne({ "_id": id }).exec();
 
         if (!entity)
             throw new Error("Entity is not found");

@@ -1,14 +1,12 @@
 ﻿var co = require('co');
 var mongoose = require('mongoose');
-var ObjectId = mongoose.Types.ObjectId;
 var schemas = require('../models/schemas');
+var ObjectId = mongoose.Types.ObjectId;
 
-function Controller() {
-    this.schema = schemas.locations;
-};
+function Controller() {};
 
 Controller.prototype.get = function (id) {
-    return this.schema.findOne({ "_id": ObjectId(id) }).populate('region').lean().exec();
+    return schemas.locations.findOne({ "_id": ObjectId(id) }).populate('region').lean().exec();
 };
 
 Controller.prototype.getAll = function (query, skip, limit) {
@@ -20,7 +18,7 @@ Controller.prototype.getAll = function (query, skip, limit) {
     if (query['region'])
         parameters['region'] = ObjectId(query['region']);
 
-    var entities = this.schema.find(parameters).populate('region');
+    var entities = schemas.locations.find(parameters).populate('region');
 
     if (query['limit'] && (query['skip'] || query['skip'] == 0))
         entities.skip(query['skip']).limit(query['limit']);
@@ -29,19 +27,17 @@ Controller.prototype.getAll = function (query, skip, limit) {
 };
 
 Controller.prototype.save = function (data) {
-    var entity = new this.schema(data);
+    var entity = new schemas.locations(data);
 
     if (!data['_id'])
         return entity.save();
 
-    return this.schema.update({ "_id": entity._id }, entity);
+    return schemas.locations.update({ "_id": entity._id }, entity);
 };
 
 Controller.prototype.delete = function (id) {
-    var self = this;
-
     return co(function* () {
-        var entity = self.schema.findOne({ "_id": id }).exec();
+        var entity = schemas.locations.findOne({ "_id": id }).exec();
 
         if (!entity)
             throw new Error("Entity is not found");

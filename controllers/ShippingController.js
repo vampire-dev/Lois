@@ -7,17 +7,11 @@ var static = require('../utils/static');
 var schemas = require('../models/schemas');
 var ObjectId = mongoose.Types.ObjectId;
 
-function Controller() {
-    this.schema = schemas.shippings;
-    this.clientSchema = schemas.clients;
-    this.tariffSchema = schemas.tariffs;
-    this.locationSchema = schemas.locations;
-    this.regionSchema = schemas.regions;
-};
+function Controller() {};
 
 Controller.prototype.get = function (id) {
-    return this.schema.findOne({ "_id": ObjectId(id) }).populate('sender destination payment.type payment.location partner items.itemType items.packingType')
-        .lean().exec();
+    return schemas.shippings.findOne({ "_id": ObjectId(id) })
+        .populate('sender destination payment.type payment.location partner items.itemType items.packingType').lean().exec();
 };
 
 Controller.prototype.getAll = function (query) {
@@ -49,7 +43,7 @@ Controller.prototype.getAll = function (query) {
     if (query['from'] && query['to'])
         parameters['date'] = { "$gte": date.createLower(query['from']), "$lte": date.createUpper(query['to']) };
 
-    var entities = this.schema.find(parameters);
+    var entities = schemas.shippings.find(parameters);
 
     if (query['limit'] && (query['skip'] || query['skip'] == 0))
         entities.skip(query['skip']).limit(query['limit']);
@@ -68,8 +62,8 @@ Controller.prototype.add = function (user) {
         throw new Error('Prefix is not defined for location ' + user.location.name);
 
     return co(function* () {
-        var lastShipping = yield self.schema.findOne({}).sort({ "number": -1 }).exec();
-        var lastLocShipping = yield self.schema.findOne({ "inputLocation": ObjectId(user.location._id) }).sort({ "number": -1 }).exec();
+        var lastShipping = yield schemas.shippings.findOne({}).sort({ "number": -1 }).exec();
+        var lastLocShipping = yield schemas.shippings.findOne({ "inputLocation": ObjectId(user.location._id) }).sort({ "number": -1 }).exec();
         var number = lastShipping ? lastShipping.number + 1 : 1;
         var spbNumber = lastLocShipping ? (parseInt(lastLocShipping.spbNumber.split('-')[0]) + 1) + '-' + user.location.prefix
             : '1-' + user.location.prefix;
@@ -87,7 +81,7 @@ Controller.prototype.add = function (user) {
             "modified": { "user": user._id }
         };
 
-        return new self.schema(shipping).save();
+        return new schemas.shippings(shipping).save();
     });
 };
 
@@ -166,10 +160,10 @@ Controller.prototype.save = function (data, fromManager) {
     var self = this;
 
     return co(function* () {
-        var sender = yield self.clientSchema.findOne({ "_id": ObjectId(data.sender._id ? data.sender._id : data.sender) }).exec();
-        var tariff = yield self.tariffSchema.findOne({ "client": ObjectId(sender._id), "destination": data.destination._id ? data.destination._id : data.destination }).exec();
-        var source = yield self.locationSchema.findOne({ "_id": ObjectId(sender.location) }).exec();
-        var dest = yield self.locationSchema.findOne({ "_id": ObjectId(data.destination._id ? data.destination._id : data.destination) }).exec();
+        var sender = yield schemas.clients.findOne({ "_id": ObjectId(data.sender._id ? data.sender._id : data.sender) }).exec();
+        var tariff = yield schemas.tariffs.findOne({ "client": ObjectId(sender._id), "destination": data.destination._id ? data.destination._id : data.destination }).exec();
+        var source = yield schemas.locations.findOne({ "_id": ObjectId(sender.location) }).exec();
+        var dest = yield schemas.locations.findOne({ "_id": ObjectId(data.destination._id ? data.destination._id : data.destination) }).exec();
 
         data.cost.total = 0;
         var count = 0;
@@ -207,8 +201,8 @@ Controller.prototype.save = function (data, fromManager) {
         data.regions.source = source === null ? data.regions.source : source.region._id;
         data.regions.destination = dest === null ? data.regions.destination : dest.region._id;
         
-        var entity = new self.schema(data);
-        return self.schema.update({ "_id": ObjectId(entity._id) }, entity);
+        var entity = new schemas.shippings(data);
+        return schemas.shippings.update({ "_id": ObjectId(entity._id) }, entity);
     });
 };
 

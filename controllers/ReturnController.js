@@ -6,9 +6,7 @@ var _co = require('co-lodash');
 var _ = require('lodash');
 var ObjectId = mongoose.Types.ObjectId;
 
-function Controller() {
-    this.schema = schemas.shippings;
-}
+function Controller() {};
 
 Controller.prototype.getAll = function (query) {
     var limit = query['limit'] ? query['limit'] : 10;
@@ -30,7 +28,7 @@ Controller.prototype.getAll = function (query) {
     if (query['from'] && query['to'])
         parameters['date'] = { "$gte": date.createLower(query['from']), "$lte": date.createUpper(query['to']) };
 
-    return this.schema.aggregate([
+    return schemas.shippings.aggregate([
         { "$match": parameters },
         { "$match": { "items": { "$elemMatch": { "status": "Terkirim" } } } },
         { "$sort": { "number": -1 } },
@@ -62,7 +60,7 @@ Controller.prototype.getAllConfirm = function (query) {
     if (query['from'] && query['to'])
         parameters['date'] = { "$gte": date.createLower(query['from']), "$lte": date.createUpper(query['to']) };
 
-    return this.schema.find(parameters).sort({ "number": -1 }).skip(skip).limit(limit).lean().exec();
+    return schemas.shippings.find(parameters).sort({ "number": -1 }).skip(skip).limit(limit).lean().exec();
 };
 
 Controller.prototype.return = function (viewModels, user) {
@@ -70,7 +68,7 @@ Controller.prototype.return = function (viewModels, user) {
 
     return co(function* () {
         yield* _co.coEach(viewModels, function* (viewModel) {
-            var shipping = yield self.schema.findOne({ _id: ObjectId(viewModel._id) });
+            var shipping = yield schemas.shippings.findOne({ _id: ObjectId(viewModel._id) });
 
             if (!shipping)
                 return;
@@ -83,11 +81,13 @@ Controller.prototype.return = function (viewModels, user) {
                 shipping.returnInfo.created.date = new Date();
                 shipping.returnInfo.created.user = user._id;
                
-                var notification = new schemas.notifications;
-                notification.event = 'Retur spb ' + shipping.spbNumber + ' ' + (viewModel.returnInfo.accepted ? 'diterima' : 'ditolak');
-                notification.filePath = shipping.returnInfo.filePath;
-                notification.date = new Date();
-                notification.user = user._id;
+                var notification = new schemas.notifications({
+                    "event": 'Retur spb ' + shipping.spbNumber + ' ' + (viewModel.returnInfo.accepted ? 'diterima' : 'ditolak'),
+                    "filePath": shipping.returnInfo.filePath,
+                    "date": new Date(),
+                    "user": user._id
+                });
+                
                 yield notification.save();
             }
 
@@ -98,11 +98,9 @@ Controller.prototype.return = function (viewModels, user) {
 };
 
 Controller.prototype.confirm = function (viewModels) {
-    var self = this;
-
     return co(function* () {
         yield* _co.coEach(viewModels, function* (viewModel) {
-            var shipping = yield self.schema.findOne({ _id: ObjectId(viewModel._id) });
+            var shipping = yield schemas.shippings.findOne({ _id: ObjectId(viewModel._id) });
 
             if (!shipping)
                 return;

@@ -5,9 +5,7 @@ var _co = require('co-lodash');
 var _ = require('lodash');
 var ObjectId = mongoose.Types.ObjectId;
 
-function Controller() {
-    this.schema = schemas.shippings;
-}
+function Controller() {}
 
 Controller.prototype.getAll = function (query) {
     var limit = query['limit'] ? query['limit'] : 10;
@@ -26,7 +24,7 @@ Controller.prototype.getAll = function (query) {
     if (query['from'] && query['to'])
         parameters['date'] = { "$gte": date.createLower(query['from']), "$lte": date.createUpper(query['to']) };
 
-    return this.schema.find(parameters).sort({ "number": -1 }).skip(skip).limit(limit).populate('sender destination payment.type').lean().exec();
+    return schemas.shippings.find(parameters).sort({ "number": -1 }).skip(skip).limit(limit).populate('sender destination payment.type').lean().exec();
 };
 
 Controller.prototype.getList = function (query) {
@@ -69,7 +67,7 @@ Controller.prototype.create = function (viewModels, user) {
         };
 
         yield* _co.coEach(viewModels, function* (viewModel) {
-            var shipping = yield self.schema.findOne({ _id: viewModel.shippingId });
+            var shipping = yield schemas.shippings.findOne({ _id: viewModel.shippingId });
 
             if (!shipping)
                 return;
@@ -113,7 +111,7 @@ Controller.prototype.getInvoiceReport = function (invoice, user) {
         var sumTotalCost = 0;
 
         yield* _co.coEach(invoice.shippings, function* (shippingId) {
-            var shipping = yield self.schema.findOne({ _id: ObjectId(shippingId) }).populate('destination').exec();
+            var shipping = yield schemas.shippings.findOne({ _id: ObjectId(shippingId) }).populate('destination').exec();
             var totalWeight = _.sumBy(shipping.items, 'dimensions.weight');
             var totalColli = _.sumBy(shipping.items, 'colli.quantity');
 

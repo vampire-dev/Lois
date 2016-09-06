@@ -6,9 +6,7 @@ var static = require('../utils/static');
 var schemas = require('../models/schemas');
 var ObjectId = mongoose.Types.ObjectId;
 
-function Controller() {
-    this.schema = schemas.shippings;
-};
+function Controller() {};
 
 Controller.prototype.getOverall = function (query) {
     var parameters = { "inputLocation": ObjectId(query['location']) };
@@ -16,7 +14,7 @@ Controller.prototype.getOverall = function (query) {
     if (query['date'])
         parameters['date'] = { "$gte": date.createLower(query['date']), "$lte": date.createUpper(query['date']) };
 
-    return this.schema.aggregate([
+    return schemas.shippings.aggregate([
         { "$match": parameters },
         { "$unwind": "$items" },
         {
@@ -39,7 +37,7 @@ Controller.prototype.getDestinations = function (query) {
     if (query['date'])
         parameters['date'] = { "$gte": date.createLower(query['date']), "$lte": date.createUpper(query['date']) };
 
-    return this.schema.aggregate([
+    return schemas.shippings.aggregate([
         { "$match": parameters },
         { "$unwind": "$items" },
         {
@@ -66,7 +64,7 @@ Controller.prototype.getSenders = function (query) {
     if (query['date'])
         parameters['date'] = { "$gte": date.createLower(query['date']), "$lte": date.createUpper(query['date']) };
 
-    return this.schema.aggregate([
+    return schemas.shippings.aggregate([
         { "$match": parameters },
         { "$unwind": "$items" },
         {
@@ -93,7 +91,7 @@ Controller.prototype.getPaymentTypes = function (query) {
     if (query['date'])
         parameters['date'] = { "$gte": date.createLower(query['date']), "$lte": date.createUpper(query['date']) };
 
-    return this.schema.aggregate([
+    return schemas.shippings.aggregate([
         { "$match": parameters },
         { "$unwind": "$items" },
         {
@@ -120,7 +118,7 @@ Controller.prototype.getPaymentStatuses = function (query) {
     if (query['date'])
         parameters['date'] = { "$gte": date.createLower(query['date']), "$lte": date.createUpper(query['date']) };
 
-    return this.schema.aggregate([
+    return schemas.shippings.aggregate([
         { "$match": parameters },
         { "$unwind": "$items" },
         {
@@ -146,7 +144,7 @@ Controller.prototype.getRegions = function (query) {
     if (query['date'])
         parameters['date'] = { "$gte": date.createLower(query['date']), "$lte": date.createUpper(query['date']) };
 
-    return this.schema.aggregate([
+    return schemas.shippings.aggregate([
         { "$match": parameters },
         { "$unwind": "$items" },
         {
@@ -173,7 +171,7 @@ Controller.prototype.getAll = function (query) {
     if (query['date'])
         parameters['date'] = { "$gte": date.createLower(query['date']), "$lte": date.createUpper(query['date']) };
 
-    return this.schema.find(parameters).populate('sender destination payment.type').skip(skip).limit(limit).exec();
+    return schemas.shippings.find(parameters).populate('sender destination payment.type').skip(skip).limit(limit).exec();
 };
 
 module.exports = new Controller();

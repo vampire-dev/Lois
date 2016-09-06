@@ -3,12 +3,10 @@ var mongoose = require('mongoose');
 var ObjectId = mongoose.Types.ObjectId;
 var schemas = require('../models/schemas');
 
-function Controller() {
-    this.schema = schemas.tariffs;
-};
+function Controller() {};
 
 Controller.prototype.get = function (id) {
-    return this.schema.findOne({ "_id": ObjectId(id) }).populate('client destination').lean().exec();
+    return schemas.tariffs.findOne({ "_id": ObjectId(id) }).populate('client destination').lean().exec();
 };
 
 Controller.prototype.getAll = function (query) {
@@ -20,7 +18,7 @@ Controller.prototype.getAll = function (query) {
     if (query['destination'])
         parameters['destination'] = Object(query['destination']);
 
-    var entities = this.schema.find(parameters);
+    var entities = schemas.tariffs.find(parameters);
 
     if (query['limit'] && (query['skip'] || query['skip'] == 0))
         entities.skip(query['skip']).limit(query['limit']);
@@ -29,19 +27,17 @@ Controller.prototype.getAll = function (query) {
 };
 
 Controller.prototype.save = function (data) {
-    var entity = new this.schema(data);
+    var entity = new schemas.tariffs(data);
 
     if (!data['_id'])
         return entity.save();
 
-    return this.schema.update({ "_id": entity._id }, entity);
+    return schemas.tariffs.update({ "_id": entity._id }, entity);
 };
 
 Controller.prototype.delete = function (id) {
-    var self = this;
-
     return co(function* () {
-        var entity = self.schema.findOne({ "_id": id }).exec();
+        var entity = schemas.tariffs.findOne({ "_id": id }).exec();
 
         if (!entity)
             throw new Error("Entity is not found");

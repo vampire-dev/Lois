@@ -7,9 +7,7 @@ var _co = require('co-lodash');
 var _ = require('lodash');
 var ObjectId = mongoose.Types.ObjectId;
 
-function Controller() {
-    this.schema = schemas.shippings;
-}
+function Controller() {};
 
 Controller.prototype.getAll = function (query) {
     var limit = query['limit'] ? query['limit'] : 10;
@@ -43,7 +41,7 @@ Controller.prototype.getAll = function (query) {
     if (query['from'] && query['to'])
         parameters['date'] = { "$gte": date.createLower(query['from']), "$lte": date.createUpper(query['to']) };
 
-    return this.schema.find(parameters).sort({ "number": -1 }).populate('payment.type').skip(skip).limit(limit).lean().exec();
+    return schemas.shippings.find(parameters).sort({ "number": -1 }).populate('payment.type').skip(skip).limit(limit).lean().exec();
 };
 
 Controller.prototype.pay = function (viewModels, user) {
@@ -52,7 +50,7 @@ Controller.prototype.pay = function (viewModels, user) {
     return co(function* () {
         yield* _co.coEach(viewModels, function* (viewModel) {
 
-            var shipping = yield self.schema.findOne({ _id: viewModel.shippingId });
+            var shipping = yield schemas.shippings.findOne({ _id: viewModel.shippingId });
 
             if (!shipping)
                 return;

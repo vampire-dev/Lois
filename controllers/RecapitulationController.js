@@ -7,10 +7,7 @@ var _co = require('co-lodash');
 var _ = require('lodash');
 var ObjectId = mongoose.Types.ObjectId;
 
-function Controller() {
-    this.schema = schemas.shippings;
-    this.notifSchema = schemas.notifications;
-};
+function Controller() {};
 
 Controller.prototype.getAll = function (query) {
     var limit = query['limit'] ? query['limit'] : 10;
@@ -32,7 +29,7 @@ Controller.prototype.getAll = function (query) {
     if (query['from'] && query['to'])
         parameters['date'] = { "$gte": date.createLower(query['from']), "$lte": date.createUpper(query['to']) };
 
-    return this.schema.aggregate([
+    return schemas.shippings.aggregate([
         { "$match": parameters },
         { "$match": { "items": { "$elemMatch": { "colli.available": { "$gt": 0 } } } } },
         { "$sort": { "number": -1 } },
@@ -69,7 +66,7 @@ Controller.prototype.getAllCancel = function (query) {
     if (query['recapDate'])
         recapParameters['items.recapitulations.date'] = { "$gte": date.createLower(query['recapDate']), "$lte": date.createUpper(query['recapDate']) };
 
-    return this.schema.aggregate([
+    return schemas.shippings.aggregate([
         { "$match": parameters },
         { "$match": { "items": { "$elemMatch": { "recapitulations": { "$elemMatch": { "available": { "$gt": 0 } } } } } } },
         { "$sort": { "number": -1 } },
@@ -91,7 +88,7 @@ Controller.prototype.recap = function (viewModels, user) {
             if (viewModel.quantity === 0)
                 return;
 
-            var shipping = yield self.schema.findOne({ _id: ObjectId(viewModel.shipping) });
+            var shipping = yield schemas.shippings.findOne({ _id: ObjectId(viewModel.shipping) });
 
             if (!shipping)
                 return;
@@ -132,14 +129,6 @@ Controller.prototype.recap = function (viewModels, user) {
             else
                 item.status = static.terekapSebagian;
 
-            var notification = new self.notifSchema();
-            notification.event = 'Batal rekap spb ' + shipping.spbNumber + ' untuk barang ' + item.content + ' sebanyak ' +
-                viewModel.quantity + ' koli';
-
-            notification.date = new Date();
-            notification.user = user._id;
-
-            yield notification.save();
             yield shipping.save();
         });
     });
@@ -155,7 +144,7 @@ Controller.prototype.cancelRecap = function (viewModels, user) {
             if (viewModel.quantity === 0)
                 return;
 
-            var shipping = yield self.schema.findOne({ _id: ObjectId(viewModel.shipping) });
+            var shipping = yield schemas.shippings.findOne({ _id: ObjectId(viewModel.shipping) });
 
             if (!shipping)
                 return;
@@ -187,6 +176,13 @@ Controller.prototype.cancelRecap = function (viewModels, user) {
             else
                 item.status = static.terekapSebagian;
 
+            var notification = new schemas.notifications({
+                "event": notification.event = 'Batal rekap spb ' + shipping.spbNumber + ' untuk barang ' + item.content + ' sebanyak ' + viewModel.quantity + ' koli',
+                "date": new Date(),
+                "user": user._id
+            });
+
+            yield notification.save();
             yield shipping.save();
         });
     });

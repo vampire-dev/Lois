@@ -7,10 +7,7 @@ var _co = require('co-lodash');
 var _ = require('lodash');
 var ObjectId = mongoose.Types.ObjectId;
 
-function Controller() {
-    this.schema = schemas.shippings;
-    this.notifSchema = schemas.notifications;
-};
+function Controller() {};
 
 Controller.prototype.getAll = function (query) {
     var limit = query['limit'] ? query['limit'] : 10;
@@ -40,7 +37,7 @@ Controller.prototype.getAll = function (query) {
     if (query['recapDate'])
         recapParameters['items.recapitulations.date'] = { "$gte": date.createLower(query['recapDate']), "$lte": date.createUpper(query['recapDate']) };
 
-    return this.schema.aggregate([
+    return schemas.shippings.aggregate([
         { "$match": parameters },
         { "$match": { "items": { "$elemMatch": { "recapitulations": { "$elemMatch": { "available": { "$gt": 0 } } } } } } },
         { "$sort": { "number": -1 } },
@@ -81,7 +78,7 @@ Controller.prototype.getAllCancel = function (query) {
     if (query['deliveryDate'])
         deliveryParameters['items.deliveries.date'] = { "$gte": date.createLower(query['deliveryDate']), "$lte": date.createUpper(query['deliveryDate']) };
 
-    return this.schema.aggregate([
+    return schemas.shippings.aggregate([
         { "$match": parameters },
         { "$match": { "items": { "$elemMatch": { "deliveries": { "$elemMatch": { "available": { "$gt": 0 } } } } } } },
         { "$sort": { "number": -1 } },
@@ -95,8 +92,6 @@ Controller.prototype.getAllCancel = function (query) {
 };
 
 Controller.prototype.delivery = function (viewModels, user) {
-    var self = this;
-
     return co(function* () {
         yield* _co.coEach(viewModels, function* (viewModel) {
             viewModel.quantity = _.parseInt(viewModel.quantity);
@@ -104,7 +99,7 @@ Controller.prototype.delivery = function (viewModels, user) {
             if (viewModel.quantity === 0)
                 return;
 
-            var shipping = yield self.schema.findOne({ _id: ObjectId(viewModel.shipping) });
+            var shipping = yield schemas.shippings.findOne({ _id: ObjectId(viewModel.shipping) });
 
             if (!shipping)
                 return;
@@ -156,8 +151,6 @@ Controller.prototype.delivery = function (viewModels, user) {
 };
 
 Controller.prototype.cancelDelivery = function (viewModels, user) {
-    var self = this;
-
     return co(function* () {
         yield* _co.coEach(viewModels, function* (viewModel) {
             viewModel.quantity = _.parseInt(viewModel.quantity);
@@ -165,7 +158,7 @@ Controller.prototype.cancelDelivery = function (viewModels, user) {
             if (viewModel.quantity === 0)
                 return;
 
-            var shipping = yield self.schema.findOne({ _id: ObjectId(viewModel.shipping) });
+            var shipping = yield schemas.shippings.findOne({ _id: ObjectId(viewModel.shipping) });
 
             if (!shipping)
                 return;
@@ -207,13 +200,12 @@ Controller.prototype.cancelDelivery = function (viewModels, user) {
             else
                 item.status = static.terekapSebagian;
 
-            var notification = new self.notifSchema();
-            notification.event = 'Batal kirim spb ' + shipping.spbNumber + ' untuk barang ' + item.content + ' sebanyak ' +
-                viewModel.quantity + ' koli';
-
-            notification.date = new Date();
-            notification.user = user._id;
-
+            var notification = new schemas.notifications({
+                "event": 'Batal kirim spb ' + shipping.spbNumber + ' untuk barang ' + item.content + ' sebanyak ' + viewModel.quantity + ' koli',
+                "date": new Date(),
+                "user": user._id
+            });
+           
             yield notification.save();
             yield shipping.save();
         });

@@ -4,14 +4,10 @@ var crypto = require('crypto');
 var co = require('co');
 var ObjectId = mongoose.Types.ObjectId;
 
-function Controller() {
-    this.schema = schemas.users;
-    this.roleSchema = schemas.roles;
-    this.locationSchema = schemas.locationSchema;
-};
+function Controller() {};
 
 Controller.prototype.get = function (id) {
-    return this.schema.findOne({ "_id": ObjectId(id) }, { "hash": 0, "salt": 0 }).populate('location').populate('role').exec();
+    return schemas.users.findOne({ "_id": ObjectId(id) }, { "hash": 0, "salt": 0 }).populate('location').populate('role').exec();
 };
 
 Controller.prototype.getAll = function (query) {
@@ -26,7 +22,7 @@ Controller.prototype.getAll = function (query) {
     if (query['role'])
         parameters['role'] = ObjectId(query['role']);
 
-    var entities = this.schema.find(parameters).populate('role location');
+    var entities = schemas.users.find(parameters).populate('role location');
 
     if (query['limit'] && (query['skip'] || query['skip'] == 0))
         entities.skip(query['skip']).limit(query['limit']);
@@ -40,19 +36,17 @@ Controller.prototype.save = function (data) {
         data['hash'] = crypto.createHmac('sha256', data['salt']).update(data['password']).digest('hex');
     }
 
-    var entity = new this.schema(data);
+    var entity = new schemas.users(data);
 
     if (!data['_id'])
         return entity.save();
 
-    return this.schema.update({ _id: ObjectId(entity._id) }, entity);
+    return schemas.users.update({ _id: ObjectId(entity._id) }, entity);
 };
 
 Controller.prototype.delete = function (id) {
-    var self = this;
-
     return co(function* () {
-        var entity = self.schema.findOne({ "_id": ObjectId(id) });
+        var entity = schemas.users.findOne({ "_id": ObjectId(id) });
 
         if (!entity)
             throw new Error('Entity is not found');
@@ -65,7 +59,7 @@ Controller.prototype.authenticate = function (userName, password) {
     var self = this;
 
     return co(function* () {
-        var user = yield self.schema.findOne({ "userName": userName }).populate('role location').exec();
+        var user = yield schemas.users.findOne({ "userName": userName }).populate('role location').exec();
         console.log(user);
         if (!user)
             throw new Error('User is not found');
