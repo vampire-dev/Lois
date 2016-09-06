@@ -214,6 +214,9 @@ Controller.prototype.auditComponent = function (data, item) {
     var self = this;
 
     return co(function* () {
+        if (!item._id)
+            return null;
+
         var prevShipping = yield schemas.shippings.findOne({ "_id": ObjectId(data._id) }).populate('items.itemType');
 
         if (!prevShipping)
