@@ -37,6 +37,9 @@ Controller.prototype.getAll = function (query) {
     if (query['regionSource'])
         parameters['regions.source'] = ObjectId(query['regionSource']);
 
+    if (query['invoice'])
+        parameters['$or'] = [{ "invoice.all": query['invoice'] }, { "invoice.client": query['invoice'] }, { "invoice.partner": query['invoice'] }];
+
     if (query['from'] && query['to'])
         parameters['date'] = { "$gte": date.createLower(query['from']), "$lte": date.createUpper(query['to']) };
 

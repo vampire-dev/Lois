@@ -73,7 +73,7 @@ var app;
                         quantity: entity.viewModel.quantity,
                         limasColor: entity.viewModel.limasColor,
                         relationColor: entity.viewModel.relationColor,
-                        deliveryCode: entity.viewModel.deliveryCode,
+                        deliveryCode: _this.deliveryCode,
                         driver: _this.driver._id,
                         vehicleNumber: _this.vehicleNumber
                     };

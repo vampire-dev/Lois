@@ -76,7 +76,7 @@
                     quantity: entity.viewModel.quantity,
                     limasColor: entity.viewModel.limasColor,
                     relationColor: entity.viewModel.relationColor,
-                    deliveryCode: entity.viewModel.deliveryCode,
+                    deliveryCode: this.deliveryCode,
                     driver: this.driver._id,
                     vehicleNumber: this.vehicleNumber
                 };
