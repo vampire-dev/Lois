@@ -177,7 +177,7 @@ Controller.prototype.cancelRecap = function (viewModels, user) {
                 item.status = static.terekapSebagian;
 
             var notification = new schemas.notifications({
-                "event": notification.event = 'Batal rekap spb ' + shipping.spbNumber + ' untuk barang ' + item.content + ' sebanyak ' + viewModel.quantity + ' koli',
+                "event": 'Batal rekap spb ' + shipping.spbNumber + ' untuk barang ' + item.content + ' sebanyak ' + viewModel.quantity + ' koli',
                 "date": new Date(),
                 "user": user._id
             });
