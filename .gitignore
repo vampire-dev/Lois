@@ -5,3 +5,4 @@ public/lois/*.js.map
 public/lois/controllers/*.js.map
 public/berita_acara/*.pdf
 obj/Debug
+env.json

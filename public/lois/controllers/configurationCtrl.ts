@@ -37,6 +37,15 @@
             });
         }
 
+        add(): void {
+            this.showForm = true;
+
+            if (this.config === 'tariff')
+                this.entity = this.createTariff();
+            else
+                this.entity = null;
+        }
+
         edit(id: any): void {
             var ctrl = this;
             ctrl.processing = true;
@@ -79,6 +88,15 @@
             }).catch(error => {
                 ctrl.notify('error', error.data);
             });
+        }
+
+        createTariff(): any {
+            return {
+                "client": null,
+                "destination": null,
+                "minimum": 0,
+                "prices": [0, 0, 0]
+            }
         }
     }
 

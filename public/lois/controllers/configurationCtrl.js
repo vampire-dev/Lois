@@ -36,6 +36,13 @@ var app;
                     ctrl.loadingData = false;
                 });
             };
+            configurationCtrl.prototype.add = function () {
+                this.showForm = true;
+                if (this.config === 'tariff')
+                    this.entity = this.createTariff();
+                else
+                    this.entity = null;
+            };
             configurationCtrl.prototype.edit = function (id) {
                 var ctrl = this;
                 ctrl.processing = true;
@@ -72,6 +79,14 @@ var app;
                 }).catch(function (error) {
                     ctrl.notify('error', error.data);
                 });
+            };
+            configurationCtrl.prototype.createTariff = function () {
+                return {
+                    "client": null,
+                    "destination": null,
+                    "minimum": 0,
+                    "prices": [0, 0, 0]
+                };
             };
             configurationCtrl.$inject = ['$scope', 'Notification'];
             return configurationCtrl;
