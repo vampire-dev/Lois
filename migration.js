@@ -16,7 +16,7 @@ mysql.configure({
 });
 
 function Migration() {
-    this.schemas = require('./schemas/schemas');
+    this.schemas = require('./models/schemas');
 }
 
 Migration.prototype.regions = function () {
@@ -419,6 +419,55 @@ Migration.prototype.shippings = function (inputLocation, skip, limit) {
     });
 }
 
+Migration.prototype.invoices = function () {
+    var query = "select s.no, s.date, t.spb_no, substring_index(substring_index(s.no , '/', 1),' ',1) as inc, c.name as client, s.lokasi as location, 'Semua' as type " +
+                "from list_tagihan l left join surat_tagihan s on l.surat_tagihan = s.id left join transaction t on l.transaction = t.id " +
+                "left join clients c on s.clients = c.id";
+
+    var currentInc = null;
+    var self = this;
+
+    mysql.query(query).spread(function (rows) {
+        
+        co(function* () {
+            var currentInvoice = null;
+
+            yield* _co.coEach(rows, function* (row) {
+                try {
+                    if (currentInc == null) {
+                        currentInc = row.inc;
+                        currentInvoice = new self.schemas.invoices({
+                            "number": row.no,
+                            "date": row.date,
+                            "inc": row.inc,
+                            "to": row.client,
+                            "location": row.location === '' ? " " : row.location,
+                            "type": row.type,
+                            "shippings": []
+                        });
+
+                        console.log(currentInvoice);
+                    }
+
+                    if (row.inc !== currentInc) {
+                        console.log("different inc");
+                        yield currentInvoice.save();
+                        currentInc = null;
+                    }
+
+                    else {
+                        var shipping = yield self.schemas.shippings.findOne({ "spbNumber": row.spb_no }).exec();
+                        currentInvoice.shippings.push(shipping._id);
+                    }
+                }
+                catch (error) {
+                    console.log(error);
+                }
+            });
+        });
+    });
+};
+
 var migration = new Migration();
 
 /*migration.regions();
@@ -428,6 +477,6 @@ migration.itemTypes();
 migration.packingTypes();
 migration.trainTypes();
 migration.clients();
-migration.tariffs();*/
-
-migration.shippings("Jakarta", 0, 1000);
+migration.tariffs();
+migration.shippings("Jakarta", 0, 1000);*/
+migration.invoices();
