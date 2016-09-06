@@ -82,8 +82,7 @@ Controller.prototype.return = function (viewModels, user) {
             if (!shipping.returnInfo.created.date) {
                 shipping.returnInfo.created.date = new Date();
                 shipping.returnInfo.created.user = user._id;
-                shipping.returned = true;
-
+               
                 var notification = new schemas.notifications;
                 notification.event = 'Retur spb ' + shipping.spbNumber + ' ' + (viewModel.returnInfo.accepted ? 'diterima' : 'ditolak');
                 notification.filePath = shipping.returnInfo.filePath;
@@ -92,6 +91,7 @@ Controller.prototype.return = function (viewModels, user) {
                 yield notification.save();
             }
 
+            shipping.returned = true;
             yield shipping.save();
         });
     });
