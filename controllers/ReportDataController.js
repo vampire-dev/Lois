@@ -201,6 +201,7 @@ Controller.prototype.getRecapitulations = function (query) {
         { "$lookup": { "from": "clients", "localField": "sender", "foreignField": "_id", "as": "sender" } },
         { "$lookup": { "from": "trainTypes", "localField": "items.recapitulations.trainType", "foreignField": "_id", "as": "trainType" } },
         { "$lookup": { "from": "drivers", "localField": "items.recapitulations.driver", "foreignField": "_id", "as": "driver" } },
+        { "$lookup": { "from": "locations", "localField": "destination", "foreignField": "_id", "as": "destination" } },
         { "$skip": skip },
         { "$limit": limit }
     ]).exec();
@@ -213,7 +214,7 @@ Controller.prototype.getRecapitulationsReport = function (viewModels, query, use
         "title": "LAPORAN REKAP",
         "template_file": "laprekap.xlsx",
         "location": user.location.name,
-        "train_type": "Kereta",
+        "train_type": "",
         "date": query['recapDate'],
         "recap_driver": null,
         "recap_car": null,
@@ -252,7 +253,7 @@ Controller.prototype.getRecapitulationsReport = function (viewModels, query, use
                 "recap_limas_color": viewModel.items.recapitulations.limasColor,
                 "recap_relation_color": viewModel.items.recapitulations.relationColor,
                 "transaction_date": viewModel.date,
-                "destination_city": viewModel.destination.name
+                "destination_city": viewModel.destination[0].name
             });
 
             totalColliQuantity += _.parseInt(viewModel.items.colli.quantity);
@@ -261,8 +262,8 @@ Controller.prototype.getRecapitulationsReport = function (viewModels, query, use
             totalPrice += parseFloat(viewModel.items.cost.shipping);
         });
 
-        result['sum_total_colli'] = totalColliQuantity;
-        result['sum_colli'] = totalRecappedColli;
+        result['sum_total_coli'] = totalColliQuantity;
+        result['sum_coli'] = totalRecappedColli;
         result['sum_weight'] = totalWeight;
         result['sum_price'] = totalPrice;
         return result;
@@ -324,7 +325,7 @@ Controller.prototype.getDeliveriesReport = function (viewModels, user) {
         "template_file": "lapdelivery.xlsx",
         "location": user.location.name,
         "user": user.name,
-        "date": new Date(),
+        "date": viewModels[0].items.deliveries.date,
         "delivery_driver": null,
         "delivery_car": null,
         "report_data": []
@@ -390,7 +391,7 @@ Controller.prototype.getReturnsReport = function (viewModels, user) {
         "location": user.location.name,
         "destination": viewModels[0].destination.name,
         "user": user.name,
-        "date": viewModels[0].returnInfo.date,
+        "date": viewModels[0].returnInfo.modified.date,
         "report_data": []
     };
 
@@ -419,9 +420,9 @@ Controller.prototype.getReturnsReport = function (viewModels, user) {
                 "spb_no": viewModel.spbNumber,
                 "sender": viewModel.sender.name,
                 "price": viewModel.cost.total,
-                "relation_no": viewModel.returnInfo.relationNumber,
                 "limas_color": viewModel.returnInfo.limasColor,
                 "relation_color": viewModel.returnInfo.relationColor,
+                "partner_no": viewModel.returnInfo.relationCode,
                 "delivery_driver": drivers.join(),
                 "delivery_car_no": vehicleNumbers.join(),
                 "delivery_date": deliveryDates.join(),
@@ -574,6 +575,7 @@ Controller.prototype.getCommisionsReport = function (viewModels, query, user) {
         "title": "LAPORAN KOMISI",
         "template_file": "lapkomisi.xlsx",
         "location": user.location.name,
+        "destination": viewModels[0].destination.name,
         "user": user.name,
         "start_date": query['from'],
         "end_date": query['to'],
@@ -599,8 +601,9 @@ Controller.prototype.getCommisionsReport = function (viewModels, query, user) {
                 "content": contents.join(),
                 "total_coli": totalColli,
                 "total_weight": totalWeight,
-                "price": viewModel.cost.total,
+                "cost": viewModel.cost.total,
                 "bea_tambahan": totalAdditionalCost,
+                "pph": "0%",
                 "bea_kuli": viewModel.cost.worker
             });
 
