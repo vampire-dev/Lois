@@ -29,6 +29,7 @@
 
             ctrl.createQuery();
             ctrl.loadingData = true;
+            ctrl.checkedAll = false;
 
             ctrl.functions.load(ctrl.query).then(result => {
                 ctrl.entities = result.data;

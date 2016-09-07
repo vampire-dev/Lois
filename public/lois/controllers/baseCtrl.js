@@ -19,6 +19,7 @@ var app;
                 var ctrl = this;
                 ctrl.createQuery();
                 ctrl.loadingData = true;
+                ctrl.checkedAll = false;
                 ctrl.functions.load(ctrl.query).then(function (result) {
                     ctrl.entities = result.data;
                 }).catch(function (error) {
