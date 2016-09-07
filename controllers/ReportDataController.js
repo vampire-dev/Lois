@@ -133,7 +133,7 @@ Controller.prototype.getUnpaidReport = function (viewModels, user) {
             var invoices = [];
 
             if (viewModel.invoice.all !== null)
-                invoices.push(viewModel.invoice.all;
+                invoices.push(viewModel.invoice.all);
             if (viewModel.invoice.client !== null)
                 invoices.push(viewModel.invoice.client);
             if (viewModel.invoice.partner !== null)
