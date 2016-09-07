@@ -218,44 +218,44 @@ var app;
             report.getRecapitulations = function (query) {
                 return app.http.get('/lois/api/reportData/getRecapitulations?query=' + JSON.stringify(query));
             };
-            report.getRecapitulationsReport = function (data) {
-                return app.http.post('/lois/api/reportData/getRecapitulationsReport', JSON.stringify(data));
+            report.getRecapitulationsReport = function (data, query) {
+                return app.http.post('/lois/api/reportData/getRecapitulationsReport?query= ' + JSON.stringify(query), JSON.stringify(data));
             };
             report.getDeliveries = function (query) {
                 return app.http.get('/lois/api/reportData/getDeliveries?query=' + JSON.stringify(query));
             };
-            report.getDeliveriesReport = function (data) {
-                return app.http.post('/lois/api/reportData/getDeliveriesReport', JSON.stringify(data));
+            report.getDeliveriesReport = function (data, query) {
+                return app.http.post('/lois/api/reportData/getDeliveriesReport?query= ' + JSON.stringify(query), JSON.stringify(data));
             };
             report.getReturns = function (query) {
                 return app.http.get('/lois/api/reportData/getReturns?query=' + JSON.stringify(query));
             };
-            report.getReturnsReport = function (data) {
-                return app.http.post('/lois/api/reportData/getReturnsReport', JSON.stringify(data));
+            report.getReturnsReport = function (data, query) {
+                return app.http.post('/lois/api/reportData/getReturnsReport?query= ' + JSON.stringify(query), JSON.stringify(data));
             };
             report.getUnconfirmed = function (query) {
                 return app.http.get('/lois/api/reportData/getUnconfirmed?query=' + JSON.stringify(query));
             };
-            report.getUnconfirmedReport = function (data) {
-                return app.http.post('/lois/api/reportData/getUnconfirmedReport', JSON.stringify(data));
+            report.getUnconfirmedReport = function (data, query) {
+                return app.http.post('/lois/api/reportData/getUnconfirmedReport?query= ' + JSON.stringify(query), JSON.stringify(data));
             };
             report.getPaid = function (query) {
                 return app.http.get('/lois/api/reportData/getPaid?query=' + JSON.stringify(query));
             };
-            report.getPaidReport = function (data) {
-                return app.http.post('/lois/api/reportData/getPaidReport', JSON.stringify(data));
+            report.getPaidReport = function (data, query) {
+                return app.http.post('/lois/api/reportData/getPaidReport?query= ' + JSON.stringify(query), JSON.stringify(data));
             };
             report.getUnpaid = function (query) {
                 return app.http.get('/lois/api/reportData/getUnpaid?query=' + JSON.stringify(query));
             };
-            report.getUnpaidReport = function (data) {
-                return app.http.post('/lois/api/reportData/getUnpaidReport', JSON.stringify(data));
+            report.getUnpaidReport = function (data, query) {
+                return app.http.post('/lois/api/reportData/getUnpaidReport?query= ' + JSON.stringify(query), JSON.stringify(data));
             };
             report.getDeliveryList = function (query) {
                 return app.http.get('/lois/api/reportData/getDeliveryList?query=' + JSON.stringify(query));
             };
-            report.getDeliveryListReport = function (data) {
-                return app.http.post('/lois/api/reportData/getDeliveryListReport', JSON.stringify(data));
+            report.getDeliveryListReport = function (data, query) {
+                return app.http.post('/lois/api/reportData/getDeliveryListReport?query= ' + JSON.stringify(query), JSON.stringify(data));
             };
             report.getCommisions = function (query) {
                 return app.http.get('/lois/api/reportData/getCommisions?query=' + JSON.stringify(query));

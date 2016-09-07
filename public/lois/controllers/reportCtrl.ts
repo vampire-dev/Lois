@@ -68,6 +68,7 @@
                     break;
             }
 
+            this.checkedAll = false;
             this.filters = {};
             this.paging.page = 1;
             this.filter();
@@ -84,10 +85,7 @@
             var ctrl = this;
             ctrl.loadingData = true;
 
-            var dataFunction = ctrl.dataFunc(checkedEntities);
-
-            if (ctrl.activeReport === 'Komisi')
-                dataFunction = ctrl.dataFunc(checkedEntities, ctrl.query);
+            var dataFunction = ctrl.dataFunc(checkedEntities, ctrl.query); 
 
             dataFunction.then(result => {
                 ctrl.renderFunc(result.data).then(buffer => {
