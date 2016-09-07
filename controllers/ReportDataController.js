@@ -65,13 +65,13 @@ Controller.prototype.getPaidReport = function (viewModels, query, user) {
                 "spb_no": viewModel.spbNumber,
                 "sender": viewModel.sender.name,
                 "receiver": viewModel.receiver.name,
-                "content": contents.join(),
+                "content": contents.length > 0 ? contents.join() : " ",
                 "total_coli": totalColli,
                 "total_weight": totalWeight,
                 "price": viewModel.cost.total,
                 "transaction_date": viewModel.date,
-                "payment_date": paymentDates.join(),
-                "bank": banks.join()
+                "payment_date": paymentDates.length > 0 ? paymentDates.join() : " ",
+                "bank": banks.length > 0 ? banks.join() : " "
             });
 
             sumTotalColli += totalColli;
@@ -137,12 +137,12 @@ Controller.prototype.getUnpaidReport = function (viewModels, user) {
                 "spb_no": viewModel.spbNumber,
                 "sender": viewModel.sender.name,
                 "receiver": viewModel.receiver.name,
-                "content": contents.join(),
+                "content": contents.length > 0 ? contents.join() : " ",
                 "total_coli": totalColli,
                 "total_weight": totalWeight,
                 "price": viewModel.cost.total,
                 "payment_method": viewModel.payment.type.name,
-                "invoice_no": invoices.join(),
+                "invoice_no": invoices.length > 0 ? invoices.join() : " ",
                 "transaction_date": viewModel.date
             });
 
@@ -423,9 +423,9 @@ Controller.prototype.getReturnsReport = function (viewModels, user) {
                 "limas_color": viewModel.returnInfo.limasColor,
                 "relation_color": viewModel.returnInfo.relationColor,
                 "partner_no": viewModel.returnInfo.relationCode,
-                "delivery_driver": drivers.join(),
-                "delivery_car_no": vehicleNumbers.join(),
-                "delivery_date": deliveryDates.join(),
+                "delivery_driver": drivers.length > 0 ? drivers.join() : " ",
+                "delivery_car_no": vehicleNumbers.length > 0 ? vehicleNumbers.join() : " ",
+                "delivery_date": deliveryDates.length > 0 ? deliveryDates.join() : " ",
                 "retur_signature": viewModel.returnInfo.signed ? 'v' : 'x',
                 "retur_stamp": viewModel.returnInfo.stamped ? 'v' : 'x',
                 "retur_received_by": viewModel.returnInfo.concernedPerson,
@@ -529,7 +529,7 @@ Controller.prototype.getDeliveryListReport = function (viewModels, user) {
                 "spb_no": viewModel.spbNumber,
                 "sender": viewModel.sender.name,
                 "receiver": viewModel.receiver.name,
-                "content": contents.join(),
+                "content": contents.length > 0 ? contents.join() : " ",
                 "total_coli": totalColli,
                 "total_weight": totalWeight,
                 "price": viewModel.cost.total,
@@ -605,7 +605,7 @@ Controller.prototype.getCommisionsReport = function (viewModels, query, user) {
                 "spb_no": viewModel.spbNumber,
                 "sender": viewModel.sender.name,
                 "receiver": viewModel.receiver.name,
-                "content": contents.join(),
+                "content": contents.length > 0 ? contents.join() : " ",
                 "total_coli": totalColli,
                 "total_weight": totalWeight,
                 "cost": priceWithoutPph,
