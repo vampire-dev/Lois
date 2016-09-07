@@ -51,7 +51,7 @@ Controller.prototype.create = function (viewModels, user) {
     var currentDate = new Date();
 
     return co(function* () {
-        var latestInvoice = yield schemas.invoices.findOne({}).sort({ "inc": -1 }).exec();
+        var latestInvoice = yield schemas.invoices.findOne({ "inputLocation": ObjectId(user.location._id) }).sort({ "inc": -1 }).exec();
         var inc = 1;
 
         if (latestInvoice)
@@ -63,7 +63,8 @@ Controller.prototype.create = function (viewModels, user) {
             "to": viewModels[0].to,
             "location": viewModels[0].location,
             "type": viewModels[0].type,
-            "shippings": []
+            "shippings": [],
+            "inputLocation": user.location._id
         };
 
         yield* _co.coEach(viewModels, function* (viewModel) {

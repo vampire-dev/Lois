@@ -235,28 +235,29 @@ schemas['shippings'] = mongoose.model('Shipping', new Schema({
 }, { versionKey: false, collection: 'shippings' }));
 
 schemas['notifications'] = mongoose.model('Notification', new Schema({
-    event: { type: String, default: null },
-    filePath: { type: String, default: null },
-    date: { type: Date, default: Date.now },
-    user: { type: ObjectId, ref: 'User' }
+    "event": { type: String, default: null },
+    "filePath": { type: String, default: null },
+    "date": { type: Date, default: Date.now },
+    "user": { type: ObjectId, ref: 'User' }
 }, { versionKey: false, collection: 'notifications' }));
 
 schemas['audits'] = mongoose.model('Audit', new Schema({
-    type: { type: String, default: null },
-    notes: { type: String, default: null },
-    date: { type: Date, default: Date.now },
-    data: {},
-    user: { type: ObjectId, ref: 'User' }
+    "type": { type: String, default: null },
+    "notes": { type: String, default: null },
+    "date": { type: Date, default: Date.now },
+    "data": {},
+    "user": { type: ObjectId, ref: 'User' }
 }, { versionKey: false, collection: 'audits' }));
 
 schemas['invoices'] = mongoose.model('Invoice', new Schema({
-    number: { type: String, required: true },
-    date: { type: Date, default: Date.now },
-    inc: { type: Number, required: true },
-    to: { type: String, required: true },
-    location: { type: String, required: true },
-    type: { type: String, default: 'Semua' },
-    shippings: [{ type: ObjectId, ref: 'Shipping' }]
+    "number": { type: String, required: true },
+    "date": { type: Date, default: Date.now },
+    "inc": { type: Number, required: true },
+    "to": { type: String, required: true },
+    "location": { type: String, required: true },
+    "type": { type: String, default: 'Semua' },
+    "shippings": [{ type: ObjectId, ref: 'Shipping' }],
+    "inputLocation": { type: ObjectId, ref: 'Location' }
 }, { versionKey: false, collection: 'invoices' }));
 
 module.exports = schemas;
