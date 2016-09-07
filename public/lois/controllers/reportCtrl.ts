@@ -68,7 +68,6 @@
                     break;
             }
 
-            this.checkedAll = false;
             this.filters = {};
             this.paging.page = 1;
             this.filter();

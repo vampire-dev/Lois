@@ -1,0 +1,500 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+        <SchemaVersion>2.0</SchemaVersion>
+        <ProjectGuid>{fcf97fed-bb4b-40eb-a66c-4112a815457b}</ProjectGuid>
+        <ProjectHome />
+        <ProjectView>ShowAllFiles</ProjectView>
+        <StartupFile>migration.js</StartupFile>
+        <WorkingDirectory>.</WorkingDirectory>
+        <OutputPath>.</OutputPath>
+        <ProjectTypeGuids>{3AF33F2E-1136-4D97-BBB7-1795711AC8B8};{349c5851-65df-11da-9384-00065b846f21};{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}</ProjectTypeGuids>
+        <TypeScriptSourceMap>true</TypeScriptSourceMap>
+        <TypeScriptModuleKind>CommonJS</TypeScriptModuleKind>
+        <EnableTypeScript>true</EnableTypeScript>
+        <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">11.0</VisualStudioVersion>
+        <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
+    <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
+    <ItemGroup>
+        <Content Include="env.json" />
+        <Content Include="package.json" />
+        <Content Include="typings.json" />
+        <Content Include="README.md" />
+        <Compile Include="app.js" />
+        <Compile Include="configurator.js" />
+        <Compile Include="migration.js" />
+        <Compile Include="controllers\AuditController.js" />
+        <Compile Include="controllers\ClientController.js" />
+        <Compile Include="controllers\DeliveryController.js" />
+        <Compile Include="controllers\DeliveryOrderController.js" />
+        <Compile Include="controllers\DriverController.js" />
+        <Compile Include="controllers\HomeController.js" />
+        <Compile Include="controllers\InvoiceController.js" />
+        <Compile Include="controllers\ItemTypeController.js" />
+        <Compile Include="controllers\LocationController.js" />
+        <Compile Include="controllers\MenuController.js" />
+        <Compile Include="controllers\NotificationController.js" />
+        <Compile Include="controllers\PackingTypeController.js" />
+        <Compile Include="controllers\PartnerController.js" />
+        <Compile Include="controllers\PaymentController.js" />
+        <Compile Include="controllers\PaymentTypeController.js" />
+        <Compile Include="controllers\RecapitulationController.js" />
+        <Compile Include="controllers\RegionController.js" />
+        <Compile Include="controllers\ReportController.js" />
+        <Compile Include="controllers\ReportDataController.js" />
+        <Compile Include="controllers\ReturnController.js" />
+        <Compile Include="controllers\RoleController.js" />
+        <Compile Include="controllers\RoleMenuController.js" />
+        <Compile Include="controllers\RoleReportController.js" />
+        <Compile Include="controllers\ShippingController.js" />
+        <Compile Include="controllers\TariffController.js" />
+        <Compile Include="controllers\TrainTypeController.js" />
+        <Compile Include="controllers\UserController.js" />
+        <Compile Include="models\schemas.js" />
+        <Compile Include="routes\audit.js" />
+        <Compile Include="routes\client.js" />
+        <Compile Include="routes\delivery.js" />
+        <Compile Include="routes\deliveryOrder.js" />
+        <Compile Include="routes\driver.js" />
+        <Compile Include="routes\home.js" />
+        <Compile Include="routes\invoice.js" />
+        <Compile Include="routes\itemType.js" />
+        <Compile Include="routes\location.js" />
+        <Compile Include="routes\menu.js" />
+        <Compile Include="routes\notification.js" />
+        <Compile Include="routes\packingType.js" />
+        <Compile Include="routes\partner.js" />
+        <Compile Include="routes\payment.js" />
+        <Compile Include="routes\paymentType.js" />
+        <Compile Include="routes\recapitulation.js" />
+        <Compile Include="routes\region.js" />
+        <Compile Include="routes\report.js" />
+        <Compile Include="routes\reportData.js" />
+        <Compile Include="routes\return.js" />
+        <Compile Include="routes\role.js" />
+        <Compile Include="routes\roleMenu.js" />
+        <Compile Include="routes\roleReport.js" />
+        <Compile Include="routes\shipping.js" />
+        <Compile Include="routes\tariff.js" />
+        <Compile Include="routes\trainType.js" />
+        <Compile Include="routes\user.js" />
+        <TypeScriptCompile Include="typings\index.d.ts" />
+        <Compile Include="utils\authentication.js" />
+        <Compile Include="utils\date.js" />
+        <Compile Include="utils\static.js" />
+        <Content Include="public\lois\tsconfig.json" />
+        <TypeScriptCompile Include="public\lois\api.ts" />
+        <TypeScriptCompile Include="public\lois\lois.ts" />
+        <Compile Include="public\lois\api.js" />
+        <Compile Include="public\lois\lois.js" />
+        <Content Include="public\views\audit.html" />
+        <Content Include="public\views\configuration.html" />
+        <Content Include="public\views\confirmReturn.html" />
+        <Content Include="public\views\delivery.html" />
+        <Content Include="public\views\deliveryOrder.html" />
+        <Content Include="public\views\home.html" />
+        <Content Include="public\views\index.html" />
+        <Content Include="public\views\invoice.html" />
+        <Content Include="public\views\login.html" />
+        <Content Include="public\views\main.html" />
+        <Content Include="public\views\notification.html" />
+        <Content Include="public\views\payment.html" />
+        <Content Include="public\views\recapitulation.html" />
+        <Content Include="public\views\report.html" />
+        <Content Include="public\views\return.html" />
+        <Content Include="public\views\shipping.html" />
+        <Content Include="public\assets\css\app.css" />
+        <Content Include="public\assets\css\bootstrap.min.css" />
+        <Content Include="public\assets\css\font-awesome.min.css" />
+        <Content Include="public\assets\css\jquery-ui.css" />
+        <Content Include="public\assets\css\smartadmin-production-plugins.min.css" />
+        <Content Include="public\assets\css\smartadmin-production.min.css" />
+        <Content Include="public\assets\css\smartadmin-rtl.min.css" />
+        <Content Include="public\assets\css\smartadmin-skins.min.css" />
+        <Content Include="public\assets\css\ui-notification.css" />
+        <Content Include="public\assets\fonts\fontawesome-webfont.svg" />
+        <Content Include="public\assets\fonts\glyphicons-halflings-regular.svg" />
+        <Content Include="public\assets\img\glass-image-copyright.txt" />
+        <Content Include="public\assets\img\alpha.png" />
+        <Content Include="public\assets\img\clear.png" />
+        <Content Include="public\assets\img\CONSTRICTION.png" />
+        <Content Include="public\assets\img\hue.png" />
+        <Content Include="public\assets\img\kai.png" />
+        <Content Include="public\assets\img\limas.png" />
+        <Content Include="public\assets\img\limas_cropped.png" />
+        <Content Include="public\assets\img\logo-blacknwhite.png" />
+        <Content Include="public\assets\img\logo-blue.png" />
+        <Content Include="public\assets\img\logo-o.png" />
+        <Content Include="public\assets\img\logo-pale.png" />
+        <Content Include="public\assets\img\logo-white.png" />
+        <Content Include="public\assets\img\logo.png" />
+        <Content Include="public\assets\img\mappin-default.png" />
+        <Content Include="public\assets\img\minus.png" />
+        <Content Include="public\assets\img\mybg.png" />
+        <Content Include="public\assets\img\plus.png" />
+        <Content Include="public\assets\img\ribbon.png" />
+        <Content Include="public\assets\img\sa-dark.png" />
+        <Content Include="public\assets\img\sa-default.png" />
+        <Content Include="public\assets\img\saturation.png" />
+        <Content Include="public\assets\img\sort_asc.png" />
+        <Content Include="public\assets\img\sort_asc_disabled.png" />
+        <Content Include="public\assets\img\sort_both.png" />
+        <Content Include="public\assets\img\sort_desc.png" />
+        <Content Include="public\assets\img\sort_desc_disabled.png" />
+        <Content Include="public\assets\img\vt-menu.png" />
+        <Content Include="public\assets\img\glass.jpg" />
+        <Content Include="public\assets\img\violate.jpg" />
+        <Content Include="public\assets\img\ajax-loader.gif" />
+        <Content Include="public\assets\img\blank.gif" />
+        <Content Include="public\assets\img\loading.gif" />
+        <Content Include="public\assets\img\select2-spinner.gif" />
+        <Content Include="public\assets\img\lois.ico" />
+        <Content Include="public\assets\fonts\fontawesome4.2\readme.txt" />
+        <Content Include="public\assets\fonts\fontawesome4.2\fontawesome-webfont.svg" />
+        <Content Include="public\assets\img\avatars\copyright.txt" />
+        <Content Include="public\assets\img\avatars\1.png" />
+        <Content Include="public\assets\img\avatars\2.png" />
+        <Content Include="public\assets\img\avatars\3.png" />
+        <Content Include="public\assets\img\avatars\4.png" />
+        <Content Include="public\assets\img\avatars\5.png" />
+        <Content Include="public\assets\img\avatars\female.png" />
+        <Content Include="public\assets\img\avatars\male.png" />
+        <Content Include="public\assets\img\avatars\sunny-big.png" />
+        <Content Include="public\assets\img\avatars\sunny.png" />
+        <Content Include="public\assets\img\colorblind-friendly\pt1.png" />
+        <Content Include="public\assets\img\colorblind-friendly\pt2.png" />
+        <Content Include="public\assets\img\colorblind-friendly\pt3.png" />
+        <Content Include="public\assets\img\demo\copyright.txt" />
+        <Content Include="public\assets\img\demo\64x64.png" />
+        <Content Include="public\assets\img\demo\basic.png" />
+        <Content Include="public\assets\img\demo\chat.png" />
+        <Content Include="public\assets\img\demo\demo-smartbig-alert.png" />
+        <Content Include="public\assets\img\demo\demo-smartmedium-alert.png" />
+        <Content Include="public\assets\img\demo\demo-smartsmall-alert.png" />
+        <Content Include="public\assets\img\demo\hero.png" />
+        <Content Include="public\assets\img\demo\image-placeholder-64x64.png" />
+        <Content Include="public\assets\img\demo\iphoneview.png" />
+        <Content Include="public\assets\img\demo\newsletter.png" />
+        <Content Include="public\assets\img\demo\responseimg.png" />
+        <Content Include="public\assets\img\demo\sa-demo.png" />
+        <Content Include="public\assets\img\demo\sidebar.png" />
+        <Content Include="public\assets\img\demo\sidebarhero.png" />
+        <Content Include="public\assets\img\demo\video.png" />
+        <Content Include="public\assets\img\demo\widget-colorpicker.png" />
+        <Content Include="public\assets\img\demo\m1.jpg" />
+        <Content Include="public\assets\img\demo\m2.jpg" />
+        <Content Include="public\assets\img\demo\m3.jpg" />
+        <Content Include="public\assets\img\demo\s1.jpg" />
+        <Content Include="public\assets\img\demo\s2.jpg" />
+        <Content Include="public\assets\img\demo\s3.jpg" />
+        <Content Include="public\assets\img\demo\sample.jpg" />
+        <Content Include="public\assets\img\demo\site-1.jpg" />
+        <Content Include="public\assets\img\demo\site-2.jpg" />
+        <Content Include="public\assets\img\dropzone\spritemap.png" />
+        <Content Include="public\assets\img\dropzone\spritemap@2x.png" />
+        <Content Include="public\assets\img\favicon\favicon.png" />
+        <Content Include="public\assets\img\favicon\1favicon.ico" />
+        <Content Include="public\assets\img\favicon\favicon.ico" />
+        <Content Include="public\assets\img\flags\de.png" />
+        <Content Include="public\assets\img\flags\es.png" />
+        <Content Include="public\assets\img\flags\flags.png" />
+        <Content Include="public\assets\img\flags\us.png" />
+        <Content Include="public\assets\img\gradient\login.png" />
+        <Content Include="public\assets\img\invoice\license.txt" />
+        <Content Include="public\assets\img\invoice\americanexpress.png" />
+        <Content Include="public\assets\img\invoice\mastercard.png" />
+        <Content Include="public\assets\img\invoice\paypal.png" />
+        <Content Include="public\assets\img\invoice\visa.png" />
+        <Content Include="public\assets\img\jcrop\Jcrop.gif" />
+        <Content Include="public\assets\img\jqueryui\ui-bg_flat_0_999999_40x100.png" />
+        <Content Include="public\assets\img\jqueryui\ui-bg_flat_0_aaaaaa_40x100.png" />
+        <Content Include="public\assets\img\jqueryui\ui-bg_glass_55_fbf9ee_1x400.png" />
+        <Content Include="public\assets\img\jqueryui\ui-bg_glass_65_ffffff_1x400.png" />
+        <Content Include="public\assets\img\jqueryui\ui-bg_glass_75_dadada_1x400.png" />
+        <Content Include="public\assets\img\jqueryui\ui-bg_glass_75_e6e6e6_1x400.png" />
+        <Content Include="public\assets\img\jqueryui\ui-bg_glass_75_ffffff_1x400.png" />
+        <Content Include="public\assets\img\jqueryui\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+        <Content Include="public\assets\img\jqueryui\ui-bg_inset-soft_95_fef1ec_1x100.png" />
+        <Content Include="public\assets\img\jqueryui\ui-icons_222222_256x240.png" />
+        <Content Include="public\assets\img\jqueryui\ui-icons_2e83ff_256x240.png" />
+        <Content Include="public\assets\img\jqueryui\ui-icons_428bca_256x240.png" />
+        <Content Include="public\assets\img\jqueryui\ui-icons_454545_256x240.png" />
+        <Content Include="public\assets\img\jqueryui\ui-icons_555555_256x240.png" />
+        <Content Include="public\assets\img\jqueryui\ui-icons_888888_256x240.png" />
+        <Content Include="public\assets\img\jqueryui\ui-icons_999999_256x240.png" />
+        <Content Include="public\assets\img\jqueryui\ui-icons_cd0a0a_256x240.png" />
+        <Content Include="public\assets\img\jqueryui\ui-icons_f0ad4e_256x240.png" />
+        <Content Include="public\assets\img\jqueryui\ui-icons_f6cf3b_256x240.png" />
+        <Content Include="public\assets\img\jqueryui\ui-icons_ffffff_256x240.png" />
+        <Content Include="public\assets\img\pattern\license-info.txt" />
+        <Content Include="public\assets\img\pattern\graphy-xs.png" />
+        <Content Include="public\assets\img\pattern\graphy.png" />
+        <Content Include="public\assets\img\pattern\lightpaperfibers.png" />
+        <Content Include="public\assets\img\pattern\movable.png" />
+        <Content Include="public\assets\img\pattern\nistri-xs.png" />
+        <Content Include="public\assets\img\pattern\nistri.png" />
+        <Content Include="public\assets\img\pattern\overlay-pattern.png" />
+        <Content Include="public\assets\img\pattern\paper-xs.png" />
+        <Content Include="public\assets\img\pattern\paper.png" />
+        <Content Include="public\assets\img\pattern\pattern.png" />
+        <Content Include="public\assets\img\pattern\sneaker_mesh_fabric-xs.png" />
+        <Content Include="public\assets\img\pattern\sneaker_mesh_fabric.png" />
+        <Content Include="public\assets\img\pattern\tileable_wood_texture-xs.png" />
+        <Content Include="public\assets\img\pattern\tileable_wood_texture.png" />
+        <Content Include="public\assets\img\pattern\divider.jpg" />
+        <Content Include="public\assets\img\realestate\1.png" />
+        <Content Include="public\assets\img\realestate\2.png" />
+        <Content Include="public\assets\img\realestate\3.png" />
+        <Content Include="public\assets\img\realestate\4.png" />
+        <Content Include="public\assets\img\realestate\5.png" />
+        <Content Include="public\assets\img\realestate\6.png" />
+        <Content Include="public\assets\img\splash\ipad-landscape.png" />
+        <Content Include="public\assets\img\splash\ipad-portrait.png" />
+        <Content Include="public\assets\img\splash\iphone.png" />
+        <Content Include="public\assets\img\splash\sptouch-icon-iphone.png" />
+        <Content Include="public\assets\img\splash\touch-icon-ipad-retina.png" />
+        <Content Include="public\assets\img\splash\touch-icon-ipad.png" />
+        <Content Include="public\assets\img\splash\touch-icon-iphone-retina.png" />
+        <Content Include="public\assets\img\superbox\superbox-full-1.jpg" />
+        <Content Include="public\assets\img\superbox\superbox-full-10.jpg" />
+        <Content Include="public\assets\img\superbox\superbox-full-11.jpg" />
+        <Content Include="public\assets\img\superbox\superbox-full-12.jpg" />
+        <Content Include="public\assets\img\superbox\superbox-full-13.jpg" />
+        <Content Include="public\assets\img\superbox\superbox-full-14.jpg" />
+        <Content Include="public\assets\img\superbox\superbox-full-15.jpg" />
+        <Content Include="public\assets\img\superbox\superbox-full-16.jpg" />
+        <Content Include="public\assets\img\superbox\superbox-full-17.jpg" />
+        <Content Include="public\assets\img\superbox\superbox-full-18.jpg" />
+        <Content Include="public\assets\img\superbox\superbox-full-19.jpg" />
+        <Content Include="public\assets\img\superbox\superbox-full-2.jpg" />
+        <Content Include="public\assets\img\superbox\superbox-full-20-bw.jpg" />
+        <Content Include="public\assets\img\superbox\superbox-full-20.jpg" />
+        <Content Include="public\assets\img\superbox\superbox-full-21.jpg" />
+        <Content Include="public\assets\img\superbox\superbox-full-22.jpg" />
+        <Content Include="public\assets\img\superbox\superbox-full-23.jpg" />
+        <Content Include="public\assets\img\superbox\superbox-full-24.jpg" />
+        <Content Include="public\assets\img\superbox\superbox-full-3.jpg" />
+        <Content Include="public\assets\img\superbox\superbox-full-4.jpg" />
+        <Content Include="public\assets\img\superbox\superbox-full-5.jpg" />
+        <Content Include="public\assets\img\superbox\superbox-full-6.jpg" />
+        <Content Include="public\assets\img\superbox\superbox-full-7.jpg" />
+        <Content Include="public\assets\img\superbox\superbox-full-8.jpg" />
+        <Content Include="public\assets\img\superbox\superbox-full-9.jpg" />
+        <Content Include="public\assets\img\superbox\superbox-thumb-1.jpg" />
+        <Content Include="public\assets\img\superbox\superbox-thumb-10.jpg" />
+        <Content Include="public\assets\img\superbox\superbox-thumb-11.jpg" />
+        <Content Include="public\assets\img\superbox\superbox-thumb-12.jpg" />
+        <Content Include="public\assets\img\superbox\superbox-thumb-13.jpg" />
+        <Content Include="public\assets\img\superbox\superbox-thumb-14.jpg" />
+        <Content Include="public\assets\img\superbox\superbox-thumb-15.jpg" />
+        <Content Include="public\assets\img\superbox\superbox-thumb-16.jpg" />
+        <Content Include="public\assets\img\superbox\superbox-thumb-17.jpg" />
+        <Content Include="public\assets\img\superbox\superbox-thumb-18.jpg" />
+        <Content Include="public\assets\img\superbox\superbox-thumb-19.jpg" />
+        <Content Include="public\assets\img\superbox\superbox-thumb-2.jpg" />
+        <Content Include="public\assets\img\superbox\superbox-thumb-20.jpg" />
+        <Content Include="public\assets\img\superbox\superbox-thumb-21.jpg" />
+        <Content Include="public\assets\img\superbox\superbox-thumb-22.jpg" />
+        <Content Include="public\assets\img\superbox\superbox-thumb-23.jpg" />
+        <Content Include="public\assets\img\superbox\superbox-thumb-24.jpg" />
+        <Content Include="public\assets\img\superbox\superbox-thumb-3.jpg" />
+        <Content Include="public\assets\img\superbox\superbox-thumb-4.jpg" />
+        <Content Include="public\assets\img\superbox\superbox-thumb-5.jpg" />
+        <Content Include="public\assets\img\superbox\superbox-thumb-6.jpg" />
+        <Content Include="public\assets\img\superbox\superbox-thumb-7.jpg" />
+        <Content Include="public\assets\img\superbox\superbox-thumb-8.jpg" />
+        <Content Include="public\assets\img\superbox\superbox-thumb-9.jpg" />
+        <Content Include="public\assets\img\versions\ajaxversion.png" />
+        <Content Include="public\assets\img\versions\angularversion.png" />
+        <Content Include="public\assets\img\versions\dotnetversion.png" />
+        <Content Include="public\assets\img\versions\htmlversion.png" />
+        <Content Include="public\assets\img\versions\phpversion.png" />
+        <Content Include="public\assets\img\versions\reactversion.png" />
+        <Content Include="public\assets\img\voicecommand\active-btn.gif" />
+        <Compile Include="public\libs\angular\angular-animate.min.js" />
+        <Compile Include="public\libs\angular\angular-aria.min.js" />
+        <Compile Include="public\libs\angular\angular-filter.js" />
+        <Compile Include="public\libs\angular\angular-locale_id-id.js" />
+        <Compile Include="public\libs\angular\angular-messages.min.js" />
+        <Compile Include="public\libs\angular\angular-resource.min.js" />
+        <Compile Include="public\libs\angular\angular-sanitize.min.js" />
+        <Compile Include="public\libs\angular\angular-ui-router.min.js" />
+        <Compile Include="public\libs\angular\angular.min.js" />
+        <Compile Include="public\libs\jquery\jquery-2.1.1.min.js" />
+        <Compile Include="public\libs\jquery\jquery-ui-1.10.3.min.js" />
+        <Compile Include="public\libs\plugins\angular-blocks.min.js" />
+        <Compile Include="public\libs\plugins\angular-ui-notification.js" />
+        <Compile Include="public\libs\plugins\ng-file-upload.min.js" />
+        <Compile Include="public\libs\plugins\paging.min.js" />
+        <Compile Include="public\libs\plugins\ui-bootstrap-tpls-1.2.5.min.js" />
+        <Compile Include="public\libs\smartadmin\app.config.js" />
+        <Compile Include="public\libs\smartadmin\app.min.js" />
+        <Compile Include="public\libs\smartadmin\bootstrap.min.js" />
+        <Compile Include="public\libs\smartadmin\jarvis.widget.min.js" />
+        <TypeScriptCompile Include="public\lois\controllers\auditCtrl.ts" />
+        <TypeScriptCompile Include="public\lois\controllers\baseCtrl.ts" />
+        <TypeScriptCompile Include="public\lois\controllers\configurationCtrl.ts" />
+        <TypeScriptCompile Include="public\lois\controllers\confirmReturnCtrl.ts" />
+        <TypeScriptCompile Include="public\lois\controllers\deliveryCtrl.ts" />
+        <TypeScriptCompile Include="public\lois\controllers\deliveryOrderCtrl.ts" />
+        <TypeScriptCompile Include="public\lois\controllers\homeCtrl.ts" />
+        <TypeScriptCompile Include="public\lois\controllers\indexCtrl.ts" />
+        <TypeScriptCompile Include="public\lois\controllers\invoiceCtrl.ts" />
+        <TypeScriptCompile Include="public\lois\controllers\loginCtrl.ts" />
+        <TypeScriptCompile Include="public\lois\controllers\notificationCtrl.ts" />
+        <TypeScriptCompile Include="public\lois\controllers\paymentCtrl.ts" />
+        <TypeScriptCompile Include="public\lois\controllers\recapitulationCtrl.ts" />
+        <TypeScriptCompile Include="public\lois\controllers\reportCtrl.ts" />
+        <TypeScriptCompile Include="public\lois\controllers\returnCtrl.ts" />
+        <TypeScriptCompile Include="public\lois\controllers\shippingCtrl.ts" />
+        <Compile Include="public\lois\controllers\auditCtrl.js" />
+        <Compile Include="public\lois\controllers\baseCtrl.js" />
+        <Compile Include="public\lois\controllers\configurationCtrl.js" />
+        <Compile Include="public\lois\controllers\confirmReturnCtrl.js" />
+        <Compile Include="public\lois\controllers\deliveryCtrl.js" />
+        <Compile Include="public\lois\controllers\deliveryOrderCtrl.js" />
+        <Compile Include="public\lois\controllers\homeCtrl.js" />
+        <Compile Include="public\lois\controllers\indexCtrl.js" />
+        <Compile Include="public\lois\controllers\invoiceCtrl.js" />
+        <Compile Include="public\lois\controllers\loginCtrl.js" />
+        <Compile Include="public\lois\controllers\notificationCtrl.js" />
+        <Compile Include="public\lois\controllers\paymentCtrl.js" />
+        <Compile Include="public\lois\controllers\recapitulationCtrl.js" />
+        <Compile Include="public\lois\controllers\reportCtrl.js" />
+        <Compile Include="public\lois\controllers\returnCtrl.js" />
+        <Compile Include="public\lois\controllers\shippingCtrl.js" />
+        <Content Include="typings\globals\body-parser\typings.json" />
+        <TypeScriptCompile Include="typings\globals\body-parser\index.d.ts" />
+        <Content Include="typings\globals\cookie-parser\typings.json" />
+        <TypeScriptCompile Include="typings\globals\cookie-parser\index.d.ts" />
+        <Content Include="typings\globals\debug\typings.json" />
+        <TypeScriptCompile Include="typings\globals\debug\index.d.ts" />
+        <Content Include="typings\globals\express\typings.json" />
+        <TypeScriptCompile Include="typings\globals\express\index.d.ts" />
+        <Content Include="typings\globals\express-serve-static-core\typings.json" />
+        <TypeScriptCompile Include="typings\globals\express-serve-static-core\index.d.ts" />
+        <Content Include="typings\globals\express-session\typings.json" />
+        <TypeScriptCompile Include="typings\globals\express-session\index.d.ts" />
+        <Content Include="typings\globals\jade\typings.json" />
+        <TypeScriptCompile Include="typings\globals\jade\index.d.ts" />
+        <Content Include="typings\globals\lodash\typings.json" />
+        <TypeScriptCompile Include="typings\globals\lodash\index.d.ts" />
+        <Content Include="typings\globals\mime\typings.json" />
+        <TypeScriptCompile Include="typings\globals\mime\index.d.ts" />
+        <Content Include="typings\globals\mongoose\typings.json" />
+        <TypeScriptCompile Include="typings\globals\mongoose\index.d.ts" />
+        <Content Include="typings\globals\morgan\typings.json" />
+        <TypeScriptCompile Include="typings\globals\morgan\index.d.ts" />
+        <Content Include="typings\globals\multer\typings.json" />
+        <TypeScriptCompile Include="typings\globals\multer\index.d.ts" />
+        <Content Include="typings\globals\node\typings.json" />
+        <TypeScriptCompile Include="typings\globals\node\index.d.ts" />
+        <Content Include="typings\globals\serve-favicon\typings.json" />
+        <TypeScriptCompile Include="typings\globals\serve-favicon\index.d.ts" />
+        <Content Include="typings\globals\serve-static\typings.json" />
+        <TypeScriptCompile Include="typings\globals\serve-static\index.d.ts" />
+        <Content Include="typings\globals\stylus\typings.json" />
+        <TypeScriptCompile Include="typings\globals\stylus\index.d.ts" />
+    </ItemGroup>
+    <ItemGroup>
+        <Folder Include="bin" />
+        <Folder Include="controllers" />
+        <Folder Include="models" />
+        <Folder Include="public" />
+        <Folder Include="public\assets" />
+        <Folder Include="public\assets\css" />
+        <Folder Include="public\assets\fonts" />
+        <Folder Include="public\assets\fonts\fontawesome4.2" />
+        <Folder Include="public\assets\img" />
+        <Folder Include="public\assets\img\avatars" />
+        <Folder Include="public\assets\img\colorblind-friendly" />
+        <Folder Include="public\assets\img\demo" />
+        <Folder Include="public\assets\img\dropzone" />
+        <Folder Include="public\assets\img\favicon" />
+        <Folder Include="public\assets\img\flags" />
+        <Folder Include="public\assets\img\gradient" />
+        <Folder Include="public\assets\img\invoice" />
+        <Folder Include="public\assets\img\jcrop" />
+        <Folder Include="public\assets\img\jqueryui" />
+        <Folder Include="public\assets\img\pattern" />
+        <Folder Include="public\assets\img\realestate" />
+        <Folder Include="public\assets\img\splash" />
+        <Folder Include="public\assets\img\superbox" />
+        <Folder Include="public\assets\img\versions" />
+        <Folder Include="public\assets\img\voicecommand" />
+        <Folder Include="public\berita_acara" />
+        <Folder Include="public\libs" />
+        <Folder Include="public\libs\angular" />
+        <Folder Include="public\libs\jquery" />
+        <Folder Include="public\libs\plugins" />
+        <Folder Include="public\libs\smartadmin" />
+        <Folder Include="public\lois" />
+        <Folder Include="public\lois\controllers" />
+        <Folder Include="public\views" />
+        <Folder Include="routes" />
+        <Folder Include="typings" />
+        <Folder Include="typings\globals" />
+        <Folder Include="typings\globals\body-parser" />
+        <Folder Include="typings\globals\cookie-parser" />
+        <Folder Include="typings\globals\debug" />
+        <Folder Include="typings\globals\express" />
+        <Folder Include="typings\globals\express-serve-static-core" />
+        <Folder Include="typings\globals\express-session" />
+        <Folder Include="typings\globals\jade" />
+        <Folder Include="typings\globals\lodash" />
+        <Folder Include="typings\globals\mime" />
+        <Folder Include="typings\globals\mongoose" />
+        <Folder Include="typings\globals\morgan" />
+        <Folder Include="typings\globals\multer" />
+        <Folder Include="typings\globals\node" />
+        <Folder Include="typings\globals\serve-favicon" />
+        <Folder Include="typings\globals\serve-static" />
+        <Folder Include="typings\globals\stylus" />
+        <Folder Include="utils" />
+    </ItemGroup>
+    <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+    <!--Do not delete the following Import Project.  While this appears to do nothing it is a marker for setting TypeScript properties before our import that depends on them.-->
+    <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="False" />
+    <Import Project="$(VSToolsPath)\Node.js Tools\Microsoft.NodejsTools.targets" />
+    <ProjectExtensions>
+        <VisualStudio>
+          <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+            <WebProjectProperties>
+              <UseIIS>False</UseIIS>
+              <AutoAssignPort>True</AutoAssignPort>
+              <DevelopmentServerPort>0</DevelopmentServerPort>
+              <DevelopmentServerVPath>/</DevelopmentServerVPath>
+              <IISUrl>http://localhost:48022/</IISUrl>
+              <NTLMAuthentication>False</NTLMAuthentication>
+              <UseCustomServer>True</UseCustomServer>
+              <CustomServerUrl>http://localhost:1337</CustomServerUrl>
+              <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+            </WebProjectProperties>
+          </FlavorProperties>
+          <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}" User="">
+            <WebProjectProperties>
+              <StartPageUrl>
+              </StartPageUrl>
+              <StartAction>CurrentPage</StartAction>
+              <AspNetDebugging>True</AspNetDebugging>
+              <SilverlightDebugging>False</SilverlightDebugging>
+              <NativeDebugging>False</NativeDebugging>
+              <SQLDebugging>False</SQLDebugging>
+              <ExternalProgram>
+              </ExternalProgram>
+              <StartExternalURL>
+              </StartExternalURL>
+              <StartCmdLineArguments>
+              </StartCmdLineArguments>
+              <StartWorkingDirectory>
+              </StartWorkingDirectory>
+              <EnableENC>False</EnableENC>
+              <AlwaysStartWebServerOnDebug>False</AlwaysStartWebServerOnDebug>
+            </WebProjectProperties>
+          </FlavorProperties>
+        </VisualStudio>
+    </ProjectExtensions>
+</Project>
