@@ -474,12 +474,15 @@ Controller.prototype.getUnconfirmedReport = function (viewModels, user) {
         "title": "LAPORAN SURAT JALAN BELUM KEMBALI",
         "template_file": "lapbelumkembali.xlsx",
         "location": user.location.name,
-        "destination": viewModels[0].destination.name,
         "user": user.name,
         "report_data": []
     };
 
     return co(function* () {
+
+        var region = yield schemas.regions.findOne({ "_id": ObjectId(viewModels[0].destination.region) }).exec();
+        result['destination'] = region.name;
+
         yield* _co.coEach(viewModels, function* (viewModel) {
             result.report_data.push({
                 "spb_no": viewModel.spbNumber,
@@ -583,7 +586,6 @@ Controller.prototype.getCommisionsReport = function (viewModels, query, user) {
         "title": "LAPORAN KOMISI",
         "template_file": "lapkomisi.xlsx",
         "location": user.location.name,
-        "destination": viewModels[0].destination.name,
         "user": user.name,
         "start_date": query['from'],
         "end_date": query['to'],
@@ -594,6 +596,9 @@ Controller.prototype.getCommisionsReport = function (viewModels, query, user) {
         var sumTotalColli = 0;
         var sumTotalWeight = 0;
         var sumPrice = 0;
+
+        var region = yield schemas.regions.findOne({ "_id": ObjectId(viewModels[0].destination.region) }).exec();
+        result['destination'] = region.name;
 
         yield* _co.coEach(viewModels, function* (viewModel) {
             var totalWeight = _.sumBy(viewModel.items, 'dimensions.weight');
