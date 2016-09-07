@@ -12,7 +12,7 @@
     "mongoose": "registry:dt/mongoose#4.5.9+20160826204928",
     "morgan": "registry:dt/morgan#1.7.0+20160524142355",
     "multer": "registry:dt/multer#0.0.0+20160829120954",
-    "node": "registry:dt/node#6.0.0+20160831021119",
+    "node": "registry:dt/node#6.0.0+20160906151955",
     "serve-favicon": "registry:dt/serve-favicon#0.0.0+20160316155526",
     "serve-static": "registry:dt/serve-static#0.0.0+20160606155157",
     "stylus": "registry:dt/stylus#0.0.0+20160831020201"

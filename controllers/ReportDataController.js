@@ -31,7 +31,7 @@ Controller.prototype.getPaid = function (query) {
     return schemas.shippings.find(parameters).sort({ "number": -1 }).populate('sender payment.type').skip(skip).limit(limit).exec();
 };
 
-Controller.prototype.getPaidReport = function (viewModels, user) {
+Controller.prototype.getPaidReport = function (viewModels, query, user) {
     var self = this;
     var lastPaymentDate = _.map(viewModels[0].payment.phases, "date")[0];
 
@@ -40,7 +40,8 @@ Controller.prototype.getPaidReport = function (viewModels, user) {
         "template_file": "lapterbayar.xlsx",
         "location": user.location.name,
         "user": user.name,
-        "date": lastPaymentDate,
+        "date": query['paymentDate'],
+        "payment_method": null,
         "report_data": []
     };
 
@@ -56,6 +57,9 @@ Controller.prototype.getPaidReport = function (viewModels, user) {
             var paymentDates = _.map(viewModel.payment.phases, "date");
             var banks = _.map(viewModel.payment.phases, "bank");
             var totalColli = _.sumBy(viewModel.items, "colli.quantity");
+            var paymentType = query['paymentType'] ? yield schemas.paymentTypes.findOne({ "_id": ObjectId(query['paymentType']) }).exec() : "Kosong";
+
+            result['payment_method'] = paymentType.name;
 
             result.report_data.push({
                 "spb_no": viewModel.spbNumber,
@@ -75,7 +79,7 @@ Controller.prototype.getPaidReport = function (viewModels, user) {
             sumPrice += viewModel.cost.total;
         });
 
-        result['sum_total_colli'] = sumTotalColli;
+        result['sum_total_coli'] = sumTotalColli;
         result['sum_total_weight'] = sumTotalWeight;
         result['sum_price'] = sumPrice;
 
@@ -202,7 +206,7 @@ Controller.prototype.getRecapitulations = function (query) {
     ]).exec();
 };
 
-Controller.prototype.getRecapitulationsReport = function (viewModels, user) {
+Controller.prototype.getRecapitulationsReport = function (viewModels, query, user) {
     var self = this;
 
     var result = {
@@ -210,7 +214,7 @@ Controller.prototype.getRecapitulationsReport = function (viewModels, user) {
         "template_file": "laprekap.xlsx",
         "location": user.location.name,
         "train_type": "Kereta",
-        "date": new Date(),
+        "date": query['recapDate'],
         "recap_driver": null,
         "recap_car": null,
         "report_data": []
@@ -222,8 +226,8 @@ Controller.prototype.getRecapitulationsReport = function (viewModels, user) {
         var totalWeight = 0;
         var totalPrice = 0;
 
-        //var trainType = yield self.trainTypeModel.findOne({ "_id": ObjectId(viewModels[0].items.recapitulations.trainType) }).exec();
-        //result['train_type'] = trainType.name;
+        var trainType = yield schemas.trainTypes.findOne({ "_id": ObjectId(viewModels[0].items.recapitulations.trainType) }).exec();
+        result['train_type'] = trainType.name;
 
         yield* _co.coEach(viewModels, function* (viewModel) {
             var driver = yield schemas.drivers.findOne({ _id: ObjectId(viewModel.items.recapitulations.driver) });
@@ -386,7 +390,7 @@ Controller.prototype.getReturnsReport = function (viewModels, user) {
         "location": user.location.name,
         "destination": viewModels[0].destination.name,
         "user": user.name,
-        "date": new Date(),
+        "date": viewModels[0].returnInfo.date,
         "report_data": []
     };
 

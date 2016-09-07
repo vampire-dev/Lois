@@ -206,56 +206,56 @@
             return http.get('/lois/api/reportData/getRecapitulations?query=' + JSON.stringify(query));
         }
 
-        static getRecapitulationsReport(data: any) {
-            return http.post('/lois/api/reportData/getRecapitulationsReport', JSON.stringify(data));
+        static getRecapitulationsReport(data: any, query: any) {
+            return http.post('/lois/api/reportData/getRecapitulationsReport?query= ' + JSON.stringify(query), JSON.stringify(data));
         }
 
         static getDeliveries(query: any) {
             return http.get('/lois/api/reportData/getDeliveries?query=' + JSON.stringify(query));
         }
 
-        static getDeliveriesReport(data: any) {
-            return http.post('/lois/api/reportData/getDeliveriesReport', JSON.stringify(data));
+        static getDeliveriesReport(data: any, query: any) {
+            return http.post('/lois/api/reportData/getDeliveriesReport?query= ' + JSON.stringify(query), JSON.stringify(data));
         }
 
         static getReturns(query: any) {
             return http.get('/lois/api/reportData/getReturns?query=' + JSON.stringify(query));
         }
 
-        static getReturnsReport(data: any) {
-            return http.post('/lois/api/reportData/getReturnsReport', JSON.stringify(data));
+        static getReturnsReport(data: any, query: any) {
+            return http.post('/lois/api/reportData/getReturnsReport?query= ' + JSON.stringify(query), JSON.stringify(data));
         }
 
         static getUnconfirmed(query: any) {
             return http.get('/lois/api/reportData/getUnconfirmed?query=' + JSON.stringify(query));
         }
 
-        static getUnconfirmedReport(data: any) {
-            return http.post('/lois/api/reportData/getUnconfirmedReport', JSON.stringify(data));
+        static getUnconfirmedReport(data: any, query: any) {
+            return http.post('/lois/api/reportData/getUnconfirmedReport?query= ' + JSON.stringify(query), JSON.stringify(data));
         }
 
         static getPaid(query: any) {
             return http.get('/lois/api/reportData/getPaid?query=' + JSON.stringify(query));
         }
 
-        static getPaidReport(data: any) {
-            return http.post('/lois/api/reportData/getPaidReport', JSON.stringify(data));
+        static getPaidReport(data: any, query: any) {
+            return http.post('/lois/api/reportData/getPaidReport?query= ' + JSON.stringify(query), JSON.stringify(data));
         }
 
         static getUnpaid(query: any) {
             return http.get('/lois/api/reportData/getUnpaid?query=' + JSON.stringify(query));
         }
 
-        static getUnpaidReport(data: any) {
-            return http.post('/lois/api/reportData/getUnpaidReport', JSON.stringify(data));
+        static getUnpaidReport(data: any, query: any) {
+            return http.post('/lois/api/reportData/getUnpaidReport?query= ' + JSON.stringify(query), JSON.stringify(data));
         }
 
         static getDeliveryList(query: any) {
             return http.get('/lois/api/reportData/getDeliveryList?query=' + JSON.stringify(query));
         }
 
-        static getDeliveryListReport(data: any) {
-            return http.post('/lois/api/reportData/getDeliveryListReport', JSON.stringify(data));
+        static getDeliveryListReport(data: any, query: any) {
+            return http.post('/lois/api/reportData/getDeliveryListReport?query= ' + JSON.stringify(query), JSON.stringify(data));
         }
 
         static getCommisions(query: any) {

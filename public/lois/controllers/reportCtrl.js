@@ -66,6 +66,7 @@ var app;
                         this.renderFunc = app.api.reportPrint.printCommision;
                         break;
                 }
+                this.checkedAll = false;
                 this.filters = {};
                 this.paging.page = 1;
                 this.filter();
@@ -78,9 +79,7 @@ var app;
                 }
                 var ctrl = this;
                 ctrl.loadingData = true;
-                var dataFunction = ctrl.dataFunc(checkedEntities);
-                if (ctrl.activeReport === 'Komisi')
-                    dataFunction = ctrl.dataFunc(checkedEntities, ctrl.query);
+                var dataFunction = ctrl.dataFunc(checkedEntities, ctrl.query);
                 dataFunction.then(function (result) {
                     ctrl.renderFunc(result.data).then(function (buffer) {
                         var blob = new Blob([buffer.data], { type: 'application/pdf' });
