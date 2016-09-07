@@ -130,7 +130,15 @@ Controller.prototype.getUnpaidReport = function (viewModels, user) {
         yield* _co.coEach(viewModels, function* (viewModel) {
             var totalWeight = _.sumBy(viewModel.items, 'dimensions.weight');
             var contents = _.map(viewModel.items, "content");
-            var invoices = [viewModel.invoice.all, viewModel.invoice.client, viewModel.invoice.partner];
+            var invoices = [];
+
+            if (viewModel.invoice.all !== null)
+                invoices.push(viewModel.invoice.all;
+            if (viewModel.invoice.client !== null)
+                invoices.push(viewModel.invoice.client);
+            if (viewModel.invoice.partner !== null)
+                invoices.push(viewModel.invoice.partner);
+
             var totalColli = _.sumBy(viewModel.items, 'colli.quantity');
 
             result.report_data.push({
