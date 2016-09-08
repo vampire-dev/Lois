@@ -36,6 +36,37 @@
             });
         }
 
+        save(): void {
+            if (!this.entity.sender || !this.entity.sender._id) {
+                this.notify('warning', 'Pengirim tidak boleh kosong');
+                return;
+            }
+
+            if (!this.entity.destination || !this.entity.destination._id) {
+                this.notify('warning', 'Tujuan tidak boleh kosong');
+                return;
+            }
+
+            if (!this.entity.payment.type || !this.entity.payment.type._id) {
+                this.notify('warning', 'Cara pembayaran tidak boleh kosong');
+                return;
+            }
+
+            var ctrl = this;
+            ctrl.processing = true;
+
+            ctrl.functions.save(ctrl.entity).then(result => {
+                ctrl.notify('success', 'Data berhasil disimpan');
+                ctrl.filter();
+                ctrl.showForm = false;
+            }).catch(error => {
+                ctrl.notify('error', error.data);
+            }).finally(() => {
+                ;
+                ctrl.processing = false;
+            });
+        }
+
         add(): void {
             var ctrl = this;
             api.shipping.add().then(result => {
@@ -88,6 +119,11 @@
 
             if (this.selectedItem.packingType == null) {
                 this.notify('warning', 'Packing barang harus diisi');
+                return;
+            }
+
+            if (this.selectedItem.colli.quantity === 0) {
+                this.notify('warning', 'Koli harus lebih besar dari nol');
                 return;
             }
 
@@ -163,6 +199,7 @@
         toggleShowItemForm(show: boolean): void {
             this.showForm = show;
             this.selectedItem = null;
+            this.filter();
         }
     }
 
