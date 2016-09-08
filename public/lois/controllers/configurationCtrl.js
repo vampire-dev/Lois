@@ -24,7 +24,7 @@ var app;
                 this.filters = {};
                 this.filter();
             };
-            configurationCtrl.prototype.filter = function () {
+            configurationCtrl.prototype.load = function () {
                 var ctrl = this;
                 ctrl.createQuery();
                 ctrl.loadingData = true;

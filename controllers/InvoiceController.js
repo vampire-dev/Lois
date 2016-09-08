@@ -114,12 +114,11 @@ Controller.prototype.change = function (viewModels, user) {
                 return;
 
             var toInvoice = yield schemas.invoices.findOne({ "number": viewModel.toInvoice }).exec();
-            var fromInvoice = yield schemas.invoices.findOne({ "number": viewModel.fromInvoice }).exec();
-
+            
             if (!toInvoice)
                 return;
 
-            toInvoice.shippings.push(shipping._id);
+            var fromInvoice = yield schemas.invoices.findOne({ "number": viewModel.fromInvoice }).exec();
 
             if (fromInvoice) {
                 var shippings = _.remove(fromInvoice.shippings, function (invoiceShipping) {
@@ -132,6 +131,8 @@ Controller.prototype.change = function (viewModels, user) {
             }
 
             shipping.invoice.client = toInvoice.number;
+
+            toInvoice.shippings.push(shipping._id);
             toInvoice.modified.user = user._id;
 
             yield toInvoice.save();

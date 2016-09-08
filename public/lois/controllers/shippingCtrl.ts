@@ -18,10 +18,11 @@
             this.filter();
         }
 
-        filter(): void {
+        load(): void {
             var ctrl = this;
             ctrl.createQuery();
             ctrl.loadingData = true;
+            ctrl.checkedAll = false;
 
             ctrl.functions.load(ctrl.query).then(result => {
                 ctrl.entities = result.data;

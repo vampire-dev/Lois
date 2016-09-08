@@ -18,7 +18,7 @@
             this.filter();
         }
 
-        filter(): void {
+        load(): void {
             var ctrl = this;
 
             ctrl.checkedAll = false;

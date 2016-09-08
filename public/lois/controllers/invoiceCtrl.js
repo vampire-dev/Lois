@@ -31,6 +31,7 @@ var app;
                 else if (this.tab === 'list')
                     this.functions.load = app.api.invoice.getList;
                 this.paging.page = 1;
+                this.filters = {};
                 this.filter();
             };
             invoiceCtrl.prototype.create = function () {
@@ -73,7 +74,7 @@ var app;
                 }
                 var viewModels = [];
                 checkedEntities.forEach(function (e) {
-                    viewModels.push({ shippingId: e._id, fromInvoice: _this.fromInvoice, toInvoice: _this.toInvoice });
+                    viewModels.push({ shippingId: e._id, fromInvoice: e.invoice.all, toInvoice: _this.toInvoice });
                 });
                 var ctrl = this;
                 app.api.invoice.change(viewModels).then(function (result) {

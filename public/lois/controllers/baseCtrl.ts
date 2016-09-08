@@ -25,8 +25,12 @@
         }
 
         filter(): void {
-            var ctrl = this;
+            this.paging.page = 1;
+            this.load();
+        }
 
+        load(): void {
+            var ctrl = this;
             ctrl.createQuery();
             ctrl.loadingData = true;
             ctrl.checkedAll = false;
@@ -111,7 +115,7 @@
                 return;
 
             this.paging.page += 1;
-            this.filter();
+            this.load();
         }
 
         prev(): void {
@@ -119,7 +123,7 @@
                 return;
 
             this.paging.page -= 1;
-            this.filter();
+            this.load();
         }
 
         notify(type: string, message: string): void {

@@ -6,7 +6,6 @@
         invoiceType: InvoiceType;
         to: string;
         location: string;
-        fromInvoice: string;
         toInvoice: string;
 
         static $inject = ['$scope', 'Notification'];
@@ -30,7 +29,7 @@
                 this.functions.load = api.invoice.getList;
 
             this.paging.page = 1;
-
+            this.filters = {};
             this.filter();
         }
 
@@ -81,7 +80,7 @@
 
             var viewModels = [];
             checkedEntities.forEach(e => {
-                viewModels.push({ shippingId: e._id, fromInvoice: this.fromInvoice, toInvoice: this.toInvoice });
+                viewModels.push({ shippingId: e._id, fromInvoice: e.invoice.all, toInvoice: this.toInvoice });
             });
 
             var ctrl = this;

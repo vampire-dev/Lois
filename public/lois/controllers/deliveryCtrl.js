@@ -22,7 +22,7 @@ var app;
                 this.filterType = FilterType.delivery;
                 this.filter();
             }
-            deliveryCtrl.prototype.filter = function () {
+            deliveryCtrl.prototype.load = function () {
                 var ctrl = this;
                 ctrl.checkedAll = false;
                 ctrl.createQuery();

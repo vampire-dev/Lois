@@ -22,7 +22,7 @@ var app;
                 this.filterType = FilterType.recap;
                 this.filter();
             }
-            recapitulationCtrl.prototype.filter = function () {
+            recapitulationCtrl.prototype.load = function () {
                 var ctrl = this;
                 ctrl.checkedAll = false;
                 ctrl.createQuery();

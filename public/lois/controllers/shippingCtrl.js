@@ -24,10 +24,11 @@ var app;
                 this.functions.autocomplete = app.api.autocomplete.getAll;
                 this.filter();
             }
-            shippingCtrl.prototype.filter = function () {
+            shippingCtrl.prototype.load = function () {
                 var ctrl = this;
                 ctrl.createQuery();
                 ctrl.loadingData = true;
+                ctrl.checkedAll = false;
                 ctrl.functions.load(ctrl.query).then(function (result) {
                     ctrl.entities = result.data;
                     if (ctrl.viewType == ViewType.item) {

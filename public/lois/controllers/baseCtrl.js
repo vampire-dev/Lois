@@ -16,6 +16,10 @@ var app;
                 this.functions = { "load": null, "get": null, "save": null, "delete": null, "autocomplete": null };
             }
             baseCtrl.prototype.filter = function () {
+                this.paging.page = 1;
+                this.load();
+            };
+            baseCtrl.prototype.load = function () {
                 var ctrl = this;
                 ctrl.createQuery();
                 ctrl.loadingData = true;
@@ -88,13 +92,13 @@ var app;
                 if (this.entities.length === 0)
                     return;
                 this.paging.page += 1;
-                this.filter();
+                this.load();
             };
             baseCtrl.prototype.prev = function () {
                 if ((this.paging.page - 1) <= 0)
                     return;
                 this.paging.page -= 1;
-                this.filter();
+                this.load();
             };
             baseCtrl.prototype.notify = function (type, message) {
                 this.notification[type](message);

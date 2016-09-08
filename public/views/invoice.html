@@ -220,17 +220,12 @@
                                     </form>
                                 </div>
                                 <div class="widget-body-toolbar">
-                                    <p>*Hanya untuk tagian client</p>
+                                    <p>*Hanya untuk tagian all (semua)</p>
                                     <form class="smart-form">
                                         <legend>Silahkan isi data berikut</legend>
                                         <fieldset>
                                             <div class="row">
-                                                <section class="col col-sm-12 col-md-12 col-lg-6">
-                                                    <label class="input">
-                                                        <input type="text" placeholder="Dari invoice" ng-model="ctrl.fromInvoice" />
-                                                    </label>
-                                                </section> 
-                                                <section class="col col-sm-12 col-md-12 col-lg-6">
+                                                <section class="col col-sm-12 col-md-12 col-lg-12">
                                                     <label class="input">
                                                         <input type="text" placeholder="Ke invoice (harus diisi)" ng-model="ctrl.toInvoice" />
                                                     </label>
@@ -283,7 +278,7 @@
                                                 <td> {{entity.colli.delivered}}</td>
                                                 <td> {{entity.cost.total | currency: 'Rp ' : 0}} </td>
                                                 <td> {{entity.cost.expedition | currency: 'Rp ' : 0}} </td>
-                                                <td> {{entity.invoice.client}} </td>
+                                                <td> {{entity.invoice.all}} </td>
                                             </tr>
                                         </tbody>
                                     </table>
