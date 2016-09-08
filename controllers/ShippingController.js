@@ -16,8 +16,8 @@ Controller.prototype.get = function (id) {
 
 Controller.prototype.getAll = function (query) {
     var limit = query['limit'] ? query['limit'] : 10;
-    var skip = query['skip'] ? query['skip'] : 0;
-    var parameters = { "inputLocation": ObjectId(query['location']) };
+    var skip = query['skip'] ? query['skip'] : 0; 
+    var parameters = { "inputLocation": ObjectId(query['location'])};
 
     if (query['spbNumber'])
         parameters['spbNumber'] = new RegExp(query['spbNumber'], 'i');
@@ -67,6 +67,11 @@ Controller.prototype.add = function (user) {
         var number = lastShipping ? lastShipping.number + 1 : 1;
         var spbNumber = lastLocShipping ? (parseInt(lastLocShipping.spbNumber.split('-')[0]) + 1) + '-' + user.location.prefix
             : '1-' + user.location.prefix;
+
+        var existingShipping = yield schemas.shippings.findOne({ "spbNumber": spbNumber }).exec();
+
+        if (existingShipping)
+            throw new Error('Spb number already exists');
 
         var shipping = {
             "number": number,

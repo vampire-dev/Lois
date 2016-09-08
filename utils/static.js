@@ -13,6 +13,7 @@
     location: '57c45ac08e8ddc7019605687',
     region: '57c459f9d1bb7304270c4552',
     paymentType: '57c46a82398059b414b37864',
+    paid: '57c46a80398059b414b3784f',
     partner: '57c46a80398059b414b37854',
     belumTerekap: 'Belum Terekap',
     terekap: 'Terekap',

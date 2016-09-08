@@ -12,7 +12,7 @@ function Controller() {};
 Controller.prototype.getAll = function (query) {
     var limit = query['limit'] ? query['limit'] : 10;
     var skip = query['skip'] ? query['skip'] : 0;
-    var parameters = { "inputLocation": ObjectId(query['location']) };
+    var parameters = { "inputLocation": ObjectId(query['location']), "$or": [{ "payment.type": ObjectId(static.paid) }, { "confirmed": true }]};
 
     if (query['spbNumber'])
         parameters['spbNumber'] = { $regex: new RegExp(query.spbNumber, 'i') };
