@@ -84,7 +84,10 @@ Controller.prototype.create = function (viewModels, user) {
             if (!shipping)
                 return;
 
-            if (shipping.invoice.all !== null)
+            if ((invoice.type === 'Klien' || invoice.type === 'Partner') && shipping.invoice.all !== null)
+                return;
+
+            else if (invoice.type === 'Semua' && (shipping.invoice.client !== null || shipping.invoice.partner !== null))
                 return;
 
             invoice.shippings.push(viewModel.shippingId);
@@ -113,9 +116,15 @@ Controller.prototype.change = function (viewModels, user) {
             if (!shipping)
                 return;
 
+            if (shipping.invoice.client !== null || shipping.invoice.partner !== null)
+                return;
+
             var toInvoice = yield schemas.invoices.findOne({ "number": viewModel.toInvoice }).exec();
             
             if (!toInvoice)
+                return;
+
+            if (toInvoice.type !== 'Semua')
                 return;
 
             var fromInvoice = yield schemas.invoices.findOne({ "number": viewModel.fromInvoice }).exec();
