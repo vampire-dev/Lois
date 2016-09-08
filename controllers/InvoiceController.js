@@ -130,7 +130,7 @@ Controller.prototype.change = function (viewModels, user) {
                 yield fromInvoice.save();
             }
 
-            shipping.invoice.client = toInvoice.number;
+            shipping.invoice.all = toInvoice.number;
 
             toInvoice.shippings.push(shipping._id);
             toInvoice.modified.user = user._id;
