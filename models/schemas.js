@@ -251,13 +251,20 @@ schemas['audits'] = mongoose.model('Audit', new Schema({
 
 schemas['invoices'] = mongoose.model('Invoice', new Schema({
     "number": { type: String, required: true },
-    "date": { type: Date, default: Date.now },
     "inc": { type: Number, required: true },
     "to": { type: String, required: true },
     "location": { type: String, required: true },
     "type": { type: String, default: 'Semua' },
     "shippings": [{ type: ObjectId, ref: 'Shipping' }],
-    "inputLocation": { type: ObjectId, ref: 'Location' }
+    "inputLocation": { type: ObjectId, ref: 'Location' },
+    "created": {
+        "date": { type: Date, default: null },
+        "user": { type: ObjectId, ref: 'User' }
+    },
+    "modified": {
+        "date": { type: Date, default: Date.now },
+        "user": { type: ObjectId, ref: 'User' }
+    },
 }, { versionKey: false, collection: 'invoices' }));
 
 module.exports = schemas;

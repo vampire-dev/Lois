@@ -21,6 +21,9 @@ Controller.prototype.getAll = function (query) {
     if (query['destination'])
         parameters['destination'] = ObjectId(query['destination']);
 
+    if (query['invoiceNumber'])
+        parameters['invoice.client'] = new RegExp(query['invoiceNumber'], 'i');
+
     if (query['from'] && query['to'])
         parameters['date'] = { "$gte": date.createLower(query['from']), "$lte": date.createUpper(query['to']) };
 
@@ -36,7 +39,7 @@ Controller.prototype.getList = function (query) {
         parameters['number'] = new RegExp(query['invoiceNumber'], 'i');
 
     if (query['fromInvoice'] && query['toInvoice'])
-        parameters['date'] = { "$gte": date.createLower(query['fromInvoice']), "$lte": date.createUpper(query['toInvoice']) };
+        parameters['modified.date'] = { "$gte": date.createLower(query['fromInvoice']), "$lte": date.createUpper(query['toInvoice']) };
 
     return schemas.invoices.find(parameters)
         .populate('shippings.shipping').sort({ "inc": - 1 })
@@ -64,7 +67,15 @@ Controller.prototype.create = function (viewModels, user) {
             "location": viewModels[0].location,
             "type": viewModels[0].type,
             "shippings": [],
-            "inputLocation": user.location._id
+            "inputLocation": user.location._id,
+            "created": {
+                "date": new Date(),
+                "user": user._id
+            },
+            "modified": {
+                "date": new Date(),
+                "user": user._id
+            },
         };
 
         yield* _co.coEach(viewModels, function* (viewModel) {
@@ -78,8 +89,11 @@ Controller.prototype.create = function (viewModels, user) {
 
             invoice.shippings.push(viewModel.shippingId);
 
-            invoice.type === 'Semua' ? shipping.invoice.all = invoice.number : invoice.type === 'Klien' ?
-                shipping.invoice.client = invoice.number :
+            if (invoice.type == 'Semua')
+                shipping.invoice.all = invoice.number;
+            else if (invoice.type == 'Klien')
+                shipping.invoice.client = invoice.number;
+            else if (invoice.type == 'Partner')
                 shipping.invoice.partner = invoice.number;
 
             yield shipping.save();
@@ -87,6 +101,43 @@ Controller.prototype.create = function (viewModels, user) {
 
         return new schemas.invoices(invoice).save();
     });
+};
+
+Controller.prototype.change = function (viewModels, user) {
+    var self = this;
+
+    return co(function* () {
+        yield* _co.coEach(viewModels, function* (viewModel) {
+            var shipping = yield schemas.shippings.findOne({ "_id": ObjectId(viewModel.shippingId) }).exec();
+
+            if (!shipping)
+                return;
+
+            var toInvoice = yield schemas.invoices.findOne({ "number": viewModel.toInvoice }).exec();
+            var fromInvoice = yield schemas.invoices.findOne({ "number": viewModel.fromInvoice }).exec();
+
+            if (!toInvoice)
+                return;
+
+            toInvoice.shippings.push(shipping._id);
+
+            if (fromInvoice) {
+                var shippings = _.remove(fromInvoice.shippings, function (invoiceShipping) {
+                    return invoiceShipping._id.toString() === shipping._id.toString();
+                });
+
+                fromInvoice.shippings = shippings;
+                fromInvoice.modified.user = user._id;
+                yield fromInvoice.save();
+            }
+
+            shipping.invoice.client = toInvoice.number;
+            toInvoice.modified.user = user._id;
+
+            yield toInvoice.save();
+            yield shipping.save();
+        });
+    }); 
 };
 
 Controller.prototype.getInvoiceReport = function (invoice, user) {
@@ -97,7 +148,7 @@ Controller.prototype.getInvoiceReport = function (invoice, user) {
         "template_file": "laptagihan.xlsx",
         "location": user.location.name,
         "invoice_no": invoice.number,
-        "invoice_date": invoice.date,
+        "invoice_date": invoice.modified.date,
         "user": user.name,
         "tertagih": invoice.to,
         "tertagih_location": invoice.location,
@@ -117,7 +168,7 @@ Controller.prototype.getInvoiceReport = function (invoice, user) {
             var totalColli = _.sumBy(shipping.items, 'colli.quantity');
 
             result.report_data.push({
-                "transaction_date": shipping.date,
+                "transaction_date": shipping.modified.date,
                 "spb_no": shipping.spbNumber,
                 "destination_city": shipping.destination.name,
                 "total_coli": totalColli,

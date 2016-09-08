@@ -26,7 +26,7 @@ var app;
             }
             invoiceCtrl.prototype.onTabChange = function (tab) {
                 this.tab = tab;
-                if (this.tab === 'create')
+                if (this.tab === 'create' || this.tab === 'change')
                     this.functions.load = app.api.invoice.getAll;
                 else if (this.tab === 'list')
                     this.functions.load = app.api.invoice.getList;
@@ -58,6 +58,29 @@ var app;
                     ctrl.filter();
                 }).catch(function (error) {
                     ctrl.notify('error', 'Tagihan gagal dibuat ' + error.data);
+                });
+            };
+            invoiceCtrl.prototype.change = function () {
+                var _this = this;
+                if (!this.toInvoice || this.toInvoice === '') {
+                    this.notify('warning', 'Tujuan invoice harus diisi');
+                    return;
+                }
+                var checkedEntities = this.entities.filter(function (e) { return e.checked; });
+                if (checkedEntities.length === 0) {
+                    this.notify('warning', 'Tidak ada pengiriman yang dipilih');
+                    return;
+                }
+                var viewModels = [];
+                checkedEntities.forEach(function (e) {
+                    viewModels.push({ shippingId: e._id, fromInvoice: _this.fromInvoice, toInvoice: _this.toInvoice });
+                });
+                var ctrl = this;
+                app.api.invoice.change(viewModels).then(function (result) {
+                    ctrl.notify('success', 'Tagihan berhasil dipindahkan');
+                    ctrl.filter();
+                }).catch(function (error) {
+                    ctrl.notify('error', 'Tagihan gagal dipindahkan ' + error.data);
                 });
             };
             invoiceCtrl.prototype.print = function (entity) {

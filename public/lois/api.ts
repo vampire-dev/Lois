@@ -152,6 +152,10 @@
             return http.post('/lois/api/invoice/create', JSON.stringify(data));
         }
 
+        static change(data: any) {
+            return http.post('/lois/api/invoice/change', JSON.stringify(data));
+        }
+
         static getInvoiceReport(data: any) {
             return http.post('/lois/api/invoice/getInvoiceReport', JSON.stringify(data));
         }

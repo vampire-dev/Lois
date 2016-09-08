@@ -19,6 +19,9 @@
                         <li ng-class="{'active': ctrl.tab == 'create'}">
                             <a data-toggle="tab" href="#" ng-click="ctrl.onTabChange('create')"><span class="hidden-mobile hidden-tablet">Buat Tagihan</span></a>
                         </li>
+                        <li ng-class="{'active': ctrl.tab == 'change'}">
+                            <a data-toggle="tab" href="#" ng-click="ctrl.onTabChange('change')"><span class="hidden-mobile hidden-tablet">Pindah Tagihan</span></a>
+                        </li>
                         <li ng-class="{'active': ctrl.tab == 'list'}">
                             <a data-toggle="tab" href="#" ng-click="ctrl.onTabChange('list')"><span class="hidden-mobile hidden-tablet">Daftar Tagihan</span></a>
                         </li>
@@ -122,6 +125,17 @@
                                                 <i class="fa fa-envelope"></i> Buat Tagihan
                                             </a>
                                         </div>
+                                        <div class="col-xs-9 col-sm-5 col-md-5 col-lg-6">
+                                            <select name="dt_basic_length" aria-controls="dt_basic" class="form-control" ng-model="ctrl.paging.max"
+                                                    ng-change="ctrl.filter()" style="float:right; width:15%;" to-number>
+                                                <option value="10">10</option>
+                                                <option value="25">25</option>
+                                                <option value="50">50</option>
+                                                <option value="100">100</option>
+                                                <option value="500">500</option>
+                                                <option value="1000">1000</option>
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="table-responsive">
@@ -166,6 +180,116 @@
                                     </table>
                                 </div>
                             </div>
+                        
+                            <div ng-show="ctrl.tab == 'change'">
+                                <div class="widget-body-toolbar" ng-show="ctrl.showToolbar">
+                                    <form class="smart-form">
+                                        <legend>Filter data</legend>
+                                        <fieldset>
+                                            <div class="row">
+                                                <section class="col col-sm-12 col-md-12 col-lg-3">
+                                                    <label class="input">
+                                                        <input type="text" placeholder="Spb" ng-model="ctrl.filters.spbNumber" />
+                                                    </label>
+                                                </section>
+                                                <section class="col col-sm-12 col-md-12 col-lg-3">
+                                                    <label class="input">
+                                                        <input type="text" placeholder="Invoice" ng-model="ctrl.filters.invoiceNumber" />
+                                                    </label>
+                                                </section>
+                                                <section class="col col-sm-12 col-md-12 col-lg-3">
+                                                    <label class="input">
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                                            <input datepicker class="form-control" placeholder="Dari Tanggal"
+                                                                   id="from-transaction-date-change" type="text" ng-model="ctrl.filters.from" />
+                                                        </div>
+                                                    </label>
+                                                </section>
+                                                <section class="col col-sm-12 col-md-12 col-lg-3">
+                                                    <label class="input">
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                                            <input datepicker class="form-control" placeholder="Sampai Tanggal"
+                                                                   id="to-transaction-date-change" type="text" ng-model="ctrl.filters.to" />
+                                                        </div>
+                                                    </label>
+                                                </section>
+                                            </div>
+                                        </fieldset>
+                                    </form>
+                                </div>
+                                <div class="widget-body-toolbar">
+                                    <p>*Hanya untuk tagian client</p>
+                                    <form class="smart-form">
+                                        <legend>Silahkan isi data berikut</legend>
+                                        <fieldset>
+                                            <div class="row">
+                                                <section class="col col-sm-12 col-md-12 col-lg-6">
+                                                    <label class="input">
+                                                        <input type="text" placeholder="Dari invoice" ng-model="ctrl.fromInvoice" />
+                                                    </label>
+                                                </section> 
+                                                <section class="col col-sm-12 col-md-12 col-lg-6">
+                                                    <label class="input">
+                                                        <input type="text" placeholder="Ke invoice (harus diisi)" ng-model="ctrl.toInvoice" />
+                                                    </label>
+                                                </section> 
+                                            </div>
+                                        </fieldset>
+                                    </form>
+                                </div>
+                                <div class="widget-body-toolbar">
+                                    <div class="row">
+                                        <div class="col-xs-9 col-sm-5 col-md-5 col-lg-6">
+                                            <a href="#" class="btn btn-default" style="color: black;" ng-click="ctrl.filter()">
+                                                <i class="fa fa-search"></i> Cari
+                                            </a>
+                                            <a href="#" class="btn btn-default" style="color: black;" ng-click="ctrl.change()">
+                                                <i class="fa fa-envelope"></i> Pindah
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-striped table-condensed table-hover smart-form has-tickbox">
+                                        <thead>
+                                            <tr style="color:black;">
+                                                <th style="text-align: center; width: 1%;">
+                                                    <input type="checkbox" ng-model="ctrl.checkedAll" ng-click="ctrl.toggleCheckAll()" ng-true-value="true" ng-false-value="false" />
+                                                </th>
+                                                <th style="text-align: center; width: 8%;">Spb</th>
+                                                <th style="text-align: center; width: 10%;">Pengirim</th>
+                                                <th style="text-align: center; width: 10%;">Tujuan</th>
+                                                <th style="text-align: center; width: 10%;">Koli</th>
+                                                <th style="text-align: center; width: 10%;">Bea Angkut</th>
+                                                <th style="text-align: center; width: 10%;">Bea Ekspedisi</th>
+                                                <th style="text-align: center; width: 10%;">No Tagihan</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-show="ctrl.loadingData">
+                                                <td style="text-align: center; margin: 10px 0px;" colspan="100">
+                                                    <img src="../assets/img/ajax-loader.gif">
+                                                </td>
+                                            </tr>
+                                            <tr ng-repeat="entity in ctrl.entities" style="color: black;" ng-show="!ctrl.loadingData">
+                                                <td style="text-align: center;">
+                                                    <input type="checkbox" ng-if="!entity.audited" ng-model="entity.checked" />
+                                                </td>
+                                                <td> {{entity.spbNumber}} </td>
+                                                <td> {{entity.sender.name}} </td>
+                                                <td> {{entity.destination.name}}</td>
+                                                <td> {{entity.colli.delivered}}</td>
+                                                <td> {{entity.cost.total | currency: 'Rp ' : 0}} </td>
+                                                <td> {{entity.cost.expedition | currency: 'Rp ' : 0}} </td>
+                                                <td> {{entity.invoice.client}} </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
                             <div ng-show="ctrl.tab == 'list'">
                                 <div class="widget-body-toolbar" ng-show="ctrl.showToolbar">
                                     <form class="smart-form">
@@ -244,7 +368,8 @@
                                     </table>
                                 </div>
                             </div>
-                        </div>
+                      
+                          </div>
                     </div>
                     <div class="widget-footer" ng-show="ctrl.entities.length >= ctrl.paging.max">
                         <div class="input-group">

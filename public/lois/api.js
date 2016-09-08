@@ -155,6 +155,9 @@ var app;
             invoice.create = function (data) {
                 return app.http.post('/lois/api/invoice/create', JSON.stringify(data));
             };
+            invoice.change = function (data) {
+                return app.http.post('/lois/api/invoice/change', JSON.stringify(data));
+            };
             invoice.getInvoiceReport = function (data) {
                 return app.http.post('/lois/api/invoice/getInvoiceReport', JSON.stringify(data));
             };

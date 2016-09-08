@@ -6,6 +6,8 @@
         invoiceType: InvoiceType;
         to: string;
         location: string;
+        fromInvoice: string;
+        toInvoice: string;
 
         static $inject = ['$scope', 'Notification'];
 
@@ -21,13 +23,14 @@
         onTabChange(tab: string): void {
             this.tab = tab;
 
-            if (this.tab === 'create')
+            if (this.tab === 'create' || this.tab === 'change')
                 this.functions.load = api.invoice.getAll;
 
             else if (this.tab === 'list')
                 this.functions.load = api.invoice.getList;
 
             this.paging.page = 1;
+
             this.filter();
         }
 
@@ -60,6 +63,33 @@
                 ctrl.filter();
             }).catch(error => {
                 ctrl.notify('error', 'Tagihan gagal dibuat ' + error.data);
+            });
+        }
+
+        change(): void {
+            if (!this.toInvoice || this.toInvoice === '') {
+                this.notify('warning', 'Tujuan invoice harus diisi');
+                return;
+            }
+
+            var checkedEntities = this.entities.filter(e => e.checked);
+
+            if (checkedEntities.length === 0) {
+                this.notify('warning', 'Tidak ada pengiriman yang dipilih');
+                return;
+            }
+
+            var viewModels = [];
+            checkedEntities.forEach(e => {
+                viewModels.push({ shippingId: e._id, fromInvoice: this.fromInvoice, toInvoice: this.toInvoice });
+            });
+
+            var ctrl = this;
+            api.invoice.change(viewModels).then(result => {
+                ctrl.notify('success', 'Tagihan berhasil dipindahkan');
+                ctrl.filter();
+            }).catch(error => {
+                ctrl.notify('error', 'Tagihan gagal dipindahkan ' + error.data);
             });
         }
 
