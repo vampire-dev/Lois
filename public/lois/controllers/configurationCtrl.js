@@ -75,7 +75,7 @@ var app;
                 var ctrl = this;
                 ctrl.functions.delete(ctrl.config, id).then(function (result) {
                     ctrl.notify('success', 'Data berhasil dihapus');
-                    ctrl.filter();
+                    ctrl.load();
                 }).catch(function (error) {
                     ctrl.notify('error', error.data);
                 });

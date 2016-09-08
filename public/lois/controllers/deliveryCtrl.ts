@@ -88,7 +88,7 @@
 
             app.api.delivery.delivery(viewModels).then(result => {
                 ctrl.notify('success', 'Proses delivery berhasil');
-                ctrl.filter();
+                ctrl.load();
             }).catch(error => {
                 ctrl.notify('error', 'Delivery gagal ' + error.data);
             }).finally(() => {
@@ -122,7 +122,7 @@
 
             app.api.delivery.cancelDelivery(viewModels).then(result => {
                 ctrl.notify('success', 'Proses cancel delivery berhasil');
-                ctrl.filter();
+                ctrl.load();
             }).catch(error => {
                 ctrl.notify('error', 'Cancel delivery gagal ' + error.data);
             }).finally(() => {

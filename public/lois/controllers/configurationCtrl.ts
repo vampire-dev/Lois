@@ -84,7 +84,7 @@
             var ctrl = this;
             ctrl.functions.delete(ctrl.config, id).then(result => {
                 ctrl.notify('success', 'Data berhasil dihapus');
-                ctrl.filter();
+                ctrl.load();
             }).catch(error => {
                 ctrl.notify('error', error.data);
             });

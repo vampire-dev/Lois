@@ -122,7 +122,7 @@ Controller.prototype.change = function (viewModels, user) {
 
             if (fromInvoice) {
                 var shippings = _.remove(fromInvoice.shippings, function (invoiceShipping) {
-                    return invoiceShipping._id.toString() === shipping._id.toString();
+                    return invoiceShipping.toString() === shipping._id.toString();
                 });
 
                 fromInvoice.shippings = shippings;

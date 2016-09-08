@@ -82,7 +82,7 @@ var app;
                 var ctrl = this;
                 app.api.delivery.delivery(viewModels).then(function (result) {
                     ctrl.notify('success', 'Proses delivery berhasil');
-                    ctrl.filter();
+                    ctrl.load();
                 }).catch(function (error) {
                     ctrl.notify('error', 'Delivery gagal ' + error.data);
                 }).finally(function () {
@@ -109,7 +109,7 @@ var app;
                 var ctrl = this;
                 app.api.delivery.cancelDelivery(viewModels).then(function (result) {
                     ctrl.notify('success', 'Proses cancel delivery berhasil');
-                    ctrl.filter();
+                    ctrl.load();
                 }).catch(function (error) {
                     ctrl.notify('error', 'Cancel delivery gagal ' + error.data);
                 }).finally(function () {

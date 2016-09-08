@@ -92,7 +92,7 @@ var app;
                 var ctrl = this;
                 app.api.recapitulation.recap(viewModels).then(function (result) {
                     ctrl.notify('success', 'Proses rekapitulasi berhasil');
-                    ctrl.filter();
+                    ctrl.load();
                 }).catch(function (error) {
                     ctrl.notify('error', 'Rekapitulasi gagal ' + error.data);
                 }).finally(function () {
@@ -120,7 +120,7 @@ var app;
                 var ctrl = this;
                 app.api.recapitulation.cancelRecap(viewModels).then(function (result) {
                     ctrl.notify('success', 'Proses cancel rekapitulasi berhasil');
-                    ctrl.filter();
+                    ctrl.load();
                 }).catch(function (error) {
                     ctrl.notify('error', 'Cancel rekapitulasi gagal ' + error.data);
                 }).finally(function () {

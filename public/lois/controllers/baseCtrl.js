@@ -54,7 +54,7 @@ var app;
                 ctrl.processing = true;
                 ctrl.functions.save(ctrl.entity).then(function (result) {
                     ctrl.notify('success', 'Data berhasil disimpan');
-                    ctrl.filter();
+                    ctrl.load();
                     ctrl.showForm = false;
                 }).catch(function (error) {
                     ctrl.notify('error', error.data);
@@ -68,7 +68,7 @@ var app;
                 ctrl.loadingData = true;
                 ctrl.functions.delete(id).then(function (result) {
                     ctrl.notify('success', 'Data berhasil dihapus');
-                    ctrl.filter();
+                    ctrl.load();
                 }).catch(function (error) {
                     ctrl.notify('error', error.data);
                 }).finally(function () {

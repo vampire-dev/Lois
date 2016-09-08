@@ -70,7 +70,7 @@
 
             ctrl.functions.save(ctrl.entity).then(result => {
                 ctrl.notify('success', 'Data berhasil disimpan');
-                ctrl.filter();
+                ctrl.load();
                 ctrl.showForm = false;
             }).catch(error => {
                 ctrl.notify('error', error.data);
@@ -85,7 +85,7 @@
 
             ctrl.functions.delete(id).then(result => {
                 ctrl.notify('success', 'Data berhasil dihapus');
-                ctrl.filter();
+                ctrl.load();
             }).catch(error => {
                 ctrl.notify('error', error.data);
             }).finally(() => {

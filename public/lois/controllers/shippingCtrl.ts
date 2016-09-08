@@ -58,7 +58,7 @@
 
             ctrl.functions.save(ctrl.entity).then(result => {
                 ctrl.notify('success', 'Data berhasil disimpan');
-                ctrl.filter();
+                ctrl.load();
                 ctrl.showForm = false;
             }).catch(error => {
                 ctrl.notify('error', error.data);
@@ -72,7 +72,7 @@
             var ctrl = this;
             api.shipping.add().then(result => {
                 ctrl.notify('success', 'Spb berhasil ditambah');
-                ctrl.filter();
+                ctrl.load();
             }).catch(error => {
                 ctrl.notify('error', error.data);
             });
@@ -200,7 +200,7 @@
         toggleShowItemForm(show: boolean): void {
             this.showForm = show;
             this.selectedItem = null;
-            this.filter();
+            this.load();
         }
     }
 

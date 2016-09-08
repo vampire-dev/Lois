@@ -58,7 +58,7 @@ var app;
                 ctrl.processing = true;
                 ctrl.functions.save(ctrl.entity).then(function (result) {
                     ctrl.notify('success', 'Data berhasil disimpan');
-                    ctrl.filter();
+                    ctrl.load();
                     ctrl.showForm = false;
                 }).catch(function (error) {
                     ctrl.notify('error', error.data);
@@ -71,7 +71,7 @@ var app;
                 var ctrl = this;
                 app.api.shipping.add().then(function (result) {
                     ctrl.notify('success', 'Spb berhasil ditambah');
-                    ctrl.filter();
+                    ctrl.load();
                 }).catch(function (error) {
                     ctrl.notify('error', error.data);
                 });
@@ -175,7 +175,7 @@ var app;
             shippingCtrl.prototype.toggleShowItemForm = function (show) {
                 this.showForm = show;
                 this.selectedItem = null;
-                this.filter();
+                this.load();
             };
             shippingCtrl.$inject = ['$scope', 'Notification'];
             return shippingCtrl;

@@ -100,7 +100,7 @@
 
             app.api.recapitulation.recap(viewModels).then(result => {
                 ctrl.notify('success', 'Proses rekapitulasi berhasil');
-                ctrl.filter();
+                ctrl.load();
             }).catch(error => {
                 ctrl.notify('error', 'Rekapitulasi gagal ' + error.data);
             }).finally(() => {
@@ -133,7 +133,7 @@
 
             app.api.recapitulation.cancelRecap(viewModels).then(result => {
                 ctrl.notify('success', 'Proses cancel rekapitulasi berhasil');
-                ctrl.filter();
+                ctrl.load();
             }).catch(error => {
                 ctrl.notify('error', 'Cancel rekapitulasi gagal ' + error.data);
             }).finally(() => {
