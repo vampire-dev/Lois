@@ -38,6 +38,7 @@ Controller.prototype.getDataReport = function (shipping) {
         "destination_city": shipping.destination.name,
         "receiver": shipping.receiver.name,
         "receiver_phone": shipping.receiver.contact,
+        "receiver_address": shipping.receiver.address,
         "contents": [],
         "sum_total_coli": totalColli,
         "sum_total_weight": null,

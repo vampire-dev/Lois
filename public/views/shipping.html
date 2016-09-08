@@ -137,13 +137,13 @@
                                     <tr style="color:black;">
                                         <th style="text-align: center; width: 10%;">Spb</th>
                                         <th style="text-align: center; width: 9%;">Tanggal</th>
-                                        <th style="text-align: center; width: 10%;">Pengirim</th>
-                                        <th style="text-align: center; width: 10%;">Penerima</th>
+                                        <th style="text-align: center; width: 8%;">Pengirim</th>
+                                        <th style="text-align: center; width: 5%;">Penerima</th>
                                         <th style="text-align: center;">Tujuan</th>
-                                        <th style="text-align: center; width:10%">Pembayaran</th>
+                                        <th style="text-align: center; width:8%">Pembayaran</th>
                                         <th style="text-align: center; width:12%;">Status</th>
                                         <th style="text-align: center; width:10%;">Total</th>
-                                        <th style="text-align: center; width:3%;">Confirm</th>
+                                        <th style="text-align: center; width:3%;">Confirmed</th>
                                         <th style="text-align: center; width:3%;">Audit</th>
                                         <th style="text-align: center; width:15%;">Aksi</th>
                                     </tr>
@@ -162,13 +162,13 @@
                                         <td>{{entity.destination.name}}</td>
                                         <td>{{entity.payment.type.name}}</td>
                                         <td>
-                                            <p ng-if="entity.payment.status == 'Belum Terbayar'" style="text-align:center;" class="center-block padding-3 label label-danger txt-color-white">
+                                            <p ng-if="entity.payment.status == 'Belum Terbayar'" style="text-align:center;" class="center-block padding-2 label label-danger txt-color-white">
                                                 {{entity.payment.status}}
                                             </p>
-                                            <p ng-if="entity.payment.status == 'Terbayar Sebagian'" style="text-align:center;" class="center-block padding-3 label label-warning txt-color-white">
+                                            <p ng-if="entity.payment.status == 'Terbayar Sebagian'" style="text-align:center;" class="center-block padding-2 label label-warning txt-color-white">
                                                 {{entity.payment.status}}
                                             </p>
-                                            <p ng-if="entity.payment.status == 'Terbayar'" style="text-align:center;" class="center-block padding-3 label label-success txt-color-white">
+                                            <p ng-if="entity.payment.status == 'Terbayar'" style="text-align:center;" class="center-block padding-2 label label-success txt-color-white">
                                                 {{entity.payment.status}}
                                             </p>
                                         </td>
