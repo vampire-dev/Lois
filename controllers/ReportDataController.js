@@ -19,6 +19,9 @@ Controller.prototype.getPaid = function (query) {
     if (query['paymentType'])
         parameters['payment.type'] = ObjectId(query['paymentType']);
 
+    if (query['sender'])
+        parameters['sender'] = ObjectId(query['sender']);
+
     if (query['paymentDate'])
         parameters['payment.phases'] = { "$elemMatch": { "date": { "$gte": date.createLower(query['paymentDate']), "$lte": date.createUpper(query['paymentDate']) } } };
 
