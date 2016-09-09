@@ -573,6 +573,9 @@ Controller.prototype.getCommisions = function (query) {
     if (query['spbNumber'])
         parameters['spbNumber'] = new RegExp(query['spbNumber'], 'i');
 
+    if (query['paymentType'])
+        parameters['payment.type'] = ObjectId(query['paymentType']);
+
     if (query['regionDest'])
         parameters['regions.destination'] = ObjectId(query['regionDest']);
 
