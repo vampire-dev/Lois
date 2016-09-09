@@ -616,6 +616,8 @@ Controller.prototype.getCommisionsReport = function (viewModels, query, user) {
             else if (viewModel.cost.pph === 0.98)
                 priceWithoutPph *= 0.98;
 
+            var cost = priceWithoutPph - totalAdditionalCost - viewModel.cost.worker;
+
             result.report_data.push({
                 "transaction_date": viewModel.date,
                 "spb_no": viewModel.spbNumber,
@@ -624,7 +626,7 @@ Controller.prototype.getCommisionsReport = function (viewModels, query, user) {
                 "content": contents.length > 0 ? contents.join() : " ",
                 "total_coli": totalColli,
                 "total_weight": totalWeight,
-                "cost": priceWithoutPph,
+                "cost": cost,
                 "price": viewModel.cost.total,
                 "bea_tambahan": totalAdditionalCost,
                 "pph": viewModel.cost.pph,
