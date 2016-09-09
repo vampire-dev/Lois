@@ -77,14 +77,6 @@ var app;
                 });
             };
             shippingCtrl.prototype.edit = function (entity) {
-                if (entity.confirmed) {
-                    this.notify('warning', 'Pengiriman ini telah dikonfirmasi');
-                    return;
-                }
-                if (entity.returned) {
-                    this.notify('warning', 'Pengiriman ini telah diretur');
-                    return;
-                }
                 if (entity.audited) {
                     this.notify('warning', 'Pengiriman ini sedang diaudit oleh manager');
                     return;
