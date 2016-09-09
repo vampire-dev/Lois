@@ -105,6 +105,10 @@ var app;
                     this.notify('warning', 'Packing barang harus diisi');
                     return;
                 }
+                if (this.selectedItem.dimensions.weight === 0) {
+                    this.notify('warning', 'Berat harus lebih besar dari nol');
+                    return;
+                }
                 if (this.selectedItem.colli.quantity === 0) {
                     this.notify('warning', 'Koli harus lebih besar dari nol');
                     return;
