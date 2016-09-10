@@ -182,9 +182,6 @@ Controller.prototype.getRecapitulations = function (query) {
     if (query['destination'])
         parameters['destination'] = ObjectId(query['destination']);
 
-    if (query['regionSource'])
-        parameters['regions.source'] = ObjectId(query['regionSource']);
-
     if (query['regionDest'])
         parameters['regions.destination'] = ObjectId(query['regionDest']);
 
@@ -202,6 +199,9 @@ Controller.prototype.getRecapitulations = function (query) {
 
     if (query['recapDate'])
         recapParameters['items.recapitulations.date'] = { "$gte": date.createLower(query['recapDate']), "$lte": date.createUpper(query['recapDate']) };
+
+    if (query['departureDate'])
+        recapParameters['items.recapitulations.departureDate'] = { "$gte": date.createLower(query['departureDate']), "$lte": date.createUpper(query['departureDate']) };
 
     return schemas.shippings.aggregate([
         { "$match": parameters },
@@ -378,9 +378,6 @@ Controller.prototype.getReturns = function (query) {
 
     if (query['paymentType'])
         parameters['payment.type'] = ObjectId(query['paymentType']);
-
-    if (query['regionDest'])
-        parameters['regions.destination'] = ObjectId(query['regionDest']);
 
     if (query['destination'])
         parameters['destination'] = ObjectId(query['destination']);
