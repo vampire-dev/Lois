@@ -382,6 +382,9 @@ Controller.prototype.getReturns = function (query) {
     if (query['regionDest'])
         parameters['regions.destination'] = ObjectId(query['regionDest']);
 
+    if (query['destination'])
+        parameters['destination'] = ObjectId(query['destination']);
+
     if (query['regionSource'])
         parameters['regions.source'] = ObjectId(query['regionSource']);
 
@@ -407,6 +410,10 @@ Controller.prototype.getReturnsReport = function (viewModels, user) {
     };
 
     return co(function* () {
+
+        var payment_method = yield schemas.paymentTypes.findOne({ "_id": ObjectId(viewModels[0].payment.type) }).exec();
+        result['payment_method'] = payment_method.name;
+
         yield* _co.coEach(viewModels, function* (viewModel) {
 
             var deliveries = _.filter(viewModel.items.deliveries, function (delivery) {

@@ -113,6 +113,14 @@ var app;
                     this.notify('warning', 'Koli harus lebih besar dari nol');
                     return;
                 }
+                if (this.selectedItem.colli.quantity === '' || this.selectedItem.dimensions.weight === '' || this.selectedItem.dimensions.height === '' || this.selectedItem.dimensions.width === '' || this.selectedItem.dimensions.length === '') {
+                    this.notify('warning', 'Ukuran barang harus diisi');
+                    return;
+                }
+                if (this.selectedItem.cost.additional === '' || this.selectedItem.cost.colli === '' || this.selectedItem.cost.discount === '') {
+                    this.notify('warning', 'Biaya barang harus diisi');
+                    return;
+                }
                 var index = this.selectedEntity['items'].indexOf(this.selectedItem);
                 if (index < 0)
                     this.selectedEntity['items'].push(this.selectedItem);
