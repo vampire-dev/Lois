@@ -8,8 +8,8 @@ var config = require('./configurator').config();
 var app = express();
 
 app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json({ limit: '100mb' }));
+app.use(bodyParser.urlencoded({ extended: false, limit: '100mb' }));
 app.use(session({ secret: 'sdfe34234fdff234fsdf', saveUninitialized: true, resave: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(require('./routes/region'));
