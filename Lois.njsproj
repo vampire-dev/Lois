@@ -424,6 +424,7 @@
     <Folder Include="public\views\" />
     <Folder Include="typings\globals\express-session\" />
     <Folder Include="typings\globals\multer\" />
+    <Folder Include="typings\globals\socket.io\" />
     <Folder Include="utils\" />
     <Folder Include="public\" />
     <Folder Include="routes\" />
@@ -489,6 +490,7 @@
     <TypeScriptCompile Include="typings\globals\node\index.d.ts" />
     <TypeScriptCompile Include="typings\globals\serve-favicon\index.d.ts" />
     <TypeScriptCompile Include="typings\globals\serve-static\index.d.ts" />
+    <TypeScriptCompile Include="typings\globals\socket.io\index.d.ts" />
     <TypeScriptCompile Include="typings\globals\stylus\index.d.ts" />
     <TypeScriptCompile Include="typings\index.d.ts" />
   </ItemGroup>
