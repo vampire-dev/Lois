@@ -521,7 +521,7 @@ Controller.prototype.getDeliveryList = function (query) {
     return schemas.shippings.find(parameters).sort({ "number": 1 }).populate('sender destination regions.destination payment.type').skip(skip).limit(limit).exec();
 };
 
-Controller.prototype.getDeliveryListReport = function (viewModels, user) {
+Controller.prototype.getDeliveryListReport = function (viewModels, query, user) {
     var self = this;
 
     var result = {
@@ -529,7 +529,8 @@ Controller.prototype.getDeliveryListReport = function (viewModels, user) {
         "template_file": "lapdaftarkirim.xlsx",
         "location": user.location.name,
         "user": user.name,
-        "date": new Date(),
+        "start_date": query['from'],
+        "end_date": query['to'],
         "report_data": []
     };
 
