@@ -80,14 +80,16 @@ Controller.prototype.return = function (viewModels, user) {
             if (!shipping.returnInfo.created.date) {
                 shipping.returnInfo.created.date = new Date();
                 shipping.returnInfo.created.user = user._id;
-               
+            }
+
+            if (!viewModel.returnInfo.accepted) {
                 var notification = new schemas.notifications({
                     "event": 'Retur spb ' + shipping.spbNumber + ' ' + (viewModel.returnInfo.accepted ? 'diterima' : 'ditolak'),
                     "filePath": shipping.returnInfo.filePath,
                     "date": new Date(),
                     "user": user._id
                 });
-                
+
                 yield notification.save();
             }
 
