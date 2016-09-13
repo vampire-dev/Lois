@@ -58,7 +58,8 @@ router.get(config.api + 'reportData/getReturns', auth.isAuthenticated, function 
 });
 
 router.post(config.api + 'reportData/getReturnsReport', auth.isAuthenticated, function (req, res) {
-    controller.getReturnsReport(req.body, req.session.user).then(function (result) {
+    var query = JSON.parse(req.query['query']);
+    controller.getReturnsReport(req.body, query, req.session.user).then(function (result) {
         res.status(200).send(result);
     }).catch(function (error) {
         res.status(500).send(error.message);

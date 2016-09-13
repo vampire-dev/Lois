@@ -404,41 +404,48 @@ Controller.prototype.getReturns = function (query) {
     return schemas.shippings.find(parameters).sort({ "number": -1 }).populate('sender destination').skip(skip).limit(limit).exec();
 };
 
-Controller.prototype.getReturnsReport = function (viewModels, user) {
+Controller.prototype.getReturnsReport = function (viewModels, query, user) {
     var self = this;
     var result = {
         "title": "LAPORAN RETUR",
         "template_file": "lapretur.xlsx",
         "location": user.location.name,
-        "destination": viewModels[0].destination.name,
         "user": user.name,
-        "date": viewModels[0].returnInfo.modified.date,
+        "date": query['returnDate'] ? query['returnDate'] : null,
         "report_data": []
     };
 
     return co(function* () {
 
-        var payment_method = yield schemas.paymentTypes.findOne({ "_id": ObjectId(viewModels[0].payment.type) }).exec();
-        result['payment_method'] = payment_method.name;
+        var destinations = [];
+
+        var payment_method = yield schemas.paymentTypes.findOne({ "_id": ObjectId(query['paymentType']) }).exec();
+        if (payment_method)
+            result['payment_method'] = payment_method.name;
 
         yield* _co.coEach(viewModels, function* (viewModel) {
-
-            var deliveries = _.filter(viewModel.items.deliveries, function (delivery) {
-                return delivery.quantity > 0;
-            });
 
             var drivers = [];
             var vehicleNumbers = [];
             var deliveryDates = [];
 
-            yield* _co.coEach(deliveries, function* (delivery) {
-                var driver = yield schemas.drivers.findOne({ _id: ObjectId(delivery.driver) });
+            destinations.push(viewModel.destination.name);
 
-                if (drive)
-                    drivers.push(driver.name);
+            yield* _co.coEach(viewModel.items, function* (item) {
 
-                vehicleNumbers.push(delivery.vehicleNumber);
-                deliveryDates.push(delivery.data);
+                var deliveries = _.filter(item.deliveries, function (delivery) {
+                    return delivery.quantity > 0;
+                });
+
+                yield* _co.coEach(deliveries, function* (delivery) {
+                    var driver = yield schemas.drivers.findOne({ _id: ObjectId(delivery.driver) });
+
+                    if (driver)
+                        drivers.push(driver.name);
+
+                    vehicleNumbers.push(delivery.vehicleNumber);
+                    deliveryDates.push(delivery.date);
+                });
             });
 
             result.report_data.push({
@@ -457,6 +464,8 @@ Controller.prototype.getReturnsReport = function (viewModels, user) {
                 "retur_porter_receipt": viewModel.returnInfo.receipt ? 'v' : 'x'
             });
         });
+
+        result['destination_city'] = destinations;
 
         return result;
     });

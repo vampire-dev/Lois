@@ -219,7 +219,7 @@
                                             <input type="text" class="form-control" ng-model="entity.viewModel.quantity" />
                                         </td>
                                         <td style="text-align:right;">
-                                            {{(entity.viewModel.weight / entity.items.colli.quantity)*entity.viewModel.quantity}}
+                                            {{(entity.viewModel.weight / entity.items.colli.quantity)*entity.viewModel.quantity | number}}
                                         </td>
                                     </tr>
                                 </tbody>
