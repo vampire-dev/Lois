@@ -116,7 +116,7 @@ Controller.prototype.getUnpaid = function (query) {
     return schemas.shippings.find(parameters).sort({ "number": -1 }).populate('sender payment.type').skip(skip).limit(limit).exec();
 };
 
-Controller.prototype.getUnpaidReport = function (viewModels, user) {
+Controller.prototype.getUnpaidReport = function (viewModels, query, user) {
     var self = this;
 
     var result = {
@@ -132,6 +132,13 @@ Controller.prototype.getUnpaidReport = function (viewModels, user) {
         var sumTotalColli = 0;
         var sumTotalWeight = 0;
         var sumPrice = 0;
+
+        if (query['regionDest']) {
+            var destination = yield schemas.regions.findOne({ "_id": ObjectId(query['regionDest']) }).exec();
+            result['destination'] = destination.name;
+        }     
+        else
+            result['destination'] = '';       
 
         yield* _co.coEach(viewModels, function* (viewModel) {
             var totalWeight = _.sumBy(viewModel.items, 'dimensions.weight');

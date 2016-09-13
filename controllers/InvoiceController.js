@@ -23,7 +23,7 @@ Controller.prototype.getAll = function (query) {
         parameters['destination'] = ObjectId(query['destination']);
 
     if (query['invoiceNumber'])
-        parameters['invoice.client'] = new RegExp(query['invoiceNumber'], 'i');
+        parameters['invoice.all'] = new RegExp(query['invoiceNumber'], 'i');
 
     if (query['from'] && query['to'])
         parameters['date'] = { "$gte": date.createLower(query['from']), "$lte": date.createUpper(query['to']) };
