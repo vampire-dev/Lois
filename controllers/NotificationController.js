@@ -18,7 +18,7 @@ Controller.prototype.getAll = function (query) {
     if (query['from'] && query['to'])
         parameters['date'] = { "$gte": date.createLower(query['from']), "$lte": date.createUpper(query['to']) };
 
-    return schemas.notifications.find(parameters).skip(skip).limit(limit).populate('user', { "hash": 0, "salt": 0 }).sort({ "date": 1 }).exec();
+    return schemas.notifications.find(parameters).skip(skip).limit(limit).populate('user', { "hash": 0, "salt": 0 }).sort({ "date": -1 }).exec();
 };
 
 Controller.prototype.delete = function (id) {
