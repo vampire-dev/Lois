@@ -180,10 +180,11 @@
                                         <th style="text-align: center; width: 5%;">Spb</th>
                                         <th style="text-align: center; width: 10%;">Isi</th>
                                         <th style="text-align: center; width: 3%;">Tersedia</th>
-                                        <th style="text-align: center; width: 10%;">Warna Limas</th>
-                                        <th style="text-align: center; width: 10%;">Warna Relasi</th>
+                                        <th style="text-align: center; width: 7%;">Warna Limas</th>
+                                        <th style="text-align: center; width: 7%;">Warna Relasi</th>
                                         <th style="text-align: center; width: 10%;">Keterangan</th>
-                                        <th style="text-align: center; width: 5%;">Qty</th>
+                                        <th style="text-align: center; width: 6%;">Qty</th>
+                                        <th style="text-align: center; width: 5%;">Weight</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -216,6 +217,9 @@
                                         </td>
                                         <td style="text-align:right;">
                                             <input type="text" class="form-control" ng-model="entity.viewModel.quantity" />
+                                        </td>
+                                        <td style="text-align:right;">
+                                            {{(entity.viewModel.weight / entity.items.colli.quantity)*entity.viewModel.quantity}}
                                         </td>
                                     </tr>
                                 </tbody>

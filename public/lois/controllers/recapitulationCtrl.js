@@ -36,6 +36,7 @@ var app;
                         e['viewModel']['relationColor'] = null;
                         e['viewModel']['notes'] = null;
                         e['viewModel']['quantity'] = ctrl.filterType === FilterType.recap ? e.items.colli.available : e.items.recapitulations.available;
+                        e['viewModel']['weight'] = e.items.dimensions.weight;
                     });
                 }).catch(function (error) {
                     ctrl.notify('error', error.data);
