@@ -104,6 +104,9 @@ Controller.prototype.getUnpaid = function (query) {
     if (query['sender'])
         parameters['sender'] = ObjectId(query['sender']);
 
+    if (query['regionDest'])
+        parameters['regions.destination'] = ObjectId(query['regionDest']);
+
     if (query['invoice'])
         parameters['$or'] = [{ "invoice.all": query['invoice'] }, { "invoice.client": query['invoice'] }, { "invoice.partner": query['invoice'] }];
 
@@ -226,7 +229,7 @@ Controller.prototype.getRecapitulationsReport = function (viewModels, query, use
         "template_file": "laprekap.xlsx",
         "location": user.location.name,
         "train_type": "",
-        "date": query['recapDate'],
+        "date": query['recapDate'] ? query['recapDate'] : query['departureDate'],
         "recap_driver": null,
         "recap_car": null,
         "report_data": []

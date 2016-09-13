@@ -64,7 +64,18 @@
                                                         <i ng-show="senderFilter" class="glyphicon glyphicon-refresh"></i>
                                                     </label>
                                                 </section>
-                                                <section class="col col-sm-12 col-md-12 col-lg-6">
+                                                <section class="col col-sm-12 col-md-12 col-lg-4">
+                                                    <label class="input">
+                                                        <input type="text"
+                                                               ng-model="ctrl.filters.regionDest"
+                                                               placeholder="Regional Tujuan"
+                                                               uib-typeahead="data as data.name for data in ctrl.suggest('region', $viewValue)"
+                                                               typeahead-min-length="2"
+                                                               typeahead-loading="regionDestFilter" class="form-control" />
+                                                        <i ng-show="regionDestFilter" class="glyphicon glyphicon-refresh"></i>
+                                                    </label>
+                                                </section>
+                                                <section class="col col-sm-12 col-md-12 col-lg-4">
                                                     <label class="input">
                                                         <div class="input-group">
                                                             <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
@@ -73,7 +84,7 @@
                                                         </div>
                                                     </label>
                                                 </section>
-                                                <section class="col col-sm-12 col-md-12 col-lg-6">
+                                                <section class="col col-sm-12 col-md-12 col-lg-4">
                                                     <label class="input">
                                                         <div class="input-group">
                                                             <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
