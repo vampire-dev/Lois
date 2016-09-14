@@ -666,8 +666,8 @@
                                                 <td> {{entity.sender[0].name}} </td>
                                                 <td> {{entity.items.content}}</td>
                                                 <td> {{entity.items.recapitulations.quantity}} </td>
-                                                <td> {{entity.items.recapitulations.weight}} </td>
-                                                <td> {{entity.items.cost.shipping | currency: 'Rp ' : 0}} </td>
+                                                <td> {{entity.items.recapitulations.weight | number}} </td>
+                                                <td> {{(entity.items.cost.shipping / entity.items.colli.quantity)*entity.items.recapitulations.quantity | currency: 'Rp ' : 0}} </td>
                                                 <td> {{entity.driver[0].name}} </td>
                                                 <td> {{entity.items.recapitulations.vehicleNumber}} </td>
                                                 <td> {{entity.items.recapitulations.date | date:'dd-MM-yyyy'}} </td>
