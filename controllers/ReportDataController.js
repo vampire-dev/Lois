@@ -267,8 +267,8 @@ Controller.prototype.getRecapitulationsReport = function (viewModels, query, use
                 "sender": viewModel.sender[0].name,
                 "receiver": viewModel.receiver.name,
                 "content": viewModel.items.content,
-                "total_coli": viewModel.items.recapitulations.quantity,
-                "coli": viewModel.items.colli.quantity,
+                "total_coli": viewModel.items.colli.quantity,
+                "coli": viewModel.items.recapitulations.quantity,
                 "weight": viewModel.items.recapitulations.weight,
                 "price": price,
                 "payment_method": paymentType.name,
@@ -280,7 +280,7 @@ Controller.prototype.getRecapitulationsReport = function (viewModels, query, use
 
             totalColliQuantity += _.parseInt(viewModel.items.colli.quantity);
             totalRecappedColli += _.parseInt(viewModel.items.recapitulations.quantity);
-            totalWeight += parseFloat(viewModel.items.dimensions.weight);
+            totalWeight += parseFloat(viewModel.items.recapitulations.weight);
             totalPrice += parseFloat(price);
         });
 
