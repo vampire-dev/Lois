@@ -43,8 +43,7 @@ Controller.prototype.getPaidReport = function (viewModels, query, user) {
         "template_file": "lapterbayar.xlsx",
         "location": user.location.name,
         "user": user.name,
-        "date": query['paymentDate'],
-        "payment_method": null,
+        "report_date": query['paymentDate'],
         "report_data": []
     };
 
@@ -52,6 +51,9 @@ Controller.prototype.getPaidReport = function (viewModels, query, user) {
         var sumTotalColli = 0;
         var sumTotalWeight = 0;
         var sumPrice = 0;
+        var paymentType = yield schemas.paymentTypes.findOne({ "_id": ObjectId(query['paymentType']) }).exec();
+
+        result['payment_method'] = paymentType ? paymentType.name : " ";
 
         yield* _co.coEach(viewModels, function* (viewModel) {
             var totalWeight = _.sumBy(viewModel.items, 'dimensions.weight');
@@ -60,9 +62,6 @@ Controller.prototype.getPaidReport = function (viewModels, query, user) {
             var paymentDates = _.map(viewModel.payment.phases, "date");
             var banks = _.map(viewModel.payment.phases, "bank");
             var totalColli = _.sumBy(viewModel.items, "colli.quantity");
-            var paymentType = query['paymentType'] ? yield schemas.paymentTypes.findOne({ "_id": ObjectId(query['paymentType']) }).exec() : "Kosong";
-
-            result['payment_method'] = paymentType.name;
 
             result.report_data.push({
                 "spb_no": viewModel.spbNumber,
@@ -74,7 +73,8 @@ Controller.prototype.getPaidReport = function (viewModels, query, user) {
                 "price": viewModel.cost.total,
                 "transaction_date": viewModel.date,
                 "payment_date": paymentDates.length > 0 ? paymentDates.join() : " ",
-                "bank": banks.length > 0 ? banks.join() : " "
+                "bank": banks.length > 0 ? banks.join() : " ",
+                "invoice": viewModel.invoice.client ? viewModel.invoice.client : viewModel.invoice.all ? viewModel.invoice.all : " "
             });
 
             sumTotalColli += totalColli;
