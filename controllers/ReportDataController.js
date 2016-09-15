@@ -281,7 +281,7 @@ Controller.prototype.getRecapitulationsReport = function (viewModels, query, use
             totalColliQuantity += _.parseInt(viewModel.items.colli.quantity);
             totalRecappedColli += _.parseInt(viewModel.items.recapitulations.quantity);
             totalWeight += parseFloat(viewModel.items.dimensions.weight);
-            totalPrice += parseFloat(viewModel.items.cost.shipping);
+            totalPrice += parseFloat(price);
         });
 
         result['sum_total_coli'] = totalColliQuantity;
