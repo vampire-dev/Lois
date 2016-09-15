@@ -255,6 +255,7 @@ Controller.prototype.getRecapitulationsReport = function (viewModels, query, use
             var driver = yield schemas.drivers.findOne({ _id: ObjectId(viewModel.items.recapitulations.driver) });
             var user = yield schemas.users.findOne({ _id: ObjectId(viewModel.items.recapitulations.user) });
             var paymentType = yield schemas.paymentTypes.findOne({ _id: ObjectId(viewModel.payment.type) });
+            var price = (viewModel.items.cost.shipping / viewModel.items.colli.quantity) * viewModel.items.recapitulations.quantity;
 
             if (driver)
                 result.recap_driver = driver.name;
@@ -268,8 +269,8 @@ Controller.prototype.getRecapitulationsReport = function (viewModels, query, use
                 "content": viewModel.items.content,
                 "total_coli": viewModel.items.recapitulations.quantity,
                 "coli": viewModel.items.colli.quantity,
-                "weight": viewModel.items.dimensions.weight,
-                "price": viewModel.items.cost.shipping,
+                "weight": viewModel.items.recapitulations.weight,
+                "price": price,
                 "payment_method": paymentType.name,
                 "recap_limas_color": viewModel.items.recapitulations.limasColor,
                 "recap_relation_color": viewModel.items.recapitulations.relationColor,
