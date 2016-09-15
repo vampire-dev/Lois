@@ -148,7 +148,7 @@ Controller.prototype.calculateCost = function (item, tariff, quota, option) {
             return minimum - cost.discount + colliCost + cost.additional;
         case static.surabayaMinWeight:
             if (dimensions.weight > quota)
-                return minimum * ((dimensions.weight - quota) * price) - cost.discount + cost.additional;
+                return minimum + ((dimensions.weight - quota) * price) - cost.discount + colliCost + cost.additional;
 
             return minimum - cost.discount + colliCost + cost.additional;
         case static.combinationWeight:
