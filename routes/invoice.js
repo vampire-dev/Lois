@@ -19,7 +19,10 @@ router.get(config.api + 'invoice/getAll', auth.isAuthenticated, function (req, r
 });
 
 router.get(config.api + 'invoice/getList', auth.isAuthenticated, function (req, res) {
-    controller.getList(JSON.parse(req.query['query'])).then(function (result) {
+    var query = JSON.parse(req.query['query']);
+    query['location'] = req.session.user.location._id;
+
+    controller.getList(query).then(function (result) {
         return res.status(200).send(result);
     }).catch(function (error) {
         return res.status(500).send(error.message);

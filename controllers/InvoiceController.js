@@ -22,6 +22,9 @@ Controller.prototype.getAll = function (query) {
     if (query['destination'])
         parameters['destination'] = ObjectId(query['destination']);
 
+    if (query['regionSource'])
+        parameters['regions.source'] = ObjectId(query['regionSource']);
+
     if (query['invoiceNumber'])
         parameters['invoice.all'] = new RegExp(query['invoiceNumber'], 'i');
 
@@ -34,7 +37,7 @@ Controller.prototype.getAll = function (query) {
 Controller.prototype.getList = function (query) {
     var limit = query['limit'] ? query['limit'] : 10;
     var skip = query['skip'] ? query['skip'] : 0;
-    var parameters = {};
+    var parameters = { "inputLocation": ObjectId(query['location'])};
 
     if (query['invoiceNumber'])
         parameters['number'] = new RegExp(query['invoiceNumber'], 'i');
