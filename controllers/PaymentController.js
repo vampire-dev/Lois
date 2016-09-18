@@ -38,6 +38,9 @@ Controller.prototype.getAll = function (query) {
     if (query['invoice'])
         parameters['$or'] = [{ "invoice.all": query['invoice'] }, { "invoice.client": query['invoice'] }, { "invoice.partner": query['invoice'] }];
 
+    if (query['paymentStatus'])
+        parameters['payment.status'] = query['paymentStatus'];
+
     if (query['from'] && query['to'])
         parameters['date'] = { "$gte": date.createLower(query['from']), "$lte": date.createUpper(query['to']) };
 

@@ -80,7 +80,11 @@
                                         </section>
                                         <section class="col col-sm-12 col-md-12 col-lg-4">
                                             <label class="input">
-                                                <input type="text" placeholder="Status Bayar" ng-model="ctrl.filters.paymentStatus" />
+                                                <select class="form-control" ng-model="ctrl.filters.paymentStatus">
+                                                    <option value="">&nbsp Status Bayar</option>
+                                                    <option value="Terbayar">&nbsp Terbayar</option>
+                                                    <option value="Belum Terbayar">&nbsp Belum Terbayar</option>
+                                                </select>
                                             </label>
                                         </section>
                                         <section class="col col-sm-12 col-md-12 col-lg-4">

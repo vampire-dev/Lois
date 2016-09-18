@@ -79,7 +79,16 @@
                                                 <i ng-show="regionSourceFilter" class="glyphicon glyphicon-refresh"></i>
                                             </label>
                                         </section>
-                                        <section class="col col-sm-12 col-md-12 col-lg-6">
+                                        <section class="col col-sm-12 col-md-12 col-lg-4">
+                                            <label class="input">
+                                                <select class="form-control" ng-model="ctrl.filters.paymentStatus">
+                                                    <option value="">&nbsp Status Bayar</option>
+                                                    <option value="Terbayar">&nbsp Terbayar</option>
+                                                    <option value="Belum Terbayar">&nbsp Belum Terbayar</option>
+                                                </select>
+                                            </label>
+                                        </section>
+                                        <section class="col col-sm-12 col-md-12 col-lg-4">
                                             <label class="input">
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
@@ -88,7 +97,7 @@
                                                 </div>
                                             </label>
                                         </section>
-                                        <section class="col col-sm-12 col-md-12 col-lg-6">
+                                        <section class="col col-sm-12 col-md-12 col-lg-4">
                                             <label class="input">
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
