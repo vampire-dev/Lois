@@ -631,6 +631,9 @@ Controller.prototype.getCommisionsReport = function (viewModels, query, user) {
         var region = yield schemas.regions.findOne({ "_id": ObjectId(viewModels[0].destination.region) }).exec();
         result['destination'] = region.name;
 
+        var paymentType = yield schemas.paymentTypes.findOne({ "_id": ObjectId(query['paymentType']) }).exec();
+        result['payment_method'] = paymentType.name;
+
         yield* _co.coEach(viewModels, function* (viewModel) {
             var totalWeight = _.sumBy(viewModel.items, 'dimensions.weight');
             var totalColli = _.sumBy(viewModel.items, 'colli.quantity');

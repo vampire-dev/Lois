@@ -56,6 +56,42 @@
                                                 <i ng-show="destinationFilter" class="glyphicon glyphicon-refresh"></i>
                                             </label>
                                         </section>
+                                        <section class="col col-sm-12 col-md-12 col-lg-3">
+                                            <label class="input">
+                                                <input type="text"
+                                                       ng-model="ctrl.filters.driver"
+                                                       placeholder="Supir Kirim"
+                                                       uib-typeahead="data as data.name for data in ctrl.suggest('driver', $viewValue)"
+                                                       typeahead-min-length="2"
+                                                       typeahead-loading="driverFilter" class="form-control" />
+                                                <i ng-show="driverFilter" class="glyphicon glyphicon-refresh"></i>
+                                            </label>
+                                        </section>
+                                        <section class="col col-sm-12 col-md-12 col-lg-3">
+                                            <label class="input">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                                    <input datepicker class="form-control" placeholder="Tanggal Kirim"
+                                                           id="delivery-date" type="text" ng-model="ctrl.filters.deliveryDate" />
+                                                </div>
+                                            </label>
+                                        </section>
+                                        <section class="col col-sm-12 col-md-12 col-lg-3">
+                                            <label class="input">
+                                                <input type="text" class="form-control" placeholder="Kode Kirim" ng-model="ctrl.filters.deliveryCode" />
+                                            </label>
+                                        </section>
+                                        <section class="col col-sm-12 col-md-12 col-lg-3">
+                                            <label class="input">
+                                                <input type="text"
+                                                       ng-model="ctrl.filters.paymentType"
+                                                       placeholder="Cara Bayar"
+                                                       uib-typeahead="data as data.name for data in ctrl.suggest('paymentType', $viewValue)"
+                                                       typeahead-min-length="2"
+                                                       typeahead-loading="paymentTypeFilter" class="form-control" />
+                                                <i ng-show="paymentTypeFilter" class="glyphicon glyphicon-refresh"></i>
+                                            </label>
+                                        </section>
                                         <section class="col col-sm-12 col-md-12 col-lg-6">
                                             <label class="input">
                                                 <div class="input-group">

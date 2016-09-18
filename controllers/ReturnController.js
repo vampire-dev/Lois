@@ -25,6 +25,18 @@ Controller.prototype.getAll = function (query) {
     if (query['regionSource'])
         parameters['regions.source'] = ObjectId(query['regionSource']);
 
+    if (query['driver'])
+        parameters['items.deliveries.driver'] = ObjectId(query['driver']);
+
+    if (query['deliveryCode'])
+        parameters['items.deliveries.deliveryCode'] = query['deliveryCode'];
+
+    if (query['paymentType'])
+        parameters['payment.type'] = ObjectId(query['paymentType']);
+
+    if (query['deliveryDate'])
+        parameters['items.deliveries.date'] = { "$gte": date.createLower(query['deliveryDate']), "$lte": date.createUpper(query['deliveryDate']) };
+
     if (query['from'] && query['to'])
         parameters['date'] = { "$gte": date.createLower(query['from']), "$lte": date.createUpper(query['to']) };
 
