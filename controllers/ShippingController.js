@@ -197,7 +197,7 @@ Controller.prototype.save = function (data, fromManager) {
             count++;
         });
 
-        data.cost.total += data.cost.worker;
+        data.cost.total += _.parseInt(data.cost.worker);
 
         if (data.cost.pph === 0.02)
             data.cost.total += (data.cost.total * 0.02);

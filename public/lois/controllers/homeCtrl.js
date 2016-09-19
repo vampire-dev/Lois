@@ -29,6 +29,19 @@ var app;
                     ctrl.notify('error', error.data);
                 });
             };
+            homeCtrl.prototype.load = function () {
+                var ctrl = this;
+                ctrl.createQuery();
+                ctrl.loadingData = true;
+                ctrl.functions.load(ctrl.query).then(function (result) {
+                    ctrl.entities = result.data;
+                }).catch(function (error) {
+                    ctrl.notify('error', error.data);
+                }).finally(function () {
+                    ctrl.loadingData = false;
+                });
+                ctrl.loadOverall();
+            };
             homeCtrl.prototype.onSummaryChanges = function (summary) {
                 switch (summary) {
                     case 'destination':
