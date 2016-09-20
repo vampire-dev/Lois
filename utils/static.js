@@ -8,6 +8,7 @@
     surabayaMinWeight: '57c46a82398059b414b37872',
     combinationWeight: '57c46a82398059b414b37874',
     ban: '57c46a82398059b414b37875',
+    freeoncharge: '57e13cea17a1c973136dd367',
     amplop: '57cca498b484a81b74c29f88',
     client: '57c45d368e4f6580202789e1',
     location: '57c45ac08e8ddc7019605687',

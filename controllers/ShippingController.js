@@ -156,6 +156,9 @@ Controller.prototype.calculateCost = function (item, tariff, quota, option) {
                 return minimum + ((dimensions.weight - quota) * price) - (colli - 1) * colliCost - cost.discount + cost.additional;
 
             return 0;
+
+        case static.freeoncharge:
+            return 0;
         default:
             return 0;
     };
