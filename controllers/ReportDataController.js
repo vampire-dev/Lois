@@ -653,8 +653,8 @@ Controller.prototype.getCommisionsReport = function (viewModels, query, user) {
                 "cost": cost,
                 "price": viewModel.cost.total,
                 "bea_tambahan": totalAdditionalCost,
-                "pph": viewModel.cost.pph,
-                "ppn": viewModel.cost.ppn,
+                "pph": viewModel.cost.pph === 0.98 ? (viewModel.cost.base / viewModel.cost.pph) - viewModel.cost.base : viewModel.cost.pph * viewModel.cost.base,
+                "ppn": viewModel.cost.ppn * viewModel.cost.base,
                 "bea_kuli": viewModel.cost.worker
             });
 
