@@ -397,7 +397,7 @@ Controller.prototype.getReturns = function (query) {
         parameters['regions.source'] = ObjectId(query['regionSource']);
 
     if (query['returnDate'])
-        parameters['returnInfo.created.date'] = { "$gte": date.createLower(query['returnDate']), "$lte": date.createUpper(query['returnDate']) };
+        parameters['returnInfo.modified.date'] = { "$gte": date.createLower(query['returnDate']), "$lte": date.createUpper(query['returnDate']) };
 
     if (query['from'] && query['to'])
         parameters['date'] = { "$gte": date.createLower(query['from']), "$lte": date.createUpper(query['to']) };
