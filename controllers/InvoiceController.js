@@ -175,6 +175,7 @@ Controller.prototype.getInvoiceReport = function (invoice, user) {
         var sumWorkerCost = 0;
         var sumExpeditionCost = 0;
         var sumTotalCost = 0;
+        var sumTotalPpn = 0;
 
         yield* _co.coEach(invoice.shippings, function* (shippingId) {
             var shipping = yield schemas.shippings.findOne({ _id: ObjectId(shippingId) }).populate('destination').exec();
@@ -189,7 +190,8 @@ Controller.prototype.getInvoiceReport = function (invoice, user) {
                 "total_weight": totalWeight,
                 "bea_kuli": shipping.cost.worker,
                 "partner_fee": shipping.cost.expedition,
-                "price": shipping.cost.total
+                "price": shipping.cost.total,
+                "ppn": shipping.cost.ppn * shipping.cost.total
             });
 
             sumTotalColli += totalColli;
@@ -197,6 +199,7 @@ Controller.prototype.getInvoiceReport = function (invoice, user) {
             sumWorkerCost += shipping.cost.worker;
             sumExpeditionCost += shipping.cost.expedition;
             sumTotalCost += shipping.cost.total;
+            sumTotalPpn += shipping.cost.ppn * shipping.cost.total;
         });
 
         var terbilang = self.getTerbilang(sumTotalCost);
@@ -204,8 +207,10 @@ Controller.prototype.getInvoiceReport = function (invoice, user) {
         result['sum_total_weight'] = sumTotalWeight;
         result['sum_bea_kuli'] = sumWorkerCost;
         result['sum_partner_fee'] = sumExpeditionCost;
-        result['sum_price'] = sumTotalCost
+        result['sum_ppn'] = sumTotalPpn;
+        result['sum_price'] = sumTotalCost;
         result['terbilang'] = self.getTerbilang(sumTotalCost);
+        
         return result;
     });
 };
