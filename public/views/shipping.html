@@ -342,7 +342,7 @@
                                                 <input type="text" ng-model="ctrl.entity.receiver.name" />
                                             </label>
                                         </section>
-                                        <section class="col col-sm-12 col-md-12 col-lg-4">
+                                        <section class="col col-sm-12 col-md-12 col-lg-8">
                                             <label class="label">
                                                 Alamat
                                             </label>
@@ -358,28 +358,52 @@
                                                 <input type="text" ng-model="ctrl.entity.receiver.contact" />
                                             </label>
                                         </section>
-                                        <section class="col col-sm-12 col-md-12 col-lg-12">
+                                        <section class="col col-sm-12 col-md-12 col-lg-4">
                                             <label class="label">
-                                                Supir
+                                                Supir Pengirim
                                             </label>
                                             <label class="input">
-                                                <input type="text" ng-model="ctrl.entity.driver" />
+                                                <input type="text" ng-model="ctrl.entity.driver.sender" />
                                             </label>
                                         </section>
-                                        <section class="col col-sm-12 col-md-12 col-lg-12">
+                                        <section class="col col-sm-12 col-md-12 col-lg-4">
                                             <label class="label">
-                                                Partner
+                                                Supir Pick Up
+                                            </label>
+                                            <label class="input">
+                                                <input type="text" ng-model="ctrl.entity.driver.pickup" />
+                                            </label>
+                                        </section>
+                                        <section class="col col-sm-12 col-md-12 col-lg-4">
+                                            <label class="label">
+                                                PO
+                                            </label>
+                                            <label class="input">
+                                                <input type="text" ng-model="ctrl.entity.notes.po" />
+                                            </label>
+                                        </section>
+                                        <section class="col col-sm-12 col-md-12 col-lg-8">
+                                            <label class="label">
+                                                Keterangan
+                                            </label>
+                                            <label class="input">
+                                                <input type="text" ng-model="ctrl.entity.notes.shipping" />
+                                            </label>
+                                        </section>                                        
+                                        <section class="col col-sm-12 col-md-12 col-lg-4">
+                                            <label class="label">
+                                                Cara Bayar<strong class="txt-color-red">*</strong>
                                             </label>
                                             <label class="input">
                                                 <input type="text"
-                                                       ng-model="ctrl.entity.partner"
-                                                       uib-typeahead="data as data.name for data in ctrl.suggest('partner', $viewValue)"
+                                                       ng-model="ctrl.entity.payment.type"
+                                                       uib-typeahead="data as data.name for data in ctrl.suggest('paymentType', $viewValue)"
                                                        typeahead-min-length="2"
-                                                       typeahead-loading="partnerInput" class="form-control" />
-                                                <i ng-show="partnerInput" class="glyphicon glyphicon-refresh"></i>
+                                                       typeahead-loading="paymentTypeInput" class="form-control" />
+                                                <i ng-show="paymentTypeInput" class="glyphicon glyphicon-refresh"></i>
                                             </label>
                                         </section>
-                                        <section class="col col-sm-12 col-md-12 col-lg-12">
+                                        <section class="col col-sm-12 col-md-12 col-lg-8">
                                             <label class="label">
                                                 Lokasi Bayar
                                             </label>
@@ -394,15 +418,14 @@
                                         </section>
                                         <section class="col col-sm-12 col-md-12 col-lg-12">
                                             <label class="label">
-                                                Cara Bayar<strong class="txt-color-red">*</strong>
+                                                Tarif
                                             </label>
-                                            <label class="input">
-                                                <input type="text"
-                                                       ng-model="ctrl.entity.payment.type"
-                                                       uib-typeahead="data as data.name for data in ctrl.suggest('paymentType', $viewValue)"
-                                                       typeahead-min-length="2"
-                                                       typeahead-loading="paymentTypeInput" class="form-control" />
-                                                <i ng-show="paymentTypeInput" class="glyphicon glyphicon-refresh"></i>
+                                            <label class="select">
+                                                <select ng-model="ctrl.entity.tariff" to-number>
+                                                    <option value="0">Tarif 1</option>
+                                                    <option value="1">Tarif 2</option>
+                                                    <option value="2">Tarif 3</option>
+                                                </select><i></i>
                                             </label>
                                         </section>
                                         <section class="col col-sm-12 col-md-12 col-lg-12">
@@ -416,24 +439,17 @@
                                                 </div>
                                             </label>
                                         </section>
-                                        <section class="col col-sm-12 col-md-12 col-lg-12">
-                                            <label class="label">
-                                                Tarif
-                                            </label>
-                                            <label class="select">
-                                                <select ng-model="ctrl.entity.tariff" to-number>
-                                                    <option value="0">Tarif 1</option>
-                                                    <option value="1">Tarif 2</option>
-                                                    <option value="2">Tarif 3</option>
-                                                </select><i></i>
-                                            </label>
-                                        </section>
                                         <section class="col col-sm-12 col-md-12 col-lg-4">
                                             <label class="label">
-                                                Biaya Kuli
+                                                Partner Ekspedisi
                                             </label>
                                             <label class="input">
-                                                <input type="text" onkeypress='return event.charCode >= 48 && event.charCode <= 57' ng-model="ctrl.entity.cost.worker" />
+                                                <input type="text"
+                                                       ng-model="ctrl.entity.partner"
+                                                       uib-typeahead="data as data.name for data in ctrl.suggest('partner', $viewValue)"
+                                                       typeahead-min-length="2"
+                                                       typeahead-loading="partnerInput" class="form-control" />
+                                                <i ng-show="partnerInput" class="glyphicon glyphicon-refresh"></i>
                                             </label>
                                         </section>
                                         <section class="col col-sm-12 col-md-12 col-lg-4">
@@ -444,6 +460,22 @@
                                                 <input type="text" onkeypress='return event.charCode >= 48 && event.charCode <= 57' ng-model="ctrl.entity.cost.expedition" />
                                             </label>
                                         </section>
+                                        <section class="col col-sm-12 col-md-12 col-lg-4">
+                                            <label class="label">
+                                                Keterangan Partner
+                                            </label>
+                                            <label class="input">
+                                                <input type="text" ng-model="ctrl.entity.notes.partner" />
+                                            </label>
+                                        </section>                                  
+                                        <section class="col col-sm-12 col-md-12 col-lg-4">
+                                            <label class="label">
+                                                Biaya Kuli
+                                            </label>
+                                            <label class="input">
+                                                <input type="text" onkeypress='return event.charCode >= 48 && event.charCode <= 57' ng-model="ctrl.entity.cost.worker" />
+                                            </label>
+                                        </section>                                        
                                         <section class="col col-sm-12 col-md-12 col-lg-4">
                                             <label class="label">
                                                 Pph
@@ -458,28 +490,15 @@
                                         </section>
                                         <section class="col col-sm-12 col-md-12 col-lg-4">
                                             <label class="label">
-                                                Keterangan
+                                                Ppn
                                             </label>
-                                            <label class="input">
-                                                <input type="text" ng-model="ctrl.entity.notes.shipping" />
+                                            <label class="select">
+                                                <select ng-model="ctrl.entity.cost.ppn" to-number>
+                                                    <option value="0">0</option>
+                                                    <option value="0.1">10%</option>
+                                                </select><i></i>
                                             </label>
-                                        </section>
-                                        <section class="col col-sm-12 col-md-12 col-lg-4">
-                                            <label class="label">
-                                                Keterangan Partner
-                                            </label>
-                                            <label class="input">
-                                                <input type="text" ng-model="ctrl.entity.notes.partner" />
-                                            </label>
-                                        </section>
-                                        <section class="col col-sm-12 col-md-12 col-lg-4">
-                                            <label class="label">
-                                                PO
-                                            </label>
-                                            <label class="input">
-                                                <input type="text" ng-model="ctrl.entity.notes.po" />
-                                            </label>
-                                        </section>
+                                        </section>                                                                             
                                     </div>
                                 </fieldset>
                                 <footer>

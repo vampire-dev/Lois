@@ -176,6 +176,7 @@ Controller.prototype.save = function (data, fromManager) {
         data.cost.total = 0;
         var count = 0;
         data.colli = 0;
+        var ppn = 0;
 
         yield _co.coEach(data.items, function* (item) {
             var auditedItem = null;
@@ -200,13 +201,19 @@ Controller.prototype.save = function (data, fromManager) {
             count++;
         });
 
+        data.cost.base = data.cost.total;
         data.cost.total += _.parseInt(data.cost.worker);
+
+        if (data.cost.ppn === 0.1)
+            ppn = data.cost.total * 0.1;
 
         if (data.cost.pph === 0.02)
             data.cost.total += (data.cost.total * 0.02);
 
         else if (data.cost.pph === 0.98)
             data.cost.total /= 0.98;
+
+        data.cost.total += ppn;
 
         data.regions.source = source === null ? data.regions.source : source.region;
         data.regions.destination = dest === null ? data.regions.destination : dest.region;

@@ -54,6 +54,10 @@ var app;
                     this.notify('warning', 'Cara pembayaran tidak boleh kosong');
                     return;
                 }
+                if (this.entity.cost.expedition === '' || this.entity.cost.worker === '') {
+                    this.notify('warning', 'Biaya harus diisi walaupun 0');
+                    return;
+                }
                 var ctrl = this;
                 ctrl.processing = true;
                 ctrl.functions.save(ctrl.entity).then(function (result) {
@@ -114,11 +118,11 @@ var app;
                     return;
                 }
                 if (this.selectedItem.colli.quantity === '' || this.selectedItem.dimensions.weight === '' || this.selectedItem.dimensions.height === '' || this.selectedItem.dimensions.width === '' || this.selectedItem.dimensions.length === '') {
-                    this.notify('warning', 'Ukuran barang harus diisi');
+                    this.notify('warning', 'Ukuran barang harus diisi walaupun 0');
                     return;
                 }
                 if (this.selectedItem.cost.additional === '' || this.selectedItem.cost.colli === '' || this.selectedItem.cost.discount === '') {
-                    this.notify('warning', 'Biaya barang harus diisi');
+                    this.notify('warning', 'Biaya barang harus diisi walaupun 0');
                     return;
                 }
                 var index = this.selectedEntity['items'].indexOf(this.selectedItem);

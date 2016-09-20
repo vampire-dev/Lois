@@ -184,7 +184,13 @@ schemas['shippings'] = mongoose.model('Shipping', new Schema({
         "pph": { type: Number, default: 0.0 },
         "worker": { type: Number, default: 0.0 },
         "expedition": { type: Number, default: 0.0 },
-        "total": { type: Number, default: 0.0 }
+        "total": { type: Number, default: 0.0 },
+        "base": { type: Number, default: 0.0 },
+        "ppn": { type: Number, default: 0.0 }
+    },
+    "driver": {
+        "sender": { type: String, default: null },
+        "pickup": { type: String, default: null }
     },
     "notes": {
         "shipping": { type: String, default: null },

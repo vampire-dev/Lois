@@ -640,14 +640,7 @@ Controller.prototype.getCommisionsReport = function (viewModels, query, user) {
             var totalAdditionalCost = _.sumBy(viewModel.items, 'cost.additional');
             var contents = _.map(viewModel.items, "content");
 
-            var priceWithoutPph = viewModel.cost.total;
-            if (viewModel.cost.pph === 0.02)
-                priceWithoutPph -= (data.cost.total * 0.02);
-
-            else if (viewModel.cost.pph === 0.98)
-                priceWithoutPph *= 0.98;
-
-            var cost = priceWithoutPph - totalAdditionalCost - viewModel.cost.worker;
+            var cost = viewModel.cost.base - totalAdditionalCost;
 
             result.report_data.push({
                 "transaction_date": viewModel.date,
@@ -661,6 +654,7 @@ Controller.prototype.getCommisionsReport = function (viewModels, query, user) {
                 "price": viewModel.cost.total,
                 "bea_tambahan": totalAdditionalCost,
                 "pph": viewModel.cost.pph,
+                "ppn": viewModel.cost.ppn,
                 "bea_kuli": viewModel.cost.worker
             });
 
