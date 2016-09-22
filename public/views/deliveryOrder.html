@@ -52,6 +52,28 @@
                                                 </div>
                                             </label>
                                         </section>
+                                        <section class="col col-sm-12 col-md-12 col-lg-6">
+                                            <label class="input">
+                                                <input type="text"
+                                                       ng-model="ctrl.filters.regionSource"
+                                                       placeholder="Regional Asal"
+                                                       uib-typeahead="data as data.name for data in ctrl.suggest('region', $viewValue)"
+                                                       typeahead-min-length="2"
+                                                       typeahead-loading="regionSourceFilter" class="form-control" />
+                                                <i ng-show="regionSourceFilter" class="glyphicon glyphicon-refresh"></i>
+                                            </label>
+                                        </section>
+                                        <section class="col col-sm-12 col-md-12 col-lg-6">
+                                            <label class="input">
+                                                <input type="text"
+                                                       ng-model="ctrl.filters.regionDest"
+                                                       placeholder="Regional Tujuan"
+                                                       uib-typeahead="data as data.name for data in ctrl.suggest('region', $viewValue)"
+                                                       typeahead-min-length="2"
+                                                       typeahead-loading="regionDestFilter" class="form-control" />
+                                                <i ng-show="regionDestFilter" class="glyphicon glyphicon-refresh"></i>
+                                            </label>
+                                        </section>
                                     </div>
                                 </fieldset>
                             </form>
@@ -80,13 +102,13 @@
                             <table class="table table-bordered table-striped table-condensed table-hover smart-form has-tickbox">
                                 <thead>
                                     <tr style="color:black;">
-                                        <th style="text-align: center; width: 8%;">Spb</th>
-                                        <th style="text-align: center; width: 5%;">Pengirim</th>
-                                        <th style="text-align: center; width: 8%;">Penerima</th>
-                                        <th style="text-align: center; width: 8%;">Kontak</th>
+                                        <th style="text-align: center; width: 4%;">Spb</th>
+                                        <th style="text-align: center; width: 11%;">Pengirim</th>
+                                        <th style="text-align: center; width: 11%;">Penerima</th>
+                                        <th style="text-align: center; width: 3%;">Kontak</th>
                                         <th style="text-align: center; width: 8%;">Tujuan</th>
                                         <th style="text-align: center; width: 8%;">Cara Bayar</th>
-                                        <th style="text-align: center; width: 5%;">Supir</th>
+                                        <th style="text-align: center; width: 5%;">Berat</th>
                                         <th style="text-align: center; width: 2%;">Koli</th>
                                         <th style="text-align: center; width: 5%;">Aksi</th>
                                     </tr>
@@ -117,10 +139,10 @@
                                             {{entity.payment.type.name}}
                                         </td>
                                         <td>
-                                            {{entity.driver}}
+                                            {{entity.weight}}
                                         </td>
                                         <td>
-                                            {{entity.colli.quantity}}
+                                            {{entity.colli}}
                                         </td>
                                         <td>
                                             <a href="#" class="txt-color-white btn-sm btn-success" title="Cetak" ng-click="ctrl.print(entity)">

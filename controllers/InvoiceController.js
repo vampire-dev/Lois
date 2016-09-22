@@ -1,4 +1,4 @@
-﻿var mongoose = require('mongoose');
+﻿  var mongoose = require('mongoose');
 var date = require('../utils/date');
 var schemas = require('../models/schemas');
 var co = require('co');
@@ -183,7 +183,7 @@ Controller.prototype.getInvoiceReport = function (invoice, user) {
             var totalColli = _.sumBy(shipping.items, 'colli.quantity');
 
             result.report_data.push({
-                "transaction_date": shipping.modified.date,
+                "transaction_date": shipping.date ? shipping.date: " ",
                 "spb_no": shipping.spbNumber,
                 "destination_city": shipping.destination.name,
                 "total_coli": totalColli,

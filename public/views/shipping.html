@@ -139,16 +139,15 @@
                             <table class="table table-bordered table-condensed table-striped table-hover smart-form has-tickbox" ng-show="ctrl.viewType == 1">
                                 <thead>
                                     <tr style="color:black;">
-                                        <th style="text-align: center; width: 10%;">Spb</th>
-                                        <th style="text-align: center; width: 10%;">Tanggal</th>
-                                        <th style="text-align: center; width: 6%;">Pengirim</th>
-                                        <th style="text-align: center; width: 5%;">Penerima</th>
+                                        <th style="text-align: center; width: 5%;">Spb</th>
+                                        <th style="text-align: center; width: 8%;">Tanggal</th>
+                                        <th style="text-align: center; width: 14%;">Pengirim</th>
+                                        <th style="text-align: center; width: 10%;">Penerima</th>
                                         <th style="text-align: center; width: 5%;">Tujuan</th>
-                                        <th style="text-align: center; width:8%">Pembayaran</th>
-                                        <th style="text-align: center; width:6%;">Terbayar</th>
-                                        <th style="text-align: center; width:10%;">Harga</th>
+                                        <th style="text-align: center; width:13%">Pembayaran</th>
+                                        <th style="text-align: center; width:8%;">Harga</th>
                                         <th style="text-align: center; width:3%;">Audit</th>
-                                        <th style="text-align: center; width:13%;">Aksi</th>
+                                        <th style="text-align: center; width:10%;">Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -163,19 +162,8 @@
                                         <td>{{entity.sender.name}}</td>
                                         <td>{{entity.receiver.name}}</td>
                                         <td>{{entity.destination.name}}</td>
-                                        <td>{{entity.payment.type.name}}</td>
-                                        <td>
-                                            <p ng-if="entity.payment.status == 'Belum Terbayar'" style="color:red;">
-                                                Belum
-                                            </p>
-                                            <p ng-if="entity.payment.status == 'Terbayar Sebagian'" style="color:yellow;">
-                                                Sebagian
-                                            </p>
-                                            <p ng-if="entity.payment.status == 'Terbayar'" style="color:green;">
-                                                Terbayar
-                                            </p>
-                                        </td>
-                                        <td>{{entity.cost.total | currency: 'Rp ' : 0}}</td>  
+                                        <td>{{entity.payment.type.name}}</td>                                        
+                                        <td>{{entity.cost.total | currency: 'Rp ' : 2}}</td>  
                                         <td style="color:red" ng-if="entity.audited">
                                            Ya
                                         </td>
@@ -198,19 +186,19 @@
                             <table class="table table-bordered table-striped table-condensed table-hover smart-form has-tickbox" ng-show="ctrl.viewType == 2">
                                 <thead>
                                     <tr style="color:black;">
-                                        <th style="text-align: center; width: 8%;">Spb</th>
-                                        <th style="text-align: center; width: 8%;">Jenis</th>
-                                        <th style="text-align: center; width: 8%;">Bungkus</th>
-                                        <th style="text-align: center; width: 8%;">Isi</th>
-                                        <th style="text-align: center; width: 5%;">Panjang</th>
-                                        <th style="text-align: center; width: 5%;">Lebar</th>
-                                        <th style="text-align: center; width: 5%;">Tinggi</th>
-                                        <th style="text-align: center; width: 5%;">Berat</th>
-                                        <th style="text-align: center; width: 5%;">Koli</th>
-                                        <th style="text-align: center; width: 8%;">Bea Angkut</th>
+                                        <th style="text-align: center; width: 7%;">Spb</th>
+                                        <th style="text-align: center; width: 7%;">Jenis</th>
+                                        <th style="text-align: center; width: 7%;">Bungkus</th>
+                                        <th style="text-align: center; width: 12%;">Isi</th>
+                                        <th style="text-align: center; width: 4%;">Panjang</th>
+                                        <th style="text-align: center; width: 4%;">Lebar</th>
+                                        <th style="text-align: center; width: 4%;">Tinggi</th>
+                                        <th style="text-align: center; width: 4%;">Berat</th>
+                                        <th style="text-align: center; width: 4%;">Koli</th>
+                                        <th style="text-align: center; width: 12%;">Bea Angkut</th>
                                         <th style="text-align: center; width: 12%;">Status</th>
                                         <th style="text-align: center; width: 2%;">Audit</th>
-                                        <th style="text-align: center; width: 14%;">Aksi</th>
+                                        <th style="text-align: center; width: 13%;">Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -229,7 +217,7 @@
                                         <td>{{entity.dimensions.height}}</td>
                                         <td>{{entity.dimensions.weight}}</td>
                                         <td>{{entity.colli.quantity}}</td>
-                                        <td>{{entity.cost.shipping | currency: 'Rp ' : 0}}</td>
+                                        <td>{{entity.cost.shipping | currency: 'Rp ' : 2}}</td>
                                         <td>
                                             <p ng-if="entity.status == 'Belum Terekap'"
                                                style="text-align:center;" class="center-block padding-3 label label-danger txt-color-white">

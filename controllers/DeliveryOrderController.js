@@ -14,6 +14,11 @@ Controller.prototype.getAll = function (query) {
     var skip = query['skip'] ? query['skip'] : 0;
     var parameters = { "inputLocation": ObjectId(query['location']), "sender": { "$ne": ObjectId(static.client) } };
 
+    if (query['regionSource'])
+        parameters['regions.source'] = ObjectId(query['regionSource']);
+    else
+        parameters['inputLocation'] = ObjectId(query['location']);
+
     if (query['spbNumber'])
         parameters['spbNumber'] = new RegExp(query['spbNumber'], 'i');
 

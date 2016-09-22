@@ -4,7 +4,7 @@
         <div class="col-xs-12 col-sm-5 col-md-5 col-lg-12">
             <ul id="sparks" class="">
                 <li class="sparks-info">
-                    <h5> Bea Angkut <span class="txt-color-blue">{{ctrl.overall[0].price | currency: 'Rp ' : 0}}</span></h5>
+                    <h5> Bea Angkut <span class="txt-color-blue">{{ctrl.overall[0].price | currency: 'Rp ' : 2}}</span></h5>
                 </li>
                 <li class="sparks-info">
                     <h5> Koli <span class="txt-color-purple">{{ctrl.overall[0].colli}}</span></h5>
@@ -104,7 +104,7 @@
                                     <thead>
                                         <tr style="color:black;">
                                             <th style="text-align: center; width: 1%;">No</th>
-                                            <th style="text-align: center; width: 15%;">Tujuan</th>
+                                            <th id="dynamicHeader" style="text-align: center; width: 15%;">Tujuan</th>
                                             <th style="text-align: center; width: 3%;">koli</th>
                                             <th style="text-align: center; width: 3%;">Berat</th>
                                             <th style="text-align: center; width: 5%;">Bea Angkut</th>
@@ -119,10 +119,10 @@
                                         </tr>
                                         <tr ng-repeat="entity in ctrl.entities" ng-show="!ctrl.loadingData" style="color:black;">
                                             <td> {{((ctrl.paging.page - 1) * ctrl.paging.max) + $index + 1}} </td>
-                                            <td> <a href="#" ng-click="ctrl.viewDetails(entity._id)">{{entity.category[0].name ? entity.category[0].name : entity._id}} </a></td>
+                                            <td> <a href="#" ng-model="entity.setNgModel" ng-click="ctrl.viewDetails(entity._id)">{{entity.category[0].name ? entity.category[0].name : entity._id}} </a></td>
                                             <td> {{entity.colli}} </td>
                                             <td> {{entity.weight}} </td>
-                                            <td> {{entity.price | currency: 'Rp ' : 0}} </td>
+                                            <td> {{entity.price | currency: 'Rp ' : 2}} </td>
                                             <td> {{entity.shippings}} </td>
                                         </tr>
                                     </tbody>
@@ -202,14 +202,14 @@
                                     <thead>
                                         <tr style="color:black;">
                                             <th style="text-align: center; width: 1%;">No</th>
-                                            <th style="text-align: center; width: 10%;">Tanggal</th>
-                                            <th style="text-align: center; width: 10%;">Spb</th>
-                                            <th style="text-align: center; width: 10%;">Pengirim</th>
-                                            <th style="text-align: center; width: 10%;">Tujuan</th>
+                                            <th style="text-align: center; width: 5%;">Tanggal</th>
+                                            <th style="text-align: center; width: 5%;">Spb</th>
+                                            <th style="text-align: center; width: 17%;">Pengirim</th>
+                                            <th style="text-align: center; width: 8%;">Tujuan</th>
                                             <th style="text-align: center; width: 3%;">Koli</th>
                                             <th style="text-align: center; width: 3%;">Berat</th>
                                             <th style="text-align: center; width: 5%;">Harga</th>
-                                            <th style="text-align: center; width: 5%;">Cara Bayar</th>
+                                            <th style="text-align: center; width: 10%;">Cara Bayar</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -226,7 +226,7 @@
                                             <td> {{entity.destination.name}}</td>
                                             <td> {{entity.colli}} </td>
                                             <td> {{entity.weight}} </td>
-                                            <td> {{entity.price | currency: 'Rp ' : 0}} </td>
+                                            <td> {{entity.cost.total | currency: 'Rp ' : 2}} </td>
                                             <td> {{entity.payment.type.name}} </td>
                                         </tr>
                                     </tbody>

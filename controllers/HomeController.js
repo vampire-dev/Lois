@@ -46,7 +46,17 @@ Controller.prototype.getDestinations = function (query) {
                 "colli": { "$sum": "$items.colli.quantity" },
                 "weight": { "$sum": "$items.dimensions.weight" },
                 "price": { "$sum": "$cost.total" },
-                "shippings": { "$sum": 1 }
+                "shippings": { "$sum": 1 },
+            }
+        },
+        {
+            "$project": {
+                "_id": "$_id",
+                "colli": "$colli",
+                "weight": "$weight",
+                "price": "$price",
+                "shippings": "$shippings",
+                "setNgModel": { "$literal": "ctrl.filters.destination" }
             }
         },
         { "$lookup": { "from": "locations", "localField": "_id", "foreignField": "_id", "as": "category" } },
@@ -76,6 +86,16 @@ Controller.prototype.getSenders = function (query) {
                 "shippings": { "$sum": 1 }
             }
         },
+        {
+            "$project": {
+                "_id": "$_id",
+                "colli": "$colli",
+                "weight": "$weight",
+                "price": "$price",
+                "shippings": "$shippings",
+                "setNgModel": { "$literal": "ctrl.filters.sender" }
+            }
+        },
         { "$lookup": { "from": "clients", "localField": "_id", "foreignField": "_id", "as": "category" } },
         { "$sort": { "category.name": 1 } },
         { "$skip": skip },
@@ -101,6 +121,16 @@ Controller.prototype.getPaymentTypes = function (query) {
                 "weight": { "$sum": "$items.dimensions.weight" },
                 "price": { "$sum": "$cost.total" },
                 "shippings": { "$sum": 1 }
+            }
+        },
+        {
+            "$project": {
+                "_id": "$_id",
+                "colli": "$colli",
+                "weight": "$weight",
+                "price": "$price",
+                "shippings": "$shippings",
+                "setNgModel": { "$literal": "ctrl.filters.paymentType" }
             }
         },
         { "$lookup": { "from": "paymentTypes", "localField": "_id", "foreignField": "_id", "as": "category" } },
@@ -130,6 +160,16 @@ Controller.prototype.getPaymentStatuses = function (query) {
                 "shippings": { "$sum": 1 }
             }
         },
+        {
+            "$project": {
+                "_id": "$_id",
+                "colli": "$colli",
+                "weight": "$weight",
+                "price": "$price",
+                "shippings": "$shippings",
+                "setNgModel": { "$literal": "ctrl.filters.paymentStatus" }
+            }
+        },
         { "$sort": { "payment.status": 1 } },
         { "$skip": skip },
         { "$limit": limit }
@@ -156,6 +196,16 @@ Controller.prototype.getRegions = function (query) {
                 "shippings": { "$sum": 1 }
             }
         },
+        {
+            "$project": {
+                "_id": "$_id",
+                "colli": "$colli",
+                "weight": "$weight",
+                "price": "$price",
+                "shippings": "$shippings",
+                "setNgModel": { "$literal": "ctrl.filters.regionDest" }
+            }
+        },
         { "$lookup": { "from": "regions", "localField": "_id", "foreignField": "_id", "as": "category" } },
         { "$sort": { "category.name": 1 } },
         { "$skip": skip },
@@ -167,6 +217,21 @@ Controller.prototype.getAll = function (query) {
     var limit = query['limit'] ? query['limit'] : 10;
     var skip = query['skip'] ? query['skip'] : 0;
     var parameters = { "inputLocation": ObjectId(query['location']) };
+
+    if (query['destination'])
+        parameters['destination'] = ObjectId(query['destination']);
+
+    if (query['sender'])
+        parameters['sender'] = ObjectId(query['sender']);
+
+    if (query['paymentType'])
+        parameters['payment.type'] = ObjectId(query['paymentType']);
+
+    if (query['paymentStatus'])
+        parameters['payment.status'] = query['paymentStatus'];
+
+    if (query['regionDest'])
+        parameters['regions.destination'] = ObjectId(query['regionDest']);
 
     if (query['date'])
         parameters['date'] = { "$gte": date.createLower(query['date']), "$lte": date.createUpper(query['date']) };

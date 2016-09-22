@@ -17,8 +17,17 @@ var app;
             __extends(homeCtrl, _super);
             function homeCtrl($scope, Notification) {
                 _super.call(this, Notification);
-                this.viewType = ViewType.summary;
-                this.loadOverall();
+
+                var dates = new Date();
+                var dd = dates.getDate();
+                var mm = dates.getMonth() + 1;
+                var yyyy = dates.getFullYear();
+
+                var ToDate = yyyy + '-' + mm + '-' + dd;
+                this.filters.date = ToDate;
+
+                //this.viewType = ViewType.summary;
+                //this.loadOverall();
                 this.onSummaryChanges('destination');
             }
             homeCtrl.prototype.loadOverall = function () {
@@ -47,28 +56,33 @@ var app;
                     case 'destination':
                         this.functions.load = app.api.home.getDestinations;
                         this.type = 'destination';
+                        document.getElementById("dynamicHeader").innerHTML = "Tujuan";
                         break;
                     case 'sender':
                         this.functions.load = app.api.home.getSenders;
                         this.type = 'sender';
+                        document.getElementById("dynamicHeader").innerHTML = "Pengirim";
                         break;
                     case 'paymentType':
-                        this.functions.load = app.api.home.getPaymentTypes;
-                        this.type = 'payment.type';
+                        this.functions.load = app.api.home.getPaymentTypes;                        
+                        this.type = 'paymentType';
+                        document.getElementById("dynamicHeader").innerHTML = "Metode Pembayaran";
                         break;
                     case 'paymentStatus':
-                        this.functions.load = app.api.home.getPaymentStatuses;
-                        this.type = 'payment.status';
+                        this.functions.load = app.api.home.getPaymentStatuses;                        
+                        this.type = 'paymentStatus';
+                        document.getElementById("dynamicHeader").innerHTML = "Status Pembayaran";
                         break;
                     case 'region':
                         this.functions.load = app.api.home.getRegions;
-                        this.type = 'regions.destination';
+                        this.type = 'regionDest';
+                        document.getElementById("dynamicHeader").innerHTML = "Regional Tujuan";
                         break;
                 }
                 this.summary = summary;
                 this.viewType = ViewType.summary;
                 this.paging.page = 1;
-                this.loadOverall();
+                //this.loadOverall();
                 this.filter();
             };
             homeCtrl.prototype.viewDetails = function (id) {
