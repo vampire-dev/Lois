@@ -36,6 +36,28 @@
                                         </section>
                                         <section class="col col-sm-12 col-md-12 col-lg-3">
                                             <label class="input">
+                                                <input type="text"
+                                                       ng-model="ctrl.filters.sender"
+                                                       placeholder="Pengirim"
+                                                       uib-typeahead="data as data.name for data in ctrl.suggest('client', $viewValue)"
+                                                       typeahead-min-length="2"
+                                                       typeahead-loading="senderFilter" class="form-control" />
+                                                <i ng-show="senderFilter" class="glyphicon glyphicon-refresh"></i>
+                                            </label>
+                                        </section>
+                                        <section class="col col-sm-12 col-md-12 col-lg-3">
+                                            <label class="input">
+                                                <input type="text"
+                                                       ng-model="ctrl.filters.paymentType"
+                                                       placeholder="Cara Bayar"
+                                                       uib-typeahead="data as data.name for data in ctrl.suggest('paymentType', $viewValue)"
+                                                       typeahead-min-length="2"
+                                                       typeahead-loading="paymentTypeFilter" class="form-control" />
+                                                <i ng-show="paymentTypeFilter" class="glyphicon glyphicon-refresh"></i>
+                                            </label>
+                                        </section>
+                                        <section class="col col-sm-12 col-md-12 col-lg-3">
+                                            <label class="input">
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                                                     <input datepicker class="form-control" placeholder="Dari Tanggal"
@@ -52,10 +74,11 @@
                                                 </div>
                                             </label>
                                         </section>
-                                        <section class="col col-sm-12 col-md-12 col-lg-6">
+                                        <section class="col col-sm-12 col-md-12 col-lg-3">
                                             <label class="input">
                                                 <input type="text"
                                                        ng-model="ctrl.filters.regionSource"
+                                                       ng-click="ctrl.filters.regionDest = null"
                                                        placeholder="Regional Asal"
                                                        uib-typeahead="data as data.name for data in ctrl.suggest('region', $viewValue)"
                                                        typeahead-min-length="2"
@@ -63,10 +86,11 @@
                                                 <i ng-show="regionSourceFilter" class="glyphicon glyphicon-refresh"></i>
                                             </label>
                                         </section>
-                                        <section class="col col-sm-12 col-md-12 col-lg-6">
+                                        <section class="col col-sm-12 col-md-12 col-lg-3">
                                             <label class="input">
                                                 <input type="text"
                                                        ng-model="ctrl.filters.regionDest"
+                                                       ng-click="ctrl.filters.regionSource = null"
                                                        placeholder="Regional Tujuan"
                                                        uib-typeahead="data as data.name for data in ctrl.suggest('region', $viewValue)"
                                                        typeahead-min-length="2"
@@ -102,10 +126,10 @@
                             <table class="table table-bordered table-striped table-condensed table-hover smart-form has-tickbox">
                                 <thead>
                                     <tr style="color:black;">
+                                        <th style="text-align: center; width: 4%;">Tanggal</th>
                                         <th style="text-align: center; width: 4%;">Spb</th>
                                         <th style="text-align: center; width: 11%;">Pengirim</th>
-                                        <th style="text-align: center; width: 11%;">Penerima</th>
-                                        <th style="text-align: center; width: 3%;">Kontak</th>
+                                        <th style="text-align: center; width: 10%;">Penerima</th>                                        
                                         <th style="text-align: center; width: 8%;">Tujuan</th>
                                         <th style="text-align: center; width: 8%;">Cara Bayar</th>
                                         <th style="text-align: center; width: 5%;">Berat</th>
@@ -121,6 +145,9 @@
                                     </tr>
                                     <tr ng-repeat="entity in ctrl.entities" ng-show="!ctrl.loadingData" style="color:black;">
                                         <td>
+                                            {{entity.date | date:'dd-MM-yyyy'}}
+                                        </td>
+                                        <td>
                                             {{entity.spbNumber}}
                                         </td>
                                         <td>
@@ -128,10 +155,7 @@
                                         </td>
                                         <td>
                                             {{entity.receiver.name}}
-                                        </td>
-                                        <td>
-                                            {{entity.receiver.contact}}
-                                        </td>
+                                        </td>                                        
                                         <td>
                                             {{entity.destination.name}}
                                         </td>

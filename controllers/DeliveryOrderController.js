@@ -12,10 +12,15 @@ function Controller() { }
 Controller.prototype.getAll = function (query) {
     var limit = query['limit'] ? query['limit'] : 10;
     var skip = query['skip'] ? query['skip'] : 0;
-    var parameters = { "inputLocation": ObjectId(query['location']), "sender": { "$ne": ObjectId(static.client) } };
+    var parameters = { "sender": { "$ne": ObjectId(static.client) } };
 
-    if (query['regionSource'])
+    if (query['regionDest'])
+        parameters['regions.destination'] = ObjectId(query['regionDest']);
+
+    if (query['regionSource']) {
         parameters['regions.source'] = ObjectId(query['regionSource']);
+        parameters['regions.destination'] = ObjectId(query['locationRegion']);
+    }
     else
         parameters['inputLocation'] = ObjectId(query['location']);
 

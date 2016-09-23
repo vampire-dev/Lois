@@ -24,6 +24,10 @@ var app;
             }
             paymentCtrl.prototype.pay = function () {
                 var _this = this;
+                if (!this.paymentType || this.paymentType == '') {
+                    this.notify('warning', 'Cara bayar harus diisi');
+                    return;
+                }
                 if (!this.date || this.date == '') {
                     this.notify('warning', 'Tanggal transfer harus diisi');
                     return;

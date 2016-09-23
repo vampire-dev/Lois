@@ -10,6 +10,7 @@ router.get('/lois/delivery-order', function (req, res) {
 router.get(config.api + 'deliveryOrder/getAll', auth.isAuthenticated, function (req, res) {
     var query = JSON.parse(req.query['query']);
     query['location'] = req.session.user.location._id;
+    query['locationRegion'] = req.session.user.location.region;
 
     controller.getAll(query).then(function (result) {
         return res.status(200).send(result);

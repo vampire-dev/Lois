@@ -175,9 +175,9 @@
                                         <th style="text-align: center; width: 10%;">Keterangan</th>
                                         <th style="text-align: center; width: 8%;">Cara Bayar</th>
                                         <th style="text-align: center; width: 10%;">Status</th>
-                                        <th style="text-align: center; width: 8%;">Total</th>
-                                        <th style="text-align: center; width: 8%;">Terbayar</th>
-                                        <th style="text-align: center; width: 8%;">Tahap</th>
+                                        <th style="text-align: center; width: 9%;">Total</th>
+                                        <th style="text-align: center; width: 9%;">Terbayar</th>
+                                        <th style="text-align: center; width: 6%;">Tahap</th>
                                         <th style="text-align: center; width: 8%;">Bayar</th>
                                         <th style="text-align: center; width: 2%;">Audit</th>
                                     </tr>
@@ -216,10 +216,10 @@
                                             </p>
                                         </td>
                                         <td>
-                                            {{entity.cost.total | currency: 'Rp. ' : 0}}
+                                            {{entity.cost.total | currency: 'Rp. ' : 2}}
                                         </td>
                                         <td>
-                                            {{entity.payment.paid | currency: 'Rp. ' : 0}}
+                                            {{entity.payment.paid | currency: 'Rp. ' : 2}}
                                         </td>
                                         <td>
                                             <a href="#" ng-click="ctrl.viewPhases(entity)">{{entity.payment.phases.length}} x bayar</a>
