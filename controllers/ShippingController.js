@@ -177,6 +177,7 @@ Controller.prototype.save = function (data, fromManager) {
         var count = 0;
         data.colli = 0;
         var ppn = 0;
+        data.weight = 0;
 
         yield _co.coEach(data.items, function* (item) {
             var auditedItem = null;
@@ -198,6 +199,7 @@ Controller.prototype.save = function (data, fromManager) {
             item.cost.shipping = self.calculateCost(item, tariff, data.sender.quota, data.tariff);
             data.cost.total += item.cost.shipping;
             data.colli += _.parseInt(item.colli.quantity);
+            data.weight += _.parseInt(item.dimensions.weight);
             count++;
         });
 
