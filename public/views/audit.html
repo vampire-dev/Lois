@@ -70,8 +70,9 @@
                             <table class="table table-bordered table-striped table-condensed table-hover smart-form has-tickbox">
                                 <thead>
                                     <tr style="color:black;">
-                                        <th style="text-align: center; width: 5%;">Jenis</th>
-                                        <th style="text-align: center; width: 5%;">Tanggal</th>
+                                        <th style="text-align: center; width: 4%;">Jenis</th>
+                                        <th style="text-align: center; width: 3%;">Tanggal</th>
+                                        <th style="text-align: center; width: 3%;">Spb</th>
                                         <th style="text-align: center; width: 25%;">Event</th>
                                         <th style="text-align: center; width: 5%;">Petugas</th>
                                         <th style="text-align: center; width: 8%;">Aksi</th>
@@ -89,6 +90,9 @@
                                         </td>
                                         <td>
                                             {{entity.date | date:'dd-MM-yyyy'}}
+                                        </td>
+                                        <td>
+                                            {{entity.data.spbNumber}}
                                         </td>
                                         <td>
                                             {{entity.notes}}
