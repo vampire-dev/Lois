@@ -343,12 +343,12 @@
                                         <thead>
                                             <tr style="color:black;">
                                                 <th style="text-align: center; width: 8%;">No Tagihan</th>
-                                                <th style="text-align: center; width: 10%;">Tanggal</th>
-                                                <th style="text-align: center; width: 10%;">Tertagih</th>
-                                                <th style="text-align: center; width: 10%;">Lokasi</th>
-                                                <th style="text-align: center; width: 10%;">Jenis</th>
+                                                <th style="text-align: center; width: 6%;">Tanggal</th>
+                                                <th style="text-align: center; width: 13%;">Tertagih</th>
+                                                <th style="text-align: center; width: 5%;">Lokasi</th>
+                                                <th style="text-align: center; width: 5%;">Jenis</th>
                                                 <th style="text-align: center; width: 5%;">Total Shipping</th>
-                                                <th style="text-align: center; width: 5%;">Aksi</th>
+                                                <th style="text-align: center; width: 16%;">Aksi</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -365,8 +365,16 @@
                                                 <td> {{entity.type}}</td>
                                                 <td> {{entity.shippings.length}} Shipping </td>
                                                 <td style="text-align:center;">
-                                                    <a href="#" class="txt-color-white btn-sm btn-success" title="Cetak" ng-click="ctrl.print(entity)">
-                                                        <i class="fa fa-file-pdf-o"></i> Cetak
+                                                    <a href="#" class="txt-color-white btn-sm btn-success" title="Print All" ng-click="ctrl.print(entity,1)">
+                                                        <i class="fa fa-file-pdf-o"></i> Semua
+                                                    </a>
+                                                    &nbsp;
+                                                    <a href="#" class="txt-color-white btn-sm btn-success" title="Print Client" ng-click="ctrl.print(entity,2)">
+                                                        <i class="fa fa-file-pdf-o"></i> Klien
+                                                    </a>
+                                                    &nbsp;
+                                                    <a href="#" class="txt-color-white btn-sm btn-success" title="Print Partner" ng-click="ctrl.print(entity,3)">
+                                                        <i class="fa fa-file-pdf-o"></i> Partner
                                                     </a>
                                                 </td>
                                             </tr>

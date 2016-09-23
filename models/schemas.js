@@ -176,7 +176,8 @@ schemas['shippings'] = mongoose.model('Shipping', new Schema({
             "bank": { type: String, default: null },
             "notes": { type: String, default: null },
             "amount": { type: Number, default: 0 },
-            "date": { type: Date, default: Date.now }
+            "date": { type: Date, default: Date.now },
+            "user": { type: ObjectId, ref: 'User' }
         }],
         "paid": { type: Number, default: 0 }
     },

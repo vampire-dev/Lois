@@ -335,12 +335,26 @@ var app;
                 };
                 return app.http.post('http://lois.limassentosa.net/index.php/commision', JSON.stringify(data), config);
             };
-            reportPrint.printInvoice = function (data) {
+            reportPrint.printInvoiceAll = function (data) {
                 var config = {
                     "headers": { "content-type": "application/x-www-form-urlencoded; charset=UTF-8" },
                     "responseType": "arraybuffer"
                 };
-                return app.http.post('http://lois.limassentosa.net/index.php/invoice', JSON.stringify(data), config);
+                return app.http.post('http://lois.limassentosa.net/index.php/invoiceAll', JSON.stringify(data), config);
+            };
+            reportPrint.printInvoiceClient = function (data) {
+                var config = {
+                    "headers": { "content-type": "application/x-www-form-urlencoded; charset=UTF-8" },
+                    "responseType": "arraybuffer"
+                };
+                return app.http.post('http://lois.limassentosa.net/index.php/invoiceClient', JSON.stringify(data), config);
+            };
+            reportPrint.printInvoicePartner = function (data) {
+                var config = {
+                    "headers": { "content-type": "application/x-www-form-urlencoded; charset=UTF-8" },
+                    "responseType": "arraybuffer"
+                };
+                return app.http.post('http://lois.limassentosa.net/index.php/invoicePartner', JSON.stringify(data), config);
             };
             return reportPrint;
         }());

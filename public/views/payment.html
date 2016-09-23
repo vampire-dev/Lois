@@ -225,7 +225,7 @@
                                             <a href="#" ng-click="ctrl.viewPhases(entity)">{{entity.payment.phases.length}} x bayar</a>
                                         </td>
                                         <td style="text-align:right;">
-                                            <input type="text" class="form-control" ng-model="entity.viewModel.amount" />
+                                            <input type="text" class="form-control" ng-model="entity.viewModel.amount" ng-init="entity.viewModel.amount=''" />
                                         </td>
                                         <td style="text-align:center;">
                                             <i class="fa fa-check" ng-show="entity.audited"></i>

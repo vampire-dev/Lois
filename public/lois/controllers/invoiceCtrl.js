@@ -84,14 +84,30 @@ var app;
                     ctrl.notify('error', 'Tagihan gagal dipindahkan ' + error.data);
                 });
             };
-            invoiceCtrl.prototype.print = function (entity) {
+            invoiceCtrl.prototype.print = function (entity, type) {
                 var ctrl = this;
                 app.api.invoice.getInvoiceReport(entity).then(function (result) {
-                    app.api.reportPrint.printInvoice(result.data).then(function (buffer) {
-                        var blob = new Blob([buffer.data], { type: 'application/pdf' });
-                        var url = URL.createObjectURL(blob);
-                        window.open(url, '_blank');
-                    });
+                    if (type == 1) {
+                        app.api.reportPrint.printInvoiceAll(result.data).then(function (buffer) {
+                            var blob = new Blob([buffer.data], { type: 'application/pdf' });
+                            var url = URL.createObjectURL(blob);
+                            window.open(url, '_blank');
+                        });
+                    }
+                    else if (type == 2) {
+                        app.api.reportPrint.printInvoiceClient(result.data).then(function (buffer) {
+                            var blob = new Blob([buffer.data], { type: 'application/pdf' });
+                            var url = URL.createObjectURL(blob);
+                            window.open(url, '_blank');
+                        });
+                    }
+                    else if (type == 3) {
+                        app.api.reportPrint.printInvoicePartner(result.data).then(function (buffer) {
+                            var blob = new Blob([buffer.data], { type: 'application/pdf' });
+                            var url = URL.createObjectURL(blob);
+                            window.open(url, '_blank');
+                        });
+                    }
                 });
             };
             invoiceCtrl.$inject = ['$scope', 'Notification'];

@@ -58,41 +58,42 @@ Controller.prototype.pay = function (viewModels, user) {
             if (!shipping)
                 return;
 
-            if (parseFloat(viewModel.amount) == 0)
-                return;
+            if (parseFloat(viewModel.amount) != 0) {
 
-            var previousStatus = shipping.payment.status;
-            var totalPaid = shipping.payment.paid + parseFloat(viewModel.amount);
+                var previousStatus = shipping.payment.status;
+                var totalPaid = shipping.payment.paid + parseFloat(viewModel.amount);
 
-            if (totalPaid >= shipping.cost.total)
-                shipping.payment.status = static.terbayar;
-            else if (totalPaid > 0)
-                shipping.payment.status = static.terbayarSebagian;
-            else if (totalPaid <= 0)
-                shipping.payment.status = static.belumTerbayar;
+                if (totalPaid >= shipping.cost.total)
+                    shipping.payment.status = static.terbayar;
+                else if (totalPaid > 0)
+                    shipping.payment.status = static.terbayarSebagian;
+                else if (totalPaid <= 0)
+                    shipping.payment.status = static.belumTerbayar;
 
-            if (previousStatus === static.terbayar && (shipping.payment.status !== previousStatus)) {
-                shipping.payment.status = previousStatus;
-                shipping.audited = true;
+                if (previousStatus === static.terbayar && (shipping.payment.status !== previousStatus)) {
+                    shipping.payment.status = previousStatus;
+                    shipping.audited = true;
 
-                var notes = 'Perubahan status dari ' + previousStatus + ' ke ' + shipping.payment.status + ' dengan perubahan harga ' +
-                    viewModel.amount;
+                    var notes = 'Perubahan status dari ' + previousStatus + ' ke ' + shipping.payment.status + ' dengan perubahan harga ' +
+                        viewModel.amount;
 
-                yield shipping.save();
-                yield self.audit(viewModel, notes, user);
-                return;
+                    yield shipping.save();
+                    yield self.audit(viewModel, notes, user);
+                    return;
+                }
+
+                shipping.payment.phases.push({
+                    transferDate: new Date(viewModel.transferDate),
+                    date: new Date(),
+                    bank: viewModel.bank,
+                    notes: viewModel.notes,
+                    amount: parseFloat(viewModel.amount),
+                    user: user._id
+                });
+
+                shipping.payment.paid = totalPaid;
+                shipping.audited = false;
             }
-
-            shipping.payment.phases.push({
-                transferDate: new Date(viewModel.transferDate),
-                date: new Date(),
-                bank: viewModel.bank,
-                notes: viewModel.notes,
-                amount: parseFloat(viewModel.amount)
-            });
-
-            shipping.payment.paid = totalPaid;
-            shipping.audited = false;
             shipping.payment.type = ObjectId(viewModel.paymentTypeId);
             shipping.save();
         });

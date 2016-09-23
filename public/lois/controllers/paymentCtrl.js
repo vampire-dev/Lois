@@ -24,10 +24,7 @@ var app;
             }
             paymentCtrl.prototype.pay = function () {
                 var _this = this;
-                if (!this.paymentType || this.paymentType == '') {
-                    this.notify('warning', 'Cara bayar harus diisi');
-                    return;
-                }
+                
                 if (!this.date || this.date == '') {
                     this.notify('warning', 'Tanggal transfer harus diisi');
                     return;
@@ -43,7 +40,7 @@ var app;
                         shippingId: entity._id,
                         bank: entity.viewModel.bank,
                         notes: entity.viewModel.notes,
-                        amount: entity.viewModel.amount,
+                        amount: entity.viewModel.amount || 0,
                         transferDate: _this.date,
                         paymentTypeId: _this.paymentType ? _this.paymentType._id : entity.payment.type._id
                     });
