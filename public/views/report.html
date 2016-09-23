@@ -320,6 +320,30 @@
                                                 </section>
                                                 <section class="col col-sm-12 col-md-12 col-lg-3">
                                                     <label class="input">
+                                                        <input type="text"
+                                                               ng-model="ctrl.filters.regionSource"
+                                                               ng-click="ctrl.filters.regionDest = null"
+                                                               placeholder="Regional Asal"
+                                                               uib-typeahead="data as data.name for data in ctrl.suggest('region', $viewValue)"
+                                                               typeahead-min-length="2"
+                                                               typeahead-loading="regionSourceFilter" class="form-control" />
+                                                        <i ng-show="regionSourceFilter" class="glyphicon glyphicon-refresh"></i>
+                                                    </label>
+                                                </section>
+                                                <section class="col col-sm-12 col-md-12 col-lg-3">
+                                                    <label class="input">
+                                                        <input type="text"
+                                                               ng-model="ctrl.filters.regionDest"
+                                                               ng-click="ctrl.filters.regionSource = null"
+                                                               placeholder="Regional Tujuan"
+                                                               uib-typeahead="data as data.name for data in ctrl.suggest('region', $viewValue)"
+                                                               typeahead-min-length="2"
+                                                               typeahead-loading="regionDestFilter" class="form-control" />
+                                                        <i ng-show="regionDestFilter" class="glyphicon glyphicon-refresh"></i>
+                                                    </label>
+                                                </section>
+                                                <section class="col col-sm-12 col-md-12 col-lg-6">
+                                                    <label class="input">
                                                         <div class="input-group">
                                                             <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                                                             <input datepicker class="form-control" placeholder="Dari Tanggal"
@@ -327,7 +351,7 @@
                                                         </div>
                                                     </label>
                                                 </section>
-                                                <section class="col col-sm-12 col-md-12 col-lg-3">
+                                                <section class="col col-sm-12 col-md-12 col-lg-6">
                                                     <label class="input">
                                                         <div class="input-group">
                                                             <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
@@ -391,7 +415,7 @@
                                                 <td> {{entity.spbNumber}} </td>
                                                 <td> {{entity.sender.name}} </td>
                                                 <td> {{entity.receiver.name}}</td>
-                                                <td> {{entity.colli.quantity}}</td>
+                                                <td> {{entity.colli}}</td>
                                                 <td> {{entity.regions.destination.name}}</td>
                                                 <td> {{entity.cost.total | currency: 'Rp ' : 0}} </td>
                                             </tr>
@@ -1018,6 +1042,17 @@
                                                                typeahead-loading="paymentTypeFilter" class="form-control" />
                                                         <i ng-show="paymentTypeFilter" class="glyphicon glyphicon-refresh"></i>
                                                     </label>
+                                                </section>                                          
+                                                <section class="col col-sm-12 col-md-12 col-lg-3">
+                                                    <label class="input">
+                                                        <input type="text"
+                                                               ng-model="ctrl.filters.destination"
+                                                               placeholder="Tujuan"
+                                                               uib-typeahead="data as data.name for data in ctrl.suggest('location', $viewValue)"
+                                                               typeahead-min-length="2"
+                                                               typeahead-loading="destinationFilter" class="form-control" />
+                                                        <i ng-show="destinationFilter" class="glyphicon glyphicon-refresh"></i>
+                                                    </label>
                                                 </section>
                                                 <section class="col col-sm-12 col-md-12 col-lg-3">
                                                     <label class="input">
@@ -1030,7 +1065,7 @@
                                                         <i ng-show="regionDestFilter" class="glyphicon glyphicon-refresh"></i>
                                                     </label>
                                                 </section>
-                                                <section class="col col-sm-12 col-md-12 col-lg-3">
+                                                <section class="col col-sm-12 col-md-12 col-lg-6">
                                                     <label class="input">
                                                         <div class="input-group">
                                                             <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
@@ -1039,7 +1074,7 @@
                                                         </div>
                                                     </label>
                                                 </section>
-                                                <section class="col col-sm-12 col-md-12 col-lg-6">
+                                                <section class="col col-sm-12 col-md-12 col-lg-3">
                                                     <label class="input">
                                                         <div class="input-group">
                                                             <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
@@ -1048,7 +1083,7 @@
                                                         </div>
                                                     </label>
                                                 </section>
-                                                <section class="col col-sm-12 col-md-12 col-lg-6">
+                                                <section class="col col-sm-12 col-md-12 col-lg-3">
                                                     <label class="input">
                                                         <div class="input-group">
                                                             <span class="input-group-addon"><i class="fa fa-calendar"></i></span>

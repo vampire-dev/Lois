@@ -486,6 +486,9 @@ Controller.prototype.getUnconfirmed = function (query) {
     if (query['regionDest'])
         parameters['regions.destination'] = ObjectId(query['regionDest']);
 
+    if (query['destination'])
+        parameters['destination'] = ObjectId(query['destination']);
+
     if (query['returnDate'])
         parameters['returnInfo.created.date'] = { "$gte": date.createLower(query['returnDate']), "$lte": date.createUpper(query['returnDate']) };
 
@@ -527,7 +530,17 @@ Controller.prototype.getUnconfirmedReport = function (viewModels, user) {
 Controller.prototype.getDeliveryList = function (query) {
     var limit = query['limit'] ? query['limit'] : 10;
     var skip = query['skip'] ? query['skip'] : 0;
-    var parameters = { "inputLocation": ObjectId(query['location']) };
+    var parameters = {};
+
+    if (query['regionDest'])
+        parameters['regions.destination'] = ObjectId(query['regionDest']);
+
+    if (query['regionSource']) {
+        parameters['regions.source'] = ObjectId(query['regionSource']);
+        parameters['regions.destination'] = ObjectId(query['locationRegion']);
+    }
+    else
+        parameters['inputLocation'] = ObjectId(query['location']);
 
     if (query['spbNumber'])
         parameters['spbNumber'] = new RegExp(query['spbNumber'], 'i');
