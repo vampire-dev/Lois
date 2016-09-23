@@ -141,11 +141,11 @@ Controller.prototype.calculateCost = function (item, tariff, quota, option) {
         case static.motor:
             return cost.colli + cost.additional - cost.discount;
         case static.jakartaMinWeight:
-            limit = (dimensions.weight * price) + cost.additional;
-            if (limit > minimum)
-                return (price * dimensions.weight) - cost.discount + colliCost + cost.additional;
+            if (dimensions.weight > quota)
+                return minimum + ((dimensions.weight - quota) * price) - cost.discount + colliCost + cost.additional;
 
             return minimum - cost.discount + colliCost + cost.additional;
+
         case static.surabayaMinWeight:
             if (dimensions.weight > quota)
                 return minimum + ((dimensions.weight - quota) * price) - cost.discount + colliCost + cost.additional;
