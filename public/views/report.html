@@ -152,11 +152,11 @@
                                                 <td> {{entity.sender.name}} </td>
                                                 <td> {{entity.receiver.name}}</td>
                                                 <td> {{entity.payment.type.name}}</td>
-                                                <td> {{entity.colli.quantity}}</td>
+                                                <td> {{entity.colli}}</td>
                                                 <td> {{entity.invoice.all}}</td>
                                                 <td> {{entity.invoice.client}}</td>
                                                 <td> {{entity.invoice.partner}}</td>
-                                                <td> {{entity.cost.total | currency: 'Rp ' : 0}} </td>
+                                                <td> {{entity.cost.total | currency: 'Rp ' : 2}} </td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -288,8 +288,8 @@
                                                 <td> {{entity.sender.name}} </td>
                                                 <td> {{entity.receiver.name}}</td>
                                                 <td> {{entity.payment.type.name}}</td>
-                                                <td> {{entity.colli.quantity}}</td>
-                                                <td> {{entity.cost.total | currency: 'Rp ' : 0}} </td>
+                                                <td> {{entity.colli}}</td>
+                                                <td> {{entity.cost.total | currency: 'Rp ' : 2}} </td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -417,7 +417,7 @@
                                                 <td> {{entity.receiver.name}}</td>
                                                 <td> {{entity.colli}}</td>
                                                 <td> {{entity.regions.destination.name}}</td>
-                                                <td> {{entity.cost.total | currency: 'Rp ' : 0}} </td>
+                                                <td> {{entity.cost.total | currency: 'Rp ' : 2}} </td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -525,9 +525,9 @@
                                                 <td> {{entity.spbNumber}} </td>
                                                 <td> {{entity.sender.name}} </td>
                                                 <td> {{entity.receiver.name}}</td>
-                                                <td> {{entity.colli.quantity}}</td>
+                                                <td> {{entity.colli}}</td>
                                                 <td> {{entity.regions.destination.name}}</td>
-                                                <td> {{entity.cost.total | currency: 'Rp ' : 0}} </td>
+                                                <td> {{entity.cost.total | currency: 'Rp ' : 2}} </td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -691,7 +691,7 @@
                                                 <td> {{entity.items.content}}</td>
                                                 <td> {{entity.items.recapitulations.quantity}} </td>
                                                 <td> {{entity.items.recapitulations.weight | number}} </td>
-                                                <td> {{(entity.items.cost.shipping / entity.items.colli.quantity)*entity.items.recapitulations.quantity | currency: 'Rp ' : 0}} </td>
+                                                <td> {{(entity.items.cost.shipping / entity.items.colli.quantity)*entity.items.recapitulations.quantity | currency: 'Rp ' : 2}} </td>
                                                 <td> {{entity.driver[0].name}} </td>
                                                 <td> {{entity.items.recapitulations.vehicleNumber}} </td>
                                                 <td> {{entity.items.recapitulations.date | date:'dd-MM-yyyy'}} </td>
@@ -846,7 +846,7 @@
                                                 <td> {{entity.items.content}}</td>
                                                 <td> {{entity.items.deliveries.deliveryCode}}</td>
                                                 <td> {{entity.items.deliveries.quantity}} </td>
-                                                <td> {{entity.items.cost.shipping | currency: 'Rp ' : 0}} </td>
+                                                <td> {{entity.items.cost.shipping | currency: 'Rp ' : 2}} </td>
                                                 <td> {{entity.items.deliveries.vehicleNumber}}</td>
                                                 <td> {{entity.driver[0].name}} </td>
                                                 <td> {{entity.items.deliveries.date | date:'dd-MM-yyyy'}} </td>
@@ -986,7 +986,7 @@
                                                 </td>
                                                 <td> {{entity.spbNumber}} </td>
                                                 <td> {{entity.sender.name}} </td>
-                                                <td> {{entity.cost.total | currency: 'Rp ' : 0}} </td>
+                                                <td> {{entity.cost.total | currency: 'Rp ' : 2}} </td>
                                                 <td> {{entity.returnInfo.relationCode}} </td>
                                                 <td> {{entity.returnInfo.created.date | date:'dd-MM-yyyy'}} </td>
                                                 <td> {{entity.returnInfo.concernedPerson}} </td>
@@ -1150,7 +1150,7 @@
                                                 </td>
                                                 <td> {{entity.spbNumber}} </td>
                                                 <td> {{entity.sender.name}} </td>
-                                                <td> {{entity.cost.total | currency: 'Rp ' : 0}} </td>
+                                                <td> {{entity.cost.total | currency: 'Rp ' : 2}} </td>
                                                 <td> {{entity.returnInfo.relationCode}} </td>
                                                 <td> {{entity.returnInfo.date | date:'dd-MM-yyyy'}} </td>
                                                 <td> {{entity.returnInfo.concernedPerson}} </td>

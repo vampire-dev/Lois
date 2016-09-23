@@ -5,6 +5,7 @@ var co = require('co');
 var _co = require('co-lodash');
 var _ = require('lodash');
 var ObjectId = mongoose.Types.ObjectId;
+var static = require('../utils/static');
 
 function Controller() {};
 
@@ -43,7 +44,7 @@ Controller.prototype.getPaidReport = function (viewModels, query, user) {
         "template_file": "lapterbayar.xlsx",
         "location": user.location.name,
         "user": user.name,
-        "report_date": query['paymentDate'],
+        "report_date": query['transferDate'],
         "report_data": []
     };
 
@@ -71,7 +72,7 @@ Controller.prototype.getPaidReport = function (viewModels, query, user) {
                 "total_coli": totalColli,
                 "total_weight": totalWeight,
                 "price": viewModel.cost.total,
-                "transaction_date": viewModel.date,
+                "transaction_date": transactionDates,
                 "payment_date": paymentDates.length > 0 ? paymentDates.join() : " ",
                 "bank": banks.length > 0 ? banks.join() : " ",
                 "invoice": viewModel.invoice.client ? viewModel.invoice.client : viewModel.invoice.all ? viewModel.invoice.all : " "
@@ -93,7 +94,7 @@ Controller.prototype.getPaidReport = function (viewModels, query, user) {
 Controller.prototype.getUnpaid = function (query) {
     var limit = query['limit'] ? query['limit'] : 10;
     var skip = query['skip'] ? query['skip'] : 0;
-    var parameters = { "inputLocation": ObjectId(query['location']), "payment.status": { $ne: 'Terbayar' } };
+    var parameters = { "inputLocation": ObjectId(query['location']), "payment.status": { $ne: 'Terbayar' }, "sender": { "$ne": ObjectId(static.client) } };
 
     if (query['spbNumber'])
         parameters['spbNumber'] = new RegExp(query['spbNumber'], 'i');
@@ -606,7 +607,7 @@ Controller.prototype.getDeliveryListReport = function (viewModels, query, user) 
 Controller.prototype.getCommisions = function (query) {
     var limit = query['limit'] ? query['limit'] : 10;
     var skip = query['skip'] ? query['skip'] : 0;
-    var parameters = { "inputLocation": ObjectId(query['location']) };
+    var parameters = { "inputLocation": ObjectId(query['location']), "sender": { "$ne": ObjectId(static.client) } };
 
     if (query['spbNumber'])
         parameters['spbNumber'] = new RegExp(query['spbNumber'], 'i');
