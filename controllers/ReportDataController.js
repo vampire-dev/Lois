@@ -357,6 +357,7 @@ Controller.prototype.getDeliveriesReport = function (viewModels, user) {
     return co(function* () {
         yield* _co.coEach(viewModels, function* (viewModel) {
             var driver = yield schemas.drivers.findOne({ _id: ObjectId(viewModel.items.deliveries.driver) });
+            var price = (viewModel.cost.worker / viewModel.itemCount) + ((viewModel.items.cost.shipping / viewModel.items.colli.quantity) * viewModel.items.deliveries.quantity);
 
             if (driver)
                 result.delivery_driver = driver.name;
@@ -371,7 +372,7 @@ Controller.prototype.getDeliveriesReport = function (viewModels, user) {
                 "content": viewModel.items.content,
                 "total_coli": viewModel.items.colli.quantity,
                 "coli": viewModel.items.deliveries.quantity,
-                "price": viewModel.items.cost.shipping,
+                "price": price,
                 "payment_method": viewModel.paymentType[0].name
             });
         });

@@ -846,7 +846,7 @@
                                                 <td> {{entity.items.content}}</td>
                                                 <td> {{entity.items.deliveries.deliveryCode}}</td>
                                                 <td> {{entity.items.deliveries.quantity}} </td>
-                                                <td> {{entity.items.cost.shipping | currency: 'Rp ' : 2}} </td>
+                                                <td> {{(entity.cost.worker/entity.itemCount)+((entity.items.cost.shipping / entity.items.colli.quantity)*entity.items.deliveries.quantity) | currency: 'Rp ' : 2}} </td>
                                                 <td> {{entity.items.deliveries.vehicleNumber}}</td>
                                                 <td> {{entity.driver[0].name}} </td>
                                                 <td> {{entity.items.deliveries.date | date:'dd-MM-yyyy'}} </td>
