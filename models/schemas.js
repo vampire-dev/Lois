@@ -209,6 +209,7 @@ schemas['shippings'] = mongoose.model('Shipping', new Schema({
     "confirmed": { type: Boolean, default: false },
     "colli": { type: Number, default: 0 },
     "weight": { type: Number, default: 0 },
+    "itemCount": { type: Number, default: 0 },
     "returnInfo": {
         "filePath": { type: String, default: null },
         "stamped": { type: Boolean, default: false },

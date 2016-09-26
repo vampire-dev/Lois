@@ -203,6 +203,7 @@ Controller.prototype.save = function (data, fromManager) {
             count++;
         });
 
+        data.itemCount = count;
         data.cost.base = data.cost.total;
         data.cost.total += _.parseInt(data.cost.worker);
 
