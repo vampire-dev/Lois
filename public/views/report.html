@@ -1064,17 +1064,8 @@
                                                                typeahead-loading="regionDestFilter" class="form-control" />
                                                         <i ng-show="regionDestFilter" class="glyphicon glyphicon-refresh"></i>
                                                     </label>
-                                                </section>
+                                                </section>                             
                                                 <section class="col col-sm-12 col-md-12 col-lg-6">
-                                                    <label class="input">
-                                                        <div class="input-group">
-                                                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                                            <input datepicker class="form-control" placeholder="Tanggal retur"
-                                                                   id="return-date-confirm" type="text" ng-model="ctrl.filters.returnDate" />
-                                                        </div>
-                                                    </label>
-                                                </section>
-                                                <section class="col col-sm-12 col-md-12 col-lg-3">
                                                     <label class="input">
                                                         <div class="input-group">
                                                             <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
@@ -1083,7 +1074,7 @@
                                                         </div>
                                                     </label>
                                                 </section>
-                                                <section class="col col-sm-12 col-md-12 col-lg-3">
+                                                <section class="col col-sm-12 col-md-12 col-lg-6">
                                                     <label class="input">
                                                         <div class="input-group">
                                                             <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
@@ -1126,16 +1117,13 @@
                                                 <th style="text-align: center; width: 1%;">
                                                     <input type="checkbox" ng-model="ctrl.checkedAll" ng-click="ctrl.toggleCheckAll()" ng-true-value="true" ng-false-value="false" />
                                                 </th>
+                                                <th style="text-align: center; width: 8%;">Tgl Transaksi</th>
                                                 <th style="text-align: center; width: 8%;">Spb</th>
                                                 <th style="text-align: center; width: 10%;">Pengirim</th>
-                                                <th style="text-align: center; width: 8%;">Harga</th>
-                                                <th style="text-align: center; width: 8%;">No Relasi</th>
-                                                <th style="text-align: center; width: 8%;">Tgl Terima</th>
-                                                <th style="text-align: center; width: 3%;">Ybs</th>
-                                                <th style="text-align: center; width: 3%;">Diterima</th>
-                                                <th style="text-align: center; width: 3%;">TTD</th>
-                                                <th style="text-align: center; width: 3%;">Cap</th>
-                                                <th style="text-align: center; width: 4%;">Kwitansi</th>
+                                                <th style="text-align: center; width: 10%;">Penerima</th>
+                                                <th style="text-align: center; width: 8%;">Regional</th> 
+                                                <th style="text-align: center; width: 8%;">Kota</th>                                              
+                                                <th style="text-align: center; width: 6%;">Retur</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -1148,37 +1136,18 @@
                                                 <td style="text-align: center;">
                                                     <input type="checkbox" ng-model="entity.checked" />
                                                 </td>
+                                                <td> {{entity.date | date:'dd-MM-yyyy'}} </td>
                                                 <td> {{entity.spbNumber}} </td>
                                                 <td> {{entity.sender.name}} </td>
-                                                <td> {{entity.cost.total | currency: 'Rp ' : 2}} </td>
-                                                <td> {{entity.returnInfo.relationCode}} </td>
-                                                <td> {{entity.returnInfo.date | date:'dd-MM-yyyy'}} </td>
-                                                <td> {{entity.returnInfo.concernedPerson}} </td>
-
-                                                <td style="text-align:center;" ng-if="entity.returnInfo.accepted">
+                                                <td> {{entity.receiver.name}} </td>
+                                                <td> {{entity.regions.destination.name}} </td>
+                                                <td> {{entity.destination.name}} </td>                                                                                                
+                                                <td style="text-align:center;" ng-if="entity.returned">
                                                     <i class="fa fa-check" />
                                                 </td>
-                                                <td style="text-align:center;" ng-if="!entity.returnInfo.accepted">
+                                                <td style="text-align:center;" ng-if="!entity.returned">
                                                     <i class="fa fa-remove" />
-                                                </td>
-                                                <td style="text-align:center;" ng-if="entity.returnInfo.signed">
-                                                    <i class="fa fa-check" />
-                                                </td>
-                                                <td style="text-align:center;" ng-if="!entity.returnInfo.signed">
-                                                    <i class="fa fa-remove" />
-                                                </td>
-                                                <td style="text-align:center;" ng-if="entity.returnInfo.stamped">
-                                                    <i class="fa fa-check" />
-                                                </td>
-                                                <td style="text-align:center;" ng-if="!entity.returnInfo.stamped">
-                                                    <i class="fa fa-remove" />
-                                                </td>
-                                                <td style="text-align:center;" ng-if="entity.returnInfo.receipt">
-                                                    <i class="fa fa-check" />
-                                                </td>
-                                                <td style="text-align:center;" ng-if="!entity.returnInfo.receipt">
-                                                    <i class="fa fa-remove" />
-                                                </td>
+                                                </td>                                               
                                             </tr>
                                         </tbody>
                                     </table>

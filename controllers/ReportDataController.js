@@ -477,7 +477,7 @@ Controller.prototype.getReturnsReport = function (viewModels, query, user) {
 Controller.prototype.getUnconfirmed = function (query) {
     var limit = query['limit'] ? query['limit'] : 10;
     var skip = query['skip'] ? query['skip'] : 0;
-    var parameters = { "inputLocation": ObjectId(query['location']), "returned": true, "confirmed": false };
+    var parameters = { "inputLocation": ObjectId(query['location']), "items.recapitulations.quantity": { "$gt": 0 }, "confirmed": false };
 
     if (query['spbNumber'])
         parameters['spbNumber'] = new RegExp(query['spbNumber'], 'i');
@@ -491,13 +491,10 @@ Controller.prototype.getUnconfirmed = function (query) {
     if (query['destination'])
         parameters['destination'] = ObjectId(query['destination']);
 
-    if (query['returnDate'])
-        parameters['returnInfo.created.date'] = { "$gte": date.createLower(query['returnDate']), "$lte": date.createUpper(query['returnDate']) };
-
     if (query['from'] && query['to'])
         parameters['date'] = { "$gte": date.createLower(query['from']), "$lte": date.createUpper(query['to']) };
 
-    return schemas.shippings.find(parameters).sort({ "number": 1 }).populate('sender').populate('destination').skip(skip).limit(limit).exec();
+    return schemas.shippings.find(parameters).sort({ "date": -1 }).populate('sender').populate('destination').populate('regions.destination').skip(skip).limit(limit).exec();
 };
 
 Controller.prototype.getUnconfirmedReport = function (viewModels, user) {
