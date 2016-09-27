@@ -23,6 +23,9 @@ Controller.prototype.getPaid = function (query) {
     if (query['sender'])
         parameters['sender'] = ObjectId(query['sender']);
 
+    if (query['bank'])
+        parameters['payment.phases.bank'] = new RegExp(query['bank'], 'i');
+
     if (query['paymentDate'])
         parameters['payment.phases'] = { "$elemMatch": { "date": { "$gte": date.createLower(query['paymentDate']), "$lte": date.createUpper(query['paymentDate']) } } };
 
@@ -45,6 +48,7 @@ Controller.prototype.getPaidReport = function (viewModels, query, user) {
         "location": user.location.name,
         "user": user.name,
         "report_date": query['transferDate'],
+        "report_bank": query['bank'],
         "report_data": []
     };
 
@@ -643,8 +647,10 @@ Controller.prototype.getCommisionsReport = function (viewModels, query, user) {
         var region = yield schemas.regions.findOne({ "_id": ObjectId(viewModels[0].destination.region) }).exec();
         result['destination'] = region.name;
 
-        var paymentType = yield schemas.paymentTypes.findOne({ "_id": ObjectId(query['paymentType']) }).exec();
-        result['payment_method'] = paymentType.name;
+        if (query['paymentType']) {
+            var paymentType = yield schemas.paymentTypes.findOne({ "_id": ObjectId(query['paymentType']) }).exec();
+            result['payment_method'] = paymentType.name;
+        }
 
         yield* _co.coEach(viewModels, function* (viewModel) {
             var totalWeight = _.sumBy(viewModel.items, 'dimensions.weight');

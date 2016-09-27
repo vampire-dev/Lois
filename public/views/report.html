@@ -205,16 +205,21 @@
                                                         </div>
                                                     </label>
                                                 </section>
-                                                <section class="col col-sm-12 col-md-12 col-lg-4">
+                                                <section class="col col-sm-12 col-md-12 col-lg-3">
+                                                    <label class="input">
+                                                        <input type="text" placeholder="Bank" ng-model="ctrl.filters.bank" />
+                                                    </label>
+                                                </section>
+                                                <section class="col col-sm-12 col-md-12 col-lg-3">
                                                     <label class="input">
                                                         <div class="input-group">
                                                             <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                                            <input datepicker class="form-control" placeholder="Tanggal Bayar"
+                                                            <input datepicker class="form-control" placeholder="Tanggal Input"
                                                                    id="payment-date" type="text" ng-model="ctrl.filters.paymentDate" />
                                                         </div>
                                                     </label>
                                                 </section>
-                                                <section class="col col-sm-12 col-md-12 col-lg-4">
+                                                <section class="col col-sm-12 col-md-12 col-lg-3">
                                                     <label class="input">
                                                         <div class="input-group">
                                                             <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
@@ -223,7 +228,7 @@
                                                         </div>
                                                     </label>
                                                 </section>
-                                                <section class="col col-sm-12 col-md-12 col-lg-4">
+                                                <section class="col col-sm-12 col-md-12 col-lg-3">
                                                     <label class="input">
                                                         <div class="input-group">
                                                             <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
@@ -272,6 +277,7 @@
                                                 <th style="text-align: center; width: 10%;">Cara Bayar</th>
                                                 <th style="text-align: center; width: 5%;">Koli</th>
                                                 <th style="text-align: center; width: 10%;">Harga</th>
+                                                <th style="text-align: center; width: 10%;">Bank</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -290,6 +296,11 @@
                                                 <td> {{entity.payment.type.name}}</td>
                                                 <td> {{entity.colli}}</td>
                                                 <td> {{entity.cost.total | currency: 'Rp ' : 2}} </td>
+                                                <td>
+                                                    <span ng-repeat="phase in entity.payment.phases">
+                                                        {{phase.bank}}{{$last ? '' : ', '}}
+                                                    </span> 
+                                                </td>
                                             </tr>
                                         </tbody>
                                     </table>
