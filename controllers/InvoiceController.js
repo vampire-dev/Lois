@@ -183,6 +183,7 @@ Controller.prototype.getInvoiceReport = function (invoice, user) {
             var totalColli = _.sumBy(shipping.items, 'colli.quantity');
 
             result.report_data.push({
+                "number": shipping.number,
                 "transaction_date": shipping.date ? shipping.date: " ",
                 "spb_no": shipping.spbNumber,
                 "destination_city": shipping.destination.name,
