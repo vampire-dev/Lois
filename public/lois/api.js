@@ -266,6 +266,12 @@ var app;
             report.getCommisionsReport = function (data, query) {
                 return app.http.post('/lois/api/reportData/getCommisionsReport?query=' + JSON.stringify(query), JSON.stringify(data));
             };
+            report.getPayOff = function (query) {
+                return app.http.get('/lois/api/reportData/getPayOff?query=' + JSON.stringify(query));
+            };
+            report.getPayOffReport = function (data, query) {
+                return app.http.post('/lois/api/reportData/getPayOffReport?query=' + JSON.stringify(query), JSON.stringify(data));
+            };
             return report;
         }());
         api.report = report;
@@ -355,6 +361,13 @@ var app;
                     "responseType": "arraybuffer"
                 };
                 return app.http.post('http://lois.limassentosa.net/index.php/invoicePartner', JSON.stringify(data), config);
+            };
+            reportPrint.printPayOff = function (data) {
+                var config = {
+                    "headers": { "content-type": "application/x-www-form-urlencoded; charset=UTF-8" },
+                    "responseType": "arraybuffer"
+                };
+                return app.http.post('http://lois.limassentosa.net/index.php/PayOff', JSON.stringify(data), config);
             };
             return reportPrint;
         }());

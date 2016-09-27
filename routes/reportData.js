@@ -167,4 +167,24 @@ router.post(config.api + 'reportData/getCommisionsReport', auth.isAuthenticated,
     });
 });
 
+router.get(config.api + 'reportData/getPayOff', auth.isAuthenticated, function (req, res) {
+    var query = JSON.parse(req.query['query']);
+    query['location'] = req.session.user.location._id;
+
+    controller.getPayOff(query).then(function (result) {
+        res.status(200).send(result);
+    }).catch(function (error) {
+        res.status(500).send(error.message);
+    });
+});
+
+router.post(config.api + 'reportData/getPayOffReport', auth.isAuthenticated, function (req, res) {
+    var query = JSON.parse(req.query['query']);
+    controller.getPayOffReport(req.body, query, req.session.user).then(function (result) {
+        res.status(200).send(result);
+    }).catch(function (error) {
+        res.status(500).send(error.message);
+    });
+});
+
 module.exports = router;

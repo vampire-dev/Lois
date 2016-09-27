@@ -686,4 +686,64 @@ Controller.prototype.getCommisionsReport = function (viewModels, query, user) {
     });
 };
 
+Controller.prototype.getPayOff = function (query) {
+    var limit = query['limit'] ? query['limit'] : 10;
+    var skip = query['skip'] ? query['skip'] : 0;
+    var parameters = { "inputLocation": ObjectId(query['location']), "sender": { "$ne": ObjectId(static.client) }, "payment.type": ObjectId("57c46a80398059b414b3784f") };
+
+    if (query['from'])
+        parameters['date'] = { "$gte": date.createLower(query['from']), "$lte": date.createUpper(query['from']) };
+
+    return schemas.shippings.find(parameters).sort({ "number": 1 }).populate('sender destination regions.destination payment.type').skip(skip).limit(limit).exec();
+};
+
+Controller.prototype.getPayOffReport = function (viewModels, query, user) {
+    var self = this;
+
+    var result = {
+        "title": "LUNAS",
+        "template_file": "laplunas.xlsx",
+        "location": user.location.name,
+        "user": user.name,
+        "start_date": query['from'],
+        "report_data": []
+    };
+
+    return co(function* () {
+        var sumTotalColli = 0;
+        var sumTotalWeight = 0;
+        var sumPrice = 0;
+
+        yield* _co.coEach(viewModels, function* (viewModel) {
+            var totalWeight = _.sumBy(viewModel.items, 'dimensions.weight');
+            var totalColli = _.sumBy(viewModel.items, 'colli.quantity');
+            var contents = _.map(viewModel.items, "content");
+
+            result.report_data.push({
+                "spb_no": viewModel.spbNumber,
+                "sender": viewModel.sender.name,
+                "receiver": viewModel.receiver.name,
+                "destination_region": viewModel.regions.destination.name,
+                "destination_city": viewModel.destination.name,
+                "content": contents.length > 0 ? contents.join() : " ",
+                "total_coli": totalColli,
+                "total_weight": totalWeight,
+                "price": viewModel.cost.total,
+                "payment_method": viewModel.payment.type.name,
+                "transaction_date": viewModel.date,
+            });
+
+            sumTotalColli += totalColli;
+            sumTotalWeight += totalWeight;
+            sumPrice += viewModel.cost.total;
+        });
+
+        result['sum_total_coli'] = sumTotalColli;
+        result['sum_total_weight'] = sumTotalWeight;
+        result['sum_price'] = sumPrice;
+
+        return result;
+    });
+};
+
 module.exports = new Controller();
