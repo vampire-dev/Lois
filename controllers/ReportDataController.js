@@ -644,8 +644,10 @@ Controller.prototype.getCommisionsReport = function (viewModels, query, user) {
         var sumTotalWeight = 0;
         var sumPrice = 0;
 
-        var region = yield schemas.regions.findOne({ "_id": ObjectId(viewModels[0].destination.region) }).exec();
-        result['destination'] = region.name;
+        if (query['regionDest']) {
+            var region = yield schemas.regions.findOne({ "_id": ObjectId(query['regionDest']) }).exec();
+            result['destination'] = region.name;
+        }
 
         if (query['paymentType']) {
             var paymentType = yield schemas.paymentTypes.findOne({ "_id": ObjectId(query['paymentType']) }).exec();
