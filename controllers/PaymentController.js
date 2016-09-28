@@ -63,11 +63,11 @@ Controller.prototype.pay = function (viewModels, user) {
                 var previousStatus = shipping.payment.status;
                 var totalPaid = shipping.payment.paid + parseFloat(viewModel.amount);
 
-                if (totalPaid >= shipping.cost.total)
+                if (parseFloat(totalPaid) >= parseFloat(shipping.cost.total))
                     shipping.payment.status = static.terbayar;
-                else if (totalPaid > 0)
+                else if (parseFloat(totalPaid > 0))
                     shipping.payment.status = static.terbayarSebagian;
-                else if (totalPaid <= 0)
+                else if (parseFloat(totalPaid <= 0))
                     shipping.payment.status = static.belumTerbayar;
 
                 if (previousStatus === static.terbayar && (shipping.payment.status !== previousStatus)) {
