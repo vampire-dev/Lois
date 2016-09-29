@@ -26,4 +26,20 @@ router.post(config.api + 'payment/pay', auth.isAuthenticated, function (req, res
     });
 });
 
+router.post(config.api + 'payment/updatePay', auth.isAuthenticated, function (req, res) {
+    controller.updatePay(req.body, req.session.user).then(function (result) {
+        res.status(200).send(result);
+    }).catch(function (error) {
+        res.status(500).send(error.message);
+    });
+});
+
+router.post(config.api + 'payment/deletePay', auth.isAuthenticated, function (req, res) {
+    controller.deletePay(req.body, req.session.user).then(function (result) {
+        res.status(200).send(result);
+    }).catch(function (error) {
+        res.status(500).send(error.message);
+    });
+});
+
 module.exports = router;

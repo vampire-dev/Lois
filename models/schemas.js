@@ -254,7 +254,8 @@ schemas['audits'] = mongoose.model('Audit', new Schema({
     "notes": { type: String, default: null },
     "date": { type: Date, default: Date.now },
     "data": {},
-    "user": { type: ObjectId, ref: 'User' }
+    "user": { type: ObjectId, ref: 'User' },
+    "stat": { type: String, default: null }
 }, { versionKey: false, collection: 'audits' }));
 
 schemas['invoices'] = mongoose.model('Invoice', new Schema({

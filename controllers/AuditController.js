@@ -36,7 +36,7 @@ Controller.prototype.approve = function (viewModel) {
 
         switch (viewModel['type']) {
             case "payment":
-                yield self.paymentProcess(viewModel.data);
+                yield self.paymentProcess(viewModel.data, viewModel.user, viewModel.stat);
                 break;
             case "price":
                 yield self.priceProcess(viewModel.data);
@@ -72,34 +72,67 @@ Controller.prototype.reject = function (viewModel) {
     });
 };
 
-Controller.prototype.paymentProcess = function (data) {
+Controller.prototype.paymentProcess = function (data, user, stat) {
     return co(function* () {
+        var match = yield schemas.shippings.aggregate([
+            {
+                "$match": {
+                    "_id": ObjectId(data.shippingId),
+                    "payment.phases._id": ObjectId(data.phasesId)
+                }
+            },
+            { "$unwind": "$payment.phases" },
+            {
+                "$match": {
+                    "payment.phases._id": ObjectId(data.phasesId)
+                }
+            }
+        ]).exec();
+        var shippingMatch = match[0];
+
         var shipping = yield schemas.shippings.findOne({ "_id": ObjectId(data.shippingId) }).exec();
 
-        if (!shipping)
+        if ((!shipping) || (!shippingMatch))
             return;
 
-        var totalPaid = shipping.payment.paid + parseFloat(data.amount);
+        if (stat == "update")
+            var totalPaid = parseFloat(shippingMatch.payment.paid) - parseFloat(shippingMatch.payment.phases.amount) + parseFloat(data.amount);
+        else if (stat == "delete")
+            var totalPaid = parseFloat(shippingMatch.payment.paid) - parseFloat(shippingMatch.payment.phases.amount);
 
-        if (totalPaid >= shipping.cost.total)
+        if (parseFloat(totalPaid).toFixed(2) >= parseFloat(shipping.cost.total).toFixed(2))
             shipping.payment.status = static.terbayar;
-        else if (totalPaid > 0)
+        else if (parseFloat(totalPaid).toFixed(2) > 0)
             shipping.payment.status = static.terbayarSebagian;
-        else if (totalPaid <= 0)
+        else if (parseFloat(totalPaid).toFixed(2) <= 0)
             shipping.payment.status = static.belumTerbayar;
 
-        shipping.payment.phases.push({
-            transferDate: new Date(_.parseInt(data.transferDate)),
-            date: new Date(_.parseInt(data.date)),
-            bank: data.bank,
-            notes: data.notes,
-            amount: parseFloat(data.amount)
-        });
-
-        shipping.payment.paid += parseFloat(data.amount);
         shipping.audited = false;
-        shipping.payment.type = ObjectId(data.paymentTypeId);
-        return shipping.save();
+        shipping.payment.paid = parseFloat(totalPaid).toFixed(2);
+        shipping.save();
+
+        console.log('stat : '+stat);
+
+        if (stat == "update") {
+            yield schemas.shippings.update(
+                { "_id": data.shippingId, "payment.phases._id": data.phasesId },
+                {
+                    "$set": {
+                        "payment.phases.$.user": user,
+                        "payment.phases.$.amount": parseFloat(data.amount).toFixed(2),
+                        "payment.phases.$.notes": data.notes,
+                        "payment.phases.$.bank": data.bank,
+                        "payment.phases.$.transferDate": new Date(data.transferDate)
+                    }
+                }
+            );
+        }
+        else if (stat == "delete") {
+            yield schemas.shippings.update(
+                { "_id": data.shippingId },
+                { "$pull": { "payment.phases": { "_id": data.phasesId } } }
+            );
+        }
     });
 };
 

@@ -197,15 +197,15 @@ Controller.prototype.save = function (data, fromManager) {
                 item.colli.available = item.colli.quantity;
 
             item.cost.shipping = self.calculateCost(item, tariff, data.sender.quota, data.tariff);
-            data.cost.total += item.cost.shipping;
+            data.cost.total += parseFloat(item.cost.shipping);
             data.colli += _.parseInt(item.colli.quantity);
             data.weight += _.parseInt(item.dimensions.weight);
             count++;
         });
 
         data.itemCount = count;
-        data.cost.base = data.cost.total;
-        data.cost.total += _.parseInt(data.cost.worker);
+        data.cost.base = parseFloat(data.cost.total);
+        data.cost.total += parseFloat(data.cost.worker);
 
         if (data.cost.ppn === 0.1)
             ppn = data.cost.total * 0.1;
@@ -216,7 +216,7 @@ Controller.prototype.save = function (data, fromManager) {
         else if (data.cost.pph === 0.98)
             data.cost.total /= 0.98;
 
-        data.cost.total += ppn;
+        data.cost.total += parseFloat(ppn);
 
         data.regions.source = source === null ? data.regions.source : source.region;
         data.regions.destination = dest === null ? data.regions.destination : dest.region;

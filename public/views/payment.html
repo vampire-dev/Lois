@@ -273,28 +273,72 @@
                                 <thead>
                                     <tr style="color:black;">
                                         <th style="text-align: center; width: 6%;">Spb</th>
+                                        <th style="text-align: center; width: 8%;">Tanggal Input</th>
                                         <th style="text-align: center; width: 8%;">Bank</th>
-                                        <th style="text-align: center; width: 10%;">Keterangan</th>
-                                        <th style="text-align: center; width: 10%;">Tanggal Transfer</th>
+                                        <th style="text-align: center; width: 10%;">Keterangan</th>                                       
+                                        <th style="text-align: center; width: 8%;">Tanggal Transfer</th>
                                         <th style="text-align: center; width: 10%;">Jumlah</th>
+                                        <th style="text-align: center; width: 10%;">Aksi</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr ng-repeat="entity in ctrl.selectedEntity.payment.phases">
+                                <tbody ng-repeat="entity in ctrl.selectedEntity.payment.phases">
+                                    <tr ng-if="entity != ctrl.activeEntity">
                                         <td>
                                             {{ctrl.selectedEntity.spbNumber}}
+                                        </td>
+                                        <td>
+                                            {{entity.date | date:'dd-MM-yyyy'}}
                                         </td>
                                         <td>
                                             {{entity.bank}}
                                         </td>
                                         <td>
                                             {{entity.notes}}
-                                        </td>
+                                        </td>                                       
                                         <td>
-                                            {{entity.date | date:'dd-MM-yyyy'}}
+                                            {{entity.transferDate | date:'dd-MM-yyyy'}}
                                         </td>
                                         <td>
                                             {{entity.amount | currency: 'Rp. ' : 2}}
+                                        </td>
+                                        <td style="text-align:center;">
+                                            <a href="#" class="txt-color-white btn-sm btn-primary" title="Edit" ng-click="ctrl.editPay(entity)">
+                                                <i class="fa fa-edit"></i> Edit
+                                            </a>
+                                            &nbsp;
+                                            <a href="#" class="txt-color-white btn-sm btn-danger" title="Hapus" ng-click="ctrl.deletePay(entity)">
+                                                <i class="fa fa-remove"></i> Hapus
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <tr class="warning" ng-if="entity == ctrl.activeEntity">
+                                        <td class="vert-align">
+                                            {{ctrl.selectedEntity.spbNumber}}
+                                        </td>
+                                        <td class="vert-align">
+                                            {{entity.date | date:'dd-MM-yyyy'}}
+                                        </td>
+                                        <td class="vert-align">
+                                            <input class="form-control" ng-model="entity.bank" type="text">
+                                        </td>
+                                        <td class="vert-align">
+                                            <input class="form-control" ng-model="entity.notes" type="text">
+                                        </td>                                     
+                                        <td class="vert-align">
+                                            <input datepicker class="form-control" placeholder="Tanggal Transfer"
+                                                   id="data-transfer-date" type="text" ng-model="ctrl.dataTransferDate" />
+                                        </td>
+                                        <td class="vert-align">
+                                            <input class="form-control" ng-model="entity.amount" type="text">
+                                        </td>
+                                        <td class="vert-align" style="text-align:center;">
+                                            <a href="#" class="txt-color-white btn-sm btn-primary" title="Edit" ng-click="ctrl.updatePay(entity)">
+                                                <i class="fa fa-save"></i> Simpan
+                                            </a>
+                                            &nbsp;
+                                            <a href="#" class="txt-color-white btn-sm btn-primary" title="Edit" ng-click="ctrl.cancelPay(entity)">
+                                                <i class="fa fa-remove"></i> Batal
+                                            </a>
                                         </td>
                                     </tr>
                                 </tbody>

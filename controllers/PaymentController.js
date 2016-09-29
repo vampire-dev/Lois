@@ -52,22 +52,22 @@ Controller.prototype.pay = function (viewModels, user) {
 
     return co(function* () {
         yield* _co.coEach(viewModels, function* (viewModel) {
-
+            
             var shipping = yield schemas.shippings.findOne({ _id: viewModel.shippingId });
 
             if (!shipping)
                 return;
-
+            
             if (parseFloat(viewModel.amount) != 0) {
 
                 var previousStatus = shipping.payment.status;
                 var totalPaid = shipping.payment.paid + parseFloat(viewModel.amount);
 
-                if (parseFloat(totalPaid) >= parseFloat(shipping.cost.total))
+                if (parseFloat(totalPaid).toFixed(2) >= parseFloat(shipping.cost.total).toFixed(2))
                     shipping.payment.status = static.terbayar;
-                else if (parseFloat(totalPaid) > 0)
+                else if (parseFloat(totalPaid).toFixed(2) > 0)
                     shipping.payment.status = static.terbayarSebagian;
-                else if (parseFloat(totalPaid) <= 0)
+                else if (parseFloat(totalPaid).toFixed(2) <= 0)
                     shipping.payment.status = static.belumTerbayar;
 
                 if (previousStatus === static.terbayar && (shipping.payment.status !== previousStatus)) {
@@ -87,11 +87,11 @@ Controller.prototype.pay = function (viewModels, user) {
                     date: new Date(),
                     bank: viewModel.bank,
                     notes: viewModel.notes,
-                    amount: parseFloat(viewModel.amount),
+                    amount: parseFloat(viewModel.amount).toFixed(2),
                     user: user._id
                 });
 
-                shipping.payment.paid = totalPaid;
+                shipping.payment.paid = parseFloat(totalPaid).toFixed(2);
                 shipping.audited = false;
             }
             shipping.payment.type = ObjectId(viewModel.paymentTypeId);
@@ -100,7 +100,7 @@ Controller.prototype.pay = function (viewModels, user) {
     });
 };
 
-Controller.prototype.audit = function (viewModel, notes, user) {
+Controller.prototype.audit = function (viewModel, notes, user, stat) {
     viewModel.date = new Date();
 
     var audit = new schemas.audits({
@@ -108,10 +108,139 @@ Controller.prototype.audit = function (viewModel, notes, user) {
         notes: notes,
         date: new Date(),
         data: viewModel,
-        user: user._id
+        user: user._id,
+        stat: stat
     });
 
     return audit.save();
+};
+
+Controller.prototype.updatePay = function (viewModel, user) {
+    var self = this;
+
+    return co(function* () {       
+        var match = yield schemas.shippings.aggregate([
+            {
+                "$match": {
+                    "_id": ObjectId(viewModel.shippingId),
+                    "payment.phases._id": ObjectId(viewModel.phasesId)
+                }
+            },
+            { "$unwind": "$payment.phases" },
+            {
+                "$match": {
+                    "payment.phases._id": ObjectId(viewModel.phasesId)
+                }
+            }
+        ]);
+        var shippingMatch = match[0];
+
+        var shipping = yield schemas.shippings.findOne({ _id: viewModel.shippingId });
+
+        if ((!shipping) || (!shippingMatch))
+            return;
+
+        var previousStatus = shipping.payment.status;
+        var totalPaid = parseFloat(shippingMatch.payment.paid) - parseFloat(shippingMatch.payment.phases.amount) + parseFloat(viewModel.amount);
+
+        if (parseFloat(totalPaid).toFixed(2) >= parseFloat(shipping.cost.total).toFixed(2))
+            shipping.payment.status = static.terbayar;
+        else if (parseFloat(totalPaid).toFixed(2) > 0)
+            shipping.payment.status = static.terbayarSebagian;
+        else if (parseFloat(totalPaid).toFixed(2) <= 0)
+            shipping.payment.status = static.belumTerbayar;
+        
+        if (previousStatus === static.terbayar && (shipping.payment.status !== previousStatus)) {
+            shipping.audited = true;
+
+            var notes = 'Perubahan status dari ' + previousStatus + ' ke ' + shipping.payment.status + ' dengan perubahan harga ' +
+                viewModel.amount;
+
+            shipping.payment.status = previousStatus;
+            var stat = 'update';
+
+            yield shipping.save();
+            yield self.audit(viewModel, notes, user, stat);
+            return;
+        }
+        
+        shipping.payment.paid = parseFloat(totalPaid).toFixed(2);
+        shipping.save();
+
+        yield schemas.shippings.update(
+            { "_id": viewModel.shippingId, "payment.phases._id": viewModel.phasesId },
+            {
+                "$set": {
+                    "payment.phases.$.user": user._id,
+                    "payment.phases.$.amount": parseFloat(viewModel.amount).toFixed(2),
+                    "payment.phases.$.notes": viewModel.notes,
+                    "payment.phases.$.bank": viewModel.bank,
+                    "payment.phases.$.transferDate": new Date(viewModel.transferDate)
+                }
+            }
+        );
+
+    });
+};
+
+Controller.prototype.deletePay = function (viewModel, user) {
+    var self = this;
+
+    return co(function* () { 
+        var match = yield schemas.shippings.aggregate([
+            {
+                "$match": {
+                    "_id": ObjectId(viewModel.shippingId),
+                    "payment.phases._id": ObjectId(viewModel.phasesId)
+                }
+            },
+            { "$unwind": "$payment.phases" },
+            {
+                "$match": {
+                    "payment.phases._id": ObjectId(viewModel.phasesId)
+                }
+            }
+        ]);
+        var shippingMatch = match[0];
+
+        var shipping = yield schemas.shippings.findOne({ _id: viewModel.shippingId });
+
+        if ((!shipping) || (!shippingMatch))
+            return;
+
+        var previousStatus = shipping.payment.status;
+        var totalPaid = parseFloat(shippingMatch.payment.paid) - parseFloat(shippingMatch.payment.phases.amount);
+
+        if (parseFloat(totalPaid).toFixed(2) >= parseFloat(shipping.cost.total).toFixed(2))
+            shipping.payment.status = static.terbayar;
+        else if (parseFloat(totalPaid).toFixed(2) > 0)
+            shipping.payment.status = static.terbayarSebagian;
+        else if (parseFloat(totalPaid).toFixed(2) <= 0)
+            shipping.payment.status = static.belumTerbayar;
+
+        if (previousStatus === static.terbayar && (shipping.payment.status !== previousStatus)) {
+            shipping.audited = true;
+
+            var notes = 'Perubahan status dari ' + previousStatus + ' ke ' + shipping.payment.status + ' dengan penghapusan harga ' +
+                viewModel.amount;
+
+            shipping.payment.status = previousStatus;
+            var stat = 'delete';
+
+            yield shipping.save();
+            yield self.audit(viewModel, notes, user, stat);
+            return;
+        }
+
+        shipping.payment.paid = parseFloat(totalPaid).toFixed(2);
+        shipping.save();
+
+        yield schemas.shippings.update(
+            { "_id": viewModel.shippingId },            
+                {"$pull": { "payment.phases": { "_id": viewModel.phasesId } } }     
+        );
+
+    });
 };
 
 module.exports = new Controller();
