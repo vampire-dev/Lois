@@ -110,6 +110,36 @@ var app;
                     }
                 });
             };
+            invoiceCtrl.prototype.editInvoice = function (e) {                
+                this.activeEntity = e;
+            };
+            invoiceCtrl.prototype.cancelInvoice = function (e) {
+                this.activeEntity = null;
+            };
+            invoiceCtrl.prototype.updateInvoice = function (e) {
+                if (!e.to || e.to == '') {
+                    this.notify('warning', 'Tertagih harus diisi');
+                    return;
+                }
+
+                if (!e.location || e.location == '') {
+                    this.notify('warning', 'Lokasi harus diisi');
+                    return;
+                }
+                var viewModel = {
+                    invoiceId: e._id,
+                    to: e.to,
+                    location: e.location
+                };
+
+                var ctrl = this;
+                app.api.invoice.updateInvoice(viewModel).then(function (result) {
+                    ctrl.notify('success', 'Proses update berhasil');
+                    ctrl.filter();
+                }).catch(function (error) {
+                    ctrl.notify('error', 'Proses update gagal ' + error.data);
+                });
+            };
             invoiceCtrl.$inject = ['$scope', 'Notification'];
             return invoiceCtrl;
         }(controllers.baseCtrl));

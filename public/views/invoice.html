@@ -344,27 +344,27 @@
                                             <tr style="color:black;">
                                                 <th style="text-align: center; width: 6%;">No Tagihan</th>
                                                 <th style="text-align: center; width: 6%;">Tanggal</th>
-                                                <th style="text-align: center; width: 13%;">Tertagih</th>
+                                                <th style="text-align: center; width: 15%;">Tertagih</th>
                                                 <th style="text-align: center; width: 5%;">Lokasi</th>
                                                 <th style="text-align: center; width: 4%;">Jenis</th>
-                                                <th style="text-align: center; width: 6%;">Total Shipping</th>
+                                                <th style="text-align: center; width: 3%;">Kiriman</th>
                                                 <th style="text-align: center; width: 14%;">Cetak</th>
                                                 <th style="text-align: center; width: 8%;">Aksi</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
+                                        <tbody ng-repeat="entity in ctrl.entities">
                                             <tr ng-show="ctrl.loadingData">
                                                 <td style="text-align: center; margin: 10px 0px;" colspan="100">
                                                     <img src="../assets/img/ajax-loader.gif">
                                                 </td>
                                             </tr>
-                                            <tr ng-repeat="entity in ctrl.entities" style="color: black;" ng-show="!ctrl.loadingData">
+                                            <tr style="color: black;" ng-if="entity != ctrl.activeEntity" ng-show="!ctrl.loadingData">
                                                 <td> {{entity.number}} </td>
                                                 <td> {{entity.created.date | date:'dd-MM-yyyy'}} </td>
                                                 <td> {{entity.to}} </td>
                                                 <td> {{entity.location}}</td>
                                                 <td> {{entity.type}}</td>
-                                                <td> {{entity.shippings.length}} Shipping </td>
+                                                <td style="text-align:right;"> {{entity.shippings.length}} </td>
                                                 <td style="text-align:center;">
                                                     <a href="#" class="txt-color-white btn-sm btn-success" title="Print All" ng-click="ctrl.print(entity,1)">
                                                         <i class="fa fa-file-pdf-o"></i> Semua
@@ -379,9 +379,43 @@
                                                     </a>
                                                 </td>
                                                 <td style="text-align:center;">
-                                                    <a href="#" class="txt-color-white btn-sm btn-primary" title="Edit" >
+                                                    <a href="#" class="txt-color-white btn-sm btn-primary" title="Edit" ng-click="ctrl.editInvoice(entity)">
                                                         <i class="fa fa-edit"></i> Edit
                                                     </a>                                                  
+                                                </td>
+                                            </tr>
+                                            <tr class="warning" ng-if="entity == ctrl.activeEntity" style="color: black;" ng-show="!ctrl.loadingData">
+                                                <td class="vert-align"> {{entity.number}} </td>
+                                                <td class="vert-align"> {{entity.created.date | date:'dd-MM-yyyy'}} </td>
+                                                <td class="vert-align">
+                                                    <input class="form-control" ng-model="entity.to" type="text">
+                                                </td>
+                                                <td class="vert-align">
+                                                    <input class="form-control" ng-model="entity.location" type="text">
+                                                </td>
+                                                <td class="vert-align"> {{entity.type}}</td>
+                                                <td class="vert-align" style="text-align:right;"> {{entity.shippings.length}} </td>
+                                                <td class="vert-align" style="text-align:center;">
+                                                    <a href="#" class="txt-color-white btn-sm btn-success" title="Print All" ng-click="ctrl.print(entity,1)">
+                                                        <i class="fa fa-file-pdf-o"></i> Semua
+                                                    </a>
+                                                    &nbsp;
+                                                    <a href="#" class="txt-color-white btn-sm btn-success" title="Print Client" ng-click="ctrl.print(entity,2)">
+                                                        <i class="fa fa-file-pdf-o"></i> Klien
+                                                    </a>
+                                                    &nbsp;
+                                                    <a href="#" class="txt-color-white btn-sm btn-success" title="Print Partner" ng-click="ctrl.print(entity,3)">
+                                                        <i class="fa fa-file-pdf-o"></i> Partner
+                                                    </a>                                               
+                                                </td>
+                                                <td class="vert-align" style="text-align:center;">
+                                                    <a href="#" class="txt-color-white btn-sm btn-primary" title="Update" ng-click="ctrl.updateInvoice(entity)">
+                                                        <i class="fa fa-save"></i> Simpan
+                                                    </a>
+                                                    &nbsp;
+                                                    <a href="#" class="txt-color-white btn-sm btn-primary" title="Cancel" ng-click="ctrl.cancelInvoice(entity)">
+                                                        <i class="fa fa-remove"></i>
+                                                    </a>
                                                 </td>
                                             </tr>
                                         </tbody>

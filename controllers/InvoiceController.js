@@ -288,5 +288,18 @@ Controller.prototype.getTerbilang = function (amount) {
     return sentence + "Rupiah";
 };
 
+Controller.prototype.updateInvoice = function (viewModel) {
+    return co(function* () {
+        yield schemas.invoices.update(
+            { "_id": viewModel.invoiceId },
+            {
+                "$set": {
+                    "to": viewModel.to,
+                    "location": viewModel.location
+                }
+            }
+        );
+    });
+};
 
 module.exports = new Controller();

@@ -282,7 +282,12 @@
                                     </tr>
                                 </thead>
                                 <tbody ng-repeat="entity in ctrl.selectedEntity.payment.phases">
-                                    <tr ng-if="entity != ctrl.activeEntity">
+                                    <tr ng-show="ctrl.loadingData">
+                                        <td style="text-align: center; margin: 10px 0px;" colspan="100">
+                                            <img src="../assets/img/ajax-loader.gif">
+                                        </td>
+                                    </tr>
+                                    <tr ng-if="entity != ctrl.activeEntity" ng-show="!ctrl.loadingData">
                                         <td>
                                             {{ctrl.selectedEntity.spbNumber}}
                                         </td>
@@ -311,7 +316,7 @@
                                             </a>
                                         </td>
                                     </tr>
-                                    <tr class="warning" ng-if="entity == ctrl.activeEntity">
+                                    <tr class="warning" ng-if="entity == ctrl.activeEntity" ng-show="!ctrl.loadingData">
                                         <td class="vert-align">
                                             {{ctrl.selectedEntity.spbNumber}}
                                         </td>
@@ -332,11 +337,11 @@
                                             <input class="form-control" ng-model="entity.amount" type="text">
                                         </td>
                                         <td class="vert-align" style="text-align:center;">
-                                            <a href="#" class="txt-color-white btn-sm btn-primary" title="Edit" ng-click="ctrl.updatePay(entity)">
+                                            <a href="#" class="txt-color-white btn-sm btn-primary" title="Update" ng-click="ctrl.updatePay(entity)">
                                                 <i class="fa fa-save"></i> Simpan
                                             </a>
                                             &nbsp;
-                                            <a href="#" class="txt-color-white btn-sm btn-primary" title="Edit" ng-click="ctrl.cancelPay(entity)">
+                                            <a href="#" class="txt-color-white btn-sm btn-primary" title="Cancel" ng-click="ctrl.cancelPay(entity)">
                                                 <i class="fa fa-remove"></i> Batal
                                             </a>
                                         </td>

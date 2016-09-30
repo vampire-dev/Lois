@@ -167,6 +167,9 @@ var app;
             invoice.getInvoiceReport = function (data) {
                 return app.http.post('/lois/api/invoice/getInvoiceReport', JSON.stringify(data));
             };
+            invoice.updateInvoice = function (data) {
+                return app.http.post('/lois/api/invoice/updateInvoice', JSON.stringify(data));
+            };
             return invoice;
         }());
         api.invoice = invoice;
