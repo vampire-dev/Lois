@@ -280,13 +280,13 @@
                                         <th style="text-align: center; width: 10%;">Jumlah</th>
                                         <th style="text-align: center; width: 10%;">Aksi</th>
                                     </tr>
-                                </thead>
-                                <tbody ng-repeat="entity in ctrl.selectedEntity.payment.phases">
                                     <tr ng-show="ctrl.loadingData">
                                         <td style="text-align: center; margin: 10px 0px;" colspan="100">
                                             <img src="../assets/img/ajax-loader.gif">
                                         </td>
                                     </tr>
+                                </thead>
+                                <tbody ng-repeat="entity in ctrl.selectedEntity.payment.phases">                                   
                                     <tr ng-if="entity != ctrl.activeEntity" ng-show="!ctrl.loadingData">
                                         <td>
                                             {{ctrl.selectedEntity.spbNumber}}

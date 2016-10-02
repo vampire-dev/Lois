@@ -34,7 +34,7 @@ Controller.prototype.save = function (data) {
 
 Controller.prototype.delete = function (id) {
     return co(function* () {
-        var entity = schemas.drivers.findOne({ "_id": id }).exec();
+        var entity = schemas.drivers.findOne({ "_id": ObjectId(id) });
 
         if (!entity)
             throw new Error("Entity is not found");

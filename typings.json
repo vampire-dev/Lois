@@ -9,7 +9,7 @@
     "jade": "registry:dt/jade#0.0.0+20160316155526",
     "lodash": "registry:dt/lodash#4.14.0+20160919145112",
     "mime": "registry:dt/mime#0.0.0+20160316155526",
-    "mongoose": "registry:dt/mongoose#4.5.9+20160929125912",
+    "mongoose": "registry:dt/mongoose#4.5.9+20161001164137",
     "morgan": "registry:dt/morgan#1.7.0+20160524142355",
     "multer": "registry:dt/multer#0.0.0+20160829120954",
     "node": "registry:dt/node#6.0.0+20160928143418",

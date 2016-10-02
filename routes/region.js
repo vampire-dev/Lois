@@ -3,6 +3,10 @@ var config = require('../configurator').config();
 var auth = require('../utils/authentication');
 var controller = require('../controllers/RegionController');
 
+router.get('/lois/configuration', function (req, res) {
+    res.redirect('/lois');
+});
+
 router.get(config.api + 'region/get', auth.isAuthenticated, function (req, res) {
     controller.get(req.query.id).then(function (result) {
         res.status(200).send(result);

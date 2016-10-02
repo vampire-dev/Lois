@@ -126,52 +126,74 @@
                             <table class="table table-bordered table-striped table-condensed table-hover smart-form has-tickbox">
                                 <thead>
                                     <tr style="color:black;">
-                                        <th style="text-align: center; width: 4%;">Tanggal</th>
+                                        <th style="text-align: center; width: 5%;">Tanggal</th>
                                         <th style="text-align: center; width: 4%;">Spb</th>
-                                        <th style="text-align: center; width: 11%;">Pengirim</th>
-                                        <th style="text-align: center; width: 10%;">Penerima</th>                                        
-                                        <th style="text-align: center; width: 8%;">Tujuan</th>
-                                        <th style="text-align: center; width: 8%;">Cara Bayar</th>
-                                        <th style="text-align: center; width: 5%;">Berat</th>
+                                        <th style="text-align: center; width: 9%;">Pengirim</th>
+                                        <th style="text-align: center; width: 8%;">Penerima</th>                                        
+                                        <th style="text-align: center; width: 4%;">Tujuan</th>
+                                        <th style="text-align: center; width: 5%;">Cara Bayar</th>
+                                        <th style="text-align: center; width: 2%;">Berat</th>
                                         <th style="text-align: center; width: 2%;">Koli</th>
-                                        <th style="text-align: center; width: 5%;">Aksi</th>
+                                        <th style="text-align: center; width: 10%;">Item</th>
+                                        <th style="text-align: center; width: 10%;">Status</th>
                                     </tr>
-                                </thead>
-                                <tbody>
                                     <tr ng-show="ctrl.loadingData" style="color:black;">
                                         <td style="text-align: center; margin: 10px 0px;" colspan="100">
                                             <img src="../assets/img/ajax-loader.gif">
                                         </td>
                                     </tr>
-                                    <tr ng-repeat="entity in ctrl.entities" ng-show="!ctrl.loadingData" style="color:black;">
-                                        <td>
+                                </thead>
+                                <tbody ng-repeat="entity in ctrl.entities">                                  
+                                    <tr ng-repeat="item in entity.items" ng-show="!ctrl.loadingData" style="color:black;">
+                                        <td ng-if="$first" rowspan="{{entity.items.length}}">
                                             {{entity.date | date:'dd-MM-yyyy'}}
                                         </td>
-                                        <td>
+                                        <td ng-if="$first" rowspan="{{entity.items.length}}">
                                             {{entity.spbNumber}}
                                         </td>
-                                        <td>
+                                        <td ng-if="$first" rowspan="{{entity.items.length}}">
                                             {{entity.sender.name}}
                                         </td>
-                                        <td>
+                                        <td ng-if="$first" rowspan="{{entity.items.length}}">
                                             {{entity.receiver.name}}
-                                        </td>                                        
-                                        <td>
+                                        </td>
+                                        <td ng-if="$first" rowspan="{{entity.items.length}}">
                                             {{entity.destination.name}}
                                         </td>
-                                        <td>
+                                        <td ng-if="$first" rowspan="{{entity.items.length}}">
                                             {{entity.payment.type.name}}
                                         </td>
-                                        <td>
+                                        <td ng-if="$first" rowspan="{{entity.items.length}}">
                                             {{entity.weight}}
                                         </td>
-                                        <td>
+                                        <td ng-if="$first" rowspan="{{entity.items.length}}">
                                             {{entity.colli}}
                                         </td>
-                                        <td>
-                                            <a href="#" class="txt-color-white btn-sm btn-success" title="Cetak" ng-click="ctrl.print(entity)">
-                                                <i class="fa fa-history"></i> Cetak
-                                            </a>
+                                        <td>{{item.content}}</td>
+                                        <td ng-if="entity.returned && $first" rowspan="{{entity.items.length}}">
+                                            <p ng-if="entity.confirmed" style="text-align:center;" class="label label-pink txt-color-white">
+                                                SJ Balik
+                                            </p>
+                                            <p ng-if="!entity.confirmed" style="text-align:center;" class="label label-purple txt-color-white">
+                                                Retur
+                                            </p>
+                                        </td>
+                                        <td ng-if="!entity.returned">                                                    
+                                            <p ng-if="item.status == 'Belum Terekap'" style="text-align:center;" class="label label-grey txt-color-white">
+                                                {{item.status}} <span class="btn badge badge-inverse badge-btn pull-right">{{item.colli.quantity}}</span>
+                                            </p>
+                                            <p ng-if="item.status == 'Terekap Sebagian'" style="text-align:center;" class="label label-warning txt-color-white">
+                                                {{item.status}} <span class="btn badge badge-inverse badge-btn pull-right">{{item.colli.quantity-item.colli.available}}/{{item.colli.quantity}}</span>
+                                            </p>
+                                            <p ng-if="item.status == 'Terekap'" style="text-align:center;" class="label label-success txt-color-white">
+                                                {{item.status}} <span class="btn badge badge-inverse badge-btn pull-right">{{item.colli.quantity}}</span>
+                                            </p>
+                                            <p ng-if="item.status == 'Terkirim Sebagian'" style="text-align:center;" class="label label-warning txt-color-white">
+                                                {{item.status}} <span class="btn badge badge-inverse badge-btn pull-right">{{item.colli.delivered}}/{{item.colli.quantity}}</span>
+                                            </p>
+                                            <p ng-if="item.status == 'Terkirim'" style="text-align:center;" class="label label-info txt-color-white">
+                                                {{item.status}} <span class="btn badge badge-inverse badge-btn pull-right">{{item.colli.delivered}}</span>
+                                            </p>
                                         </td>
                                     </tr>
                                 </tbody>

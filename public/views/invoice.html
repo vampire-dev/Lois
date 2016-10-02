@@ -255,6 +255,17 @@
                                                 <i class="fa fa-envelope"></i> Pindah
                                             </a>
                                         </div>
+                                        <div class="col-xs-9 col-sm-5 col-md-5 col-lg-6">
+                                            <select name="dt_basic_length" aria-controls="dt_basic" class="form-control" ng-model="ctrl.paging.max"
+                                                    ng-change="ctrl.filter()" style="float:right; width:15%;" to-number>
+                                                <option value="10">10</option>
+                                                <option value="25">25</option>
+                                                <option value="50">50</option>
+                                                <option value="100">100</option>
+                                                <option value="500">500</option>
+                                                <option value="1000">1000</option>
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="table-responsive">
@@ -336,6 +347,17 @@
                                                 <i class="fa fa-search"></i> Cari
                                             </a>
                                         </div>
+                                        <div class="col-xs-9 col-sm-5 col-md-5 col-lg-6">
+                                            <select name="dt_basic_length" aria-controls="dt_basic" class="form-control" ng-model="ctrl.paging.max"
+                                                    ng-change="ctrl.filter()" style="float:right; width:15%;" to-number>
+                                                <option value="10">10</option>
+                                                <option value="25">25</option>
+                                                <option value="50">50</option>
+                                                <option value="100">100</option>
+                                                <option value="500">500</option>
+                                                <option value="1000">1000</option>
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="table-responsive">
@@ -351,13 +373,13 @@
                                                 <th style="text-align: center; width: 14%;">Cetak</th>
                                                 <th style="text-align: center; width: 8%;">Aksi</th>
                                             </tr>
-                                        </thead>
-                                        <tbody ng-repeat="entity in ctrl.entities">
                                             <tr ng-show="ctrl.loadingData">
                                                 <td style="text-align: center; margin: 10px 0px;" colspan="100">
                                                     <img src="../assets/img/ajax-loader.gif">
                                                 </td>
                                             </tr>
+                                        </thead>
+                                        <tbody ng-repeat="entity in ctrl.entities">                                        
                                             <tr style="color: black;" ng-if="entity != ctrl.activeEntity" ng-show="!ctrl.loadingData">
                                                 <td> {{entity.number}} </td>
                                                 <td> {{entity.created.date | date:'dd-MM-yyyy'}} </td>
