@@ -35,6 +35,7 @@ var app;
                 this.filter();
             };
             invoiceCtrl.prototype.create = function () {
+                var ret = false;
                 var _this = this;
                 if (!this.to || this.to === '') {
                     this.notify('warning', 'Tertagih harus diisi');
@@ -43,7 +44,7 @@ var app;
                 if (!this.location || this.location === '') {
                     this.notify('warning', 'Lokasi tertagih harus diisi');
                     return;
-                }
+                }                
                 var checkedEntities = this.entities.filter(function (e) { return e.checked; });
                 if (checkedEntities.length === 0) {
                     this.notify('warning', 'Tidak ada pengiriman yang dipilih');
@@ -51,8 +52,15 @@ var app;
                 }
                 var viewModels = [];
                 checkedEntities.forEach(function (e) {
+                    if (e.invoice.all || !e.invoice.all === '') {
+                        _this.notify('warning', e.spbNumber + ' sudah dibuat tagihan ' + e.invoice.all);
+                        ret = true;
+                    }
                     viewModels.push({ shippingId: e._id, to: _this.to, location: _this.location, type: InvoiceType[_this.invoiceType] });
                 });
+                if (ret) 
+                    return;
+
                 var ctrl = this;
                 app.api.invoice.create(viewModels).then(function (result) {
                     ctrl.notify('success', 'Tagihan berhasil dibuat');
@@ -62,6 +70,7 @@ var app;
                 });
             };
             invoiceCtrl.prototype.change = function () {
+                var ret = false;
                 var _this = this;
                 if (!this.toInvoice || this.toInvoice === '') {
                     this.notify('warning', 'Tujuan invoice harus diisi');
@@ -74,8 +83,16 @@ var app;
                 }
                 var viewModels = [];
                 checkedEntities.forEach(function (e) {
+                    if (e.invoice.all == _this.toInvoice)                      
+                        ret = true;
+                    
                     viewModels.push({ shippingId: e._id, fromInvoice: e.invoice.all, toInvoice: _this.toInvoice });
                 });
+                if (ret) {
+                    this.notify('warning', 'Nomor invoice dan ke invoice tidak boleh sama');
+                    return;
+                }
+
                 var ctrl = this;
                 app.api.invoice.change(viewModels).then(function (result) {
                     ctrl.notify('success', 'Tagihan berhasil dipindahkan');

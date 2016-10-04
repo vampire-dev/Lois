@@ -134,13 +134,13 @@ Controller.prototype.change = function (viewModels, user) {
             var fromInvoice = yield schemas.invoices.findOne({ "number": viewModel.fromInvoice }).exec();
 
             if (fromInvoice) {
-                var shippings = _.remove(fromInvoice.shippings, function (invoiceShipping) {
-                    return invoiceShipping.toString() === shipping._id.toString();
-                });
-
-                fromInvoice.shippings = shippings;
-                fromInvoice.modified.user = user._id;
-                yield fromInvoice.save();
+                yield schemas.invoices.update(
+                    { "number": viewModel.fromInvoice },
+                    {
+                        $pull: { "shippings": shipping._id },
+                        $set: { "modified.user": user._id }
+                    }
+                );
             }
 
             shipping.invoice.all = toInvoice.number;
