@@ -150,6 +150,7 @@ router.post(config.api + 'reportData/getDeliveryListReport', auth.isAuthenticate
 router.get(config.api + 'reportData/getCommisions', auth.isAuthenticated, function (req, res) {
     var query = JSON.parse(req.query['query']);
     query['location'] = req.session.user.location._id;
+    query['locationRegion'] = req.session.user.location.region;
 
     controller.getCommisions(query).then(function (result) {
         res.status(200).send(result);

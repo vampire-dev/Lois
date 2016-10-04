@@ -58,7 +58,7 @@ Controller.prototype.getAllCancel = function (query) {
     var deliveryParameters = {};
 
     if (query['spbNumber'])
-        parameters['spbNumber'] = query['spbNumber'];
+        parameters['spbNumber'] = new RegExp(query['spbNumber'], 'i');
 
     if (query['regionDest'])
         parameters['regions.destination'] = ObjectId(query['regionDest']);

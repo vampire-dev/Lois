@@ -441,18 +441,31 @@
                                         <legend>Filter data</legend>
                                         <fieldset>
                                             <div class="row">
-                                                <section class="col col-sm-12 col-md-12 col-lg-3">
+                                                <section class="col col-sm-12 col-md-12 col-lg-4">
+                                                    <label class="input">
+                                                        <input type="text"
+                                                               ng-model="ctrl.filters.regionSource"
+                                                               ng-click="ctrl.filters.regionDest = null"
+                                                               placeholder="Regional Asal"
+                                                               uib-typeahead="data as data.name for data in ctrl.suggest('region', $viewValue)"
+                                                               typeahead-min-length="2"
+                                                               typeahead-loading="regionSourceFilter" class="form-control" />
+                                                        <i ng-show="regionSourceFilter" class="glyphicon glyphicon-refresh"></i>
+                                                    </label>
+                                                </section>
+                                                <section class="col col-sm-12 col-md-12 col-lg-4">
                                                     <label class="input">
                                                         <input type="text"
                                                                ng-model="ctrl.filters.regionDest"
+                                                               ng-click="ctrl.filters.regionSource = null"
                                                                placeholder="Regional Tujuan"
                                                                uib-typeahead="data as data.name for data in ctrl.suggest('region', $viewValue)"
                                                                typeahead-min-length="2"
-                                                               typeahead-loading="regionFilter" class="form-control" />
-                                                        <i ng-show="regionFilter" class="glyphicon glyphicon-refresh"></i>
+                                                               typeahead-loading="regionDestFilter" class="form-control" />
+                                                        <i ng-show="regionDestFilter" class="glyphicon glyphicon-refresh"></i>
                                                     </label>
                                                 </section>
-                                                <section class="col col-sm-12 col-md-12 col-lg-3">
+                                                <section class="col col-sm-12 col-md-12 col-lg-4">
                                                     <label class="input">
                                                         <input type="text"
                                                                ng-model="ctrl.filters.paymentType"
@@ -463,7 +476,7 @@
                                                         <i ng-show="paymentTypeFilter" class="glyphicon glyphicon-refresh"></i>
                                                     </label>
                                                 </section>
-                                                <section class="col col-sm-12 col-md-12 col-lg-3">
+                                                <section class="col col-sm-12 col-md-12 col-lg-6">
                                                     <label class="input">
                                                         <div class="input-group">
                                                             <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
@@ -472,7 +485,7 @@
                                                         </div>
                                                     </label>
                                                 </section>
-                                                <section class="col col-sm-12 col-md-12 col-lg-3">
+                                                <section class="col col-sm-12 col-md-12 col-lg-6">
                                                     <label class="input">
                                                         <div class="input-group">
                                                             <span class="input-group-addon"><i class="fa fa-calendar"></i></span>

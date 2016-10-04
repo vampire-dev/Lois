@@ -219,73 +219,90 @@ Controller.prototype.getInvoiceReport = function (invoice, user) {
     });
 };
 
-Controller.prototype.getTerbilang = function (amount) {
-    amount = String(amount);
-    var numbers = new Array('0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0');
-    var words = new Array('', 'Satu', 'Dua', 'Tiga', 'Empat', 'Lima', 'Enam', 'Tujuh', 'Delapan', 'Sembilan');
-    var level = new Array('', 'Ribu', 'Juta', 'Milyar', 'Triliun');
-    var sentence = '';
+Controller.prototype.getTerbilang = function (ammount) {
+    var num = parseFloat(ammount).toFixed(2);
+    var rev = num.toString().replace(/\.[0-9]+/, '').split('').reverse();
 
-    if (amount.length > 15) {
-        sentence = "Diluar Batas";
-        return sentence;
+    if (num.toString().search(/\./) >= 0)
+        var revDecimal = num.toString().replace(/[0-9]+\./, '').split('').reverse();
+
+    var result = '';
+    var thousands = '';
+
+    // handle decimal
+    if (revDecimal) {
+        for (var i = 0; i < revDecimal.length; i++)
+            result = toWords(revDecimal, i, true) + result;
+        result = 'koma ' + result;
     }
 
-    for (i = 1; i <= amount.length; i++)
-        numbers[i] = amount.substr(-(i), 1);
-
-    i = 1;
-    j = 0;
-    sentence = "";
-
-    while (i <= amount.length) {
-        subSentence = "";
-        word1 = "";
-        word2 = "";
-        word3 = "";
-
-        if (numbers[i + 2] != "0") {
-            if (numbers[i + 2] == "1") {
-                word1 = "Seratus";
-            } else {
-                word1 = words[numbers[i + 2]] + " Ratus";
-            }
+    // handle non-decimal
+    for (var i = 0; i < rev.length; i++) {
+        if (i == 3) {
+            thousands = 'ribu ';
+        } else if (i == 6) {
+            thousands = 'juta ';
+        } else if (i == 9) {
+            thousands = 'miliar ';
+        } else if (i == 12) {
+            thousands = 'triliun ';
+        } else if (i == 15) {
+            thousands = 'billiun ';
         }
 
-        if (numbers[i + 1] != "0") {
-            if (numbers[i + 1] == "1") {
-                if (numbers[i] == "0") {
-                    word2 = "Sepuluh";
-                } else if (numbers[i] == "1") {
-                    word2 = "Sebelas";
+        if (rev[i] != '0') {
+            if ((i % 3) == 0) {
+                if (rev[i + 1] == '1') {
+                    result = toWords(rev, i) + 'belas ' + thousands + result;
+                    i++;
                 } else {
-                    word2 = words[numbers[i]] + " Belas";
+                    result = toWords(rev, i) + thousands + result;
                 }
-            } else {
-                word2 = words[numbers[i + 1]] + " Puluh";
+                thousands = '';
+            } else if ((i % 3) == 2) {
+                result = toWords(rev, i) + 'ratus ' + thousands + result;
+                thousands = '';
+            } else if ((i % 3) == 1) {
+                result = toWords(rev, i) + 'puluh ' + thousands + result;
+                thousands = '';
             }
         }
-
-        if (numbers[i] != "0") {
-            if (numbers[i + 1] != "1") {
-                word3 = words[numbers[i]];
-            }
-        }
-
-        if ((numbers[i] != "0") || (numbers[i + 1] != "0") || (numbers[i + 2] != "0")) {
-            subSentence = word1 + " " + word2 + " " + word3 + " " + level[j] + " ";
-        }
-
-        sentence = subSentence + sentence;
-        i = i + 3;
-        j = j + 1;
     }
 
-    if ((numbers[5] == "0") && (numbers[6] == "0")) {
-        sentence = sentence.replace("Satu Ribu", "Seribu");
-    }
+    return result + " rupiah";
 
-    return sentence + "Rupiah";
+    function toWords(arr, index, decimal) {
+        var number = arr[index];
+        switch (number) {
+            case '.':
+                if (decimal)
+                    return 'koma ';
+            case '0':
+                if (decimal)
+                    return 'nol ';
+                return '';
+            case '1':
+                if (!decimal && (index == 1 || index == 2 || arr[index + 1] == '1' || (index % 3) == 1 || (index % 3) == 2))
+                    return 'se';
+                return 'satu ';
+            case '2':
+                return 'dua ';
+            case '3':
+                return 'tiga ';
+            case '4':
+                return 'empat ';
+            case '5':
+                return 'lima ';
+            case '6':
+                return 'enam ';
+            case '7':
+                return 'tujuh ';
+            case '8':
+                return 'delapan ';
+            case '9':
+                return 'sembilan ';
+        }
+    }
 };
 
 Controller.prototype.updateInvoice = function (viewModel) {
