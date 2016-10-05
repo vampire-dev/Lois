@@ -541,30 +541,40 @@ Controller.prototype.getUnconfirmedReport = function (viewModels, user) {
 };
 
 Controller.prototype.getDeliveryList = function (query) {
-    var limit = query['limit'] ? query['limit'] : 10;
-    var skip = query['skip'] ? query['skip'] : 0;
-    var parameters = {};
+    return co(function* () {
+               
+        var limit = query['limit'] ? query['limit'] : 10;
+        var skip = query['skip'] ? query['skip'] : 0;
+        var parameters = {};
 
-    if (query['regionDest'])
-        parameters['regions.destination'] = ObjectId(query['regionDest']);
+        if (query['spbNumberStart'] && query['spbNumberStart']) {
+            var Start = yield schemas.shippings.findOne({ 'spbNumber': query['spbNumberStart'] });
+            var End = yield schemas.shippings.findOne({ 'spbNumber': query['spbNumberEnd'] });
+            if (Start && End)
+            parameters['number'] = { "$gte": Start.number, "$lte": End.number };
+        }
 
-    if (query['regionSource']) {
-        parameters['regions.source'] = ObjectId(query['regionSource']);
-        parameters['regions.destination'] = ObjectId(query['locationRegion']);
-    }
-    else
-        parameters['inputLocation'] = ObjectId(query['location']);
+        if (query['regionDest'])
+            parameters['regions.destination'] = ObjectId(query['regionDest']);
 
-    if (query['spbNumber'])
-        parameters['spbNumber'] = new RegExp(query['spbNumber'], 'i');
+        if (query['regionSource']) {
+            parameters['regions.source'] = ObjectId(query['regionSource']);
+            parameters['regions.destination'] = ObjectId(query['locationRegion']);
+        }
+        else
+            parameters['inputLocation'] = ObjectId(query['location']);
 
-    if (query['paymentType'])
-        parameters['payment.type'] = ObjectId(query['paymentType']);
+        if (query['spbNumber'])
+            parameters['spbNumber'] = new RegExp(query['spbNumber'], 'i');
 
-    if (query['from'] && query['to'])
-        parameters['date'] = { "$gte": date.createLower(query['from']), "$lte": date.createUpper(query['to']) };
+        if (query['paymentType'])
+            parameters['payment.type'] = ObjectId(query['paymentType']);
 
-    return schemas.shippings.find(parameters).sort({ "number": 1 }).populate('sender destination regions.destination payment.type').skip(skip).limit(limit).exec();
+        if (query['from'] && query['to'])
+            parameters['date'] = { "$gte": date.createLower(query['from']), "$lte": date.createUpper(query['to']) };
+
+        return yield schemas.shippings.find(parameters).sort({ "number": 1 }).populate('sender destination regions.destination payment.type').skip(skip).limit(limit).exec();
+    });
 };
 
 Controller.prototype.getDeliveryListReport = function (viewModels, query, user) {

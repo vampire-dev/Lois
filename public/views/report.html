@@ -127,14 +127,12 @@
                                                 <th style="text-align: center; width: 1%;">
                                                     <input type="checkbox" ng-model="ctrl.checkedAll" ng-click="ctrl.toggleCheckAll()" ng-true-value="true" ng-false-value="false" />
                                                 </th>
-                                                <th style="text-align: center; width: 8%;">Spb</th>
-                                                <th style="text-align: center; width: 10%;">Pengirim</th>
-                                                <th style="text-align: center; width: 10%;">Penerima</th>
+                                                <th style="text-align: center; width: 6%;">Spb</th>
+                                                <th style="text-align: center; width: 12%;">Pengirim</th>
+                                                <th style="text-align: center; width: 11%;">Penerima</th>
                                                 <th style="text-align: center; width: 10%;">Cara Bayar</th>
-                                                <th style="text-align: center; width: 5%;">Koli</th>
+                                                <th style="text-align: center; width: 4%;">Koli</th>
                                                 <th style="text-align: center; width: 8%;">Tagihan</th>
-                                                <th style="text-align: center; width: 8%;">Tagihan Klien</th>
-                                                <th style="text-align: center; width: 10%;">Tagihan Partner</th>
                                                 <th style="text-align: center; width: 8%;">Harga</th>
                                             </tr>
                                         </thead>
@@ -154,8 +152,6 @@
                                                 <td> {{entity.payment.type.name}}</td>
                                                 <td> {{entity.colli}}</td>
                                                 <td> {{entity.invoice.all}}</td>
-                                                <td> {{entity.invoice.client}}</td>
-                                                <td> {{entity.invoice.partner}}</td>
                                                 <td> {{entity.cost.total | currency: 'Rp ' : 2}} </td>
                                             </tr>
                                         </tbody>
@@ -353,7 +349,17 @@
                                                         <i ng-show="regionDestFilter" class="glyphicon glyphicon-refresh"></i>
                                                     </label>
                                                 </section>
-                                                <section class="col col-sm-12 col-md-12 col-lg-6">
+                                                <section class="col col-sm-12 col-md-12 col-lg-3">
+                                                    <label class="input">
+                                                        <input type="text" placeholder="Dari Spb" ng-model="ctrl.filters.spbNumberStart" />
+                                                    </label>
+                                                </section>
+                                                <section class="col col-sm-12 col-md-12 col-lg-3">
+                                                    <label class="input">
+                                                        <input type="text" placeholder="Sampai Spb" ng-model="ctrl.filters.spbNumberEnd" />
+                                                    </label>
+                                                </section>
+                                                <section class="col col-sm-12 col-md-12 col-lg-3">
                                                     <label class="input">
                                                         <div class="input-group">
                                                             <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
@@ -362,7 +368,7 @@
                                                         </div>
                                                     </label>
                                                 </section>
-                                                <section class="col col-sm-12 col-md-12 col-lg-6">
+                                                <section class="col col-sm-12 col-md-12 col-lg-3">
                                                     <label class="input">
                                                         <div class="input-group">
                                                             <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
@@ -849,10 +855,10 @@
                                                 <th style="text-align: center; width: 5%;">Kode</th>
                                                 <th style="text-align: center; width: 5%;">Terkirim</th>
                                                 <th style="text-align: center; width: 8%;">Harga</th>
-                                                <th style="text-align: center; width: 5%;">No Mobil</th>
-                                                <th style="text-align: center; width: 5%;">Supir</th>
+                                                <th style="text-align: center; width: 6%;">No Mobil</th>
+                                                <th style="text-align: center; width: 7%;">Supir</th>
                                                 <th style="text-align: center; width: 8%;">Tgl Kirim</th>
-                                                <th style="text-align: center; width: 8%;">Keterangan</th>
+                                                <th style="text-align: center; width: 5%;">Keterangan</th>
                                             </tr>
                                         </thead>
                                         <tbody>
