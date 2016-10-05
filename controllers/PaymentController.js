@@ -70,17 +70,7 @@ Controller.prototype.pay = function (viewModels, user) {
                 else if (parseFloat(totalPaid).toFixed(2) <= 0)
                     shipping.payment.status = static.belumTerbayar;
 
-                if (previousStatus === static.terbayar && (shipping.payment.status !== previousStatus)) {
-                    shipping.payment.status = previousStatus;
-                    shipping.audited = true;
-
-                    var notes = 'Perubahan status dari ' + previousStatus + ' ke ' + shipping.payment.status + ' dengan perubahan harga ' +
-                        viewModel.amount;
-
-                    yield shipping.save();
-                    yield self.audit(viewModel, notes, user);
-                    return;
-                }
+                
 
                 shipping.payment.phases.push({
                     transferDate: new Date(viewModel.transferDate),
@@ -151,12 +141,12 @@ Controller.prototype.updatePay = function (viewModel, user) {
             shipping.payment.status = static.belumTerbayar;
         
         if (previousStatus === static.terbayar && (shipping.payment.status !== previousStatus)) {
-            shipping.audited = true;
-
+           
             var notes = 'Perubahan status dari ' + previousStatus + ' ke ' + shipping.payment.status + ' dengan perubahan harga ' +
-                viewModel.amount;
+                viewModel.amount + ' dari ' + shipping.payment.paid;
 
             shipping.payment.status = previousStatus;
+            shipping.audited = true;
             var stat = 'update';
 
             yield shipping.save();
