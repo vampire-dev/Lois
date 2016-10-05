@@ -715,7 +715,8 @@
                                                 <td> {{entity.items.content}}</td>
                                                 <td> {{entity.items.recapitulations.quantity}} </td>
                                                 <td> {{entity.items.recapitulations.weight | number}} </td>
-                                                <td> {{(entity.cost.worker/entity.itemCount)+((entity.items.cost.shipping / entity.items.colli.quantity)*entity.items.recapitulations.quantity) | currency: 'Rp ' : 2}} </td>
+                                                <td ng-if="entity.cost.expeditionType=='include'"> {{(entity.cost.worker/entity.itemCount)+((entity.items.cost.shipping / entity.items.colli.quantity)*entity.items.recapitulations.quantity) | currency: 'Rp ' : 2}} </td>
+                                                <td ng-if="entity.cost.expeditionType=='reimburse'"> {{(entity.cost.expedition/entity.itemCount)+(entity.cost.worker/entity.itemCount)+((entity.items.cost.shipping / entity.items.colli.quantity)*entity.items.recapitulations.quantity) | currency: 'Rp ' : 2}} </td>
                                                 <td> {{entity.driver[0].name}} </td>
                                                 <td> {{entity.items.recapitulations.vehicleNumber}} </td>
                                                 <td> {{entity.items.recapitulations.date | date:'dd-MM-yyyy'}} </td>
@@ -870,7 +871,8 @@
                                                 <td> {{entity.items.content}}</td>
                                                 <td> {{entity.items.deliveries.deliveryCode}}</td>
                                                 <td> {{entity.items.deliveries.quantity}} </td>
-                                                <td> {{(entity.cost.worker/entity.itemCount)+((entity.items.cost.shipping / entity.items.colli.quantity)*entity.items.deliveries.quantity) | currency: 'Rp ' : 2}} </td>
+                                                <td ng-if="entity.cost.expeditionType=='include'"> {{(entity.cost.worker/entity.itemCount)+((entity.items.cost.shipping / entity.items.colli.quantity)*entity.items.deliveries.quantity) | currency: 'Rp ' : 2}} </td>
+                                                <td ng-if="entity.cost.expeditionType=='reimburse'"> {{(entity.cost.expedition/entity.itemCount)+{{(entity.cost.worker/entity.itemCount)+((entity.items.cost.shipping / entity.items.colli.quantity)*entity.items.deliveries.quantity) | currency: 'Rp ' : 2}} </td>
                                                 <td> {{entity.items.deliveries.vehicleNumber}}</td>
                                                 <td> {{entity.driver[0].name}} </td>
                                                 <td> {{entity.items.deliveries.date | date:'dd-MM-yyyy'}} </td>

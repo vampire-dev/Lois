@@ -427,7 +427,7 @@
                                                 </div>
                                             </label>
                                         </section>
-                                        <section class="col col-sm-12 col-md-12 col-lg-4">
+                                        <section class="col col-sm-12 col-md-12 col-lg-12">
                                             <label class="label">
                                                 Partner Ekspedisi
                                             </label>
@@ -438,6 +438,17 @@
                                                        typeahead-min-length="2"
                                                        typeahead-loading="partnerInput" class="form-control" />
                                                 <i ng-show="partnerInput" class="glyphicon glyphicon-refresh"></i>
+                                            </label>
+                                        </section>
+                                        <section class="col col-sm-12 col-md-12 col-lg-4">
+                                            <label class="label">
+                                                Jenis Biaya Ekspedisi
+                                            </label>
+                                            <label class="select">
+                                                <select ng-model="ctrl.entity.cost.expeditionType">
+                                                    <option value="include">Sudah termasuk bea angkut</option>
+                                                    <option value="reimburse">Ditambahkan ke bea angkut (Reimburse)</option>
+                                                </select><i></i>
                                             </label>
                                         </section>
                                         <section class="col col-sm-12 col-md-12 col-lg-4">

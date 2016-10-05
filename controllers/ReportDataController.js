@@ -260,7 +260,12 @@ Controller.prototype.getRecapitulationsReport = function (viewModels, query, use
             var driver = yield schemas.drivers.findOne({ _id: ObjectId(viewModel.items.recapitulations.driver) });
             var user = yield schemas.users.findOne({ _id: ObjectId(viewModel.items.recapitulations.user) });
             var paymentType = yield schemas.paymentTypes.findOne({ _id: ObjectId(viewModel.payment.type) });
-            var price = (viewModel.cost.worker / viewModel.itemCount) + ((viewModel.items.cost.shipping / viewModel.items.colli.quantity) * viewModel.items.recapitulations.quantity);
+
+            var price = 0;
+            if (viewModel.cost.expeditionType == 'include')
+                price = (viewModel.cost.worker / viewModel.itemCount) + ((viewModel.items.cost.shipping / viewModel.items.colli.quantity) * viewModel.items.recapitulations.quantity);
+            else if (viewModel.cost.expeditionType == 'reimburse')
+                price = (viewModel.cost.expedition / viewModel.itemCount) + (viewModel.cost.worker / viewModel.itemCount) + ((viewModel.items.cost.shipping / viewModel.items.colli.quantity) * viewModel.items.recapitulations.quantity);
 
             if (driver)
                 result.recap_driver = driver.name;
@@ -361,7 +366,12 @@ Controller.prototype.getDeliveriesReport = function (viewModels, user) {
     return co(function* () {
         yield* _co.coEach(viewModels, function* (viewModel) {
             var driver = yield schemas.drivers.findOne({ _id: ObjectId(viewModel.items.deliveries.driver) });
-            var price = (viewModel.cost.worker / viewModel.itemCount) + ((viewModel.items.cost.shipping / viewModel.items.colli.quantity) * viewModel.items.deliveries.quantity);
+
+            var price = 0;
+            if (viewModel.cost.expeditionType == 'include')
+                price = (viewModel.cost.worker / viewModel.itemCount) + ((viewModel.items.cost.shipping / viewModel.items.colli.quantity) * viewModel.items.deliveries.quantity);
+            else if (viewModel.cost.expeditionType == 'reimburse')
+                price = (viewModel.cost.expedition / viewModel.itemCount) + (viewModel.cost.worker / viewModel.itemCount) + ((viewModel.items.cost.shipping / viewModel.items.colli.quantity) * viewModel.items.deliveries.quantity);            
 
             if (driver)
                 result.delivery_driver = driver.name;

@@ -210,9 +210,8 @@ Controller.prototype.getInvoiceReport = function (invoice, user) {
         result['sum_partner_fee'] = sumExpeditionCost;
         result['sum_ppn'] = sumTotalPpn;
         result['sum_price'] = sumTotalCost;
-        result['sum_price_all'] = sumTotalCost + sumExpeditionCost;
         result['terbilang_client'] = self.getTerbilang(sumTotalCost);
-        result['terbilang_all'] = self.getTerbilang(sumTotalCost + sumExpeditionCost);
+        result['terbilang_all'] = self.getTerbilang(sumTotalCost);
         result['terbilang_partner'] = self.getTerbilang(sumExpeditionCost);
         
         return result;

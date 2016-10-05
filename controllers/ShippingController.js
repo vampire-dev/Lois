@@ -207,6 +207,9 @@ Controller.prototype.save = function (data, fromManager) {
         data.cost.base = parseFloat(data.cost.total);
         data.cost.total += parseFloat(data.cost.worker);
 
+        if (data.cost.expeditionType === 'reimburse')
+        data.cost.total += parseFloat(data.cost.expedition);
+
         if (data.cost.ppn === 0.1)
             ppn = data.cost.total * 0.1;
 
