@@ -41,6 +41,9 @@ Controller.prototype.getAll = function (query) {
     if (query['paymentStatus'])
         parameters['payment.status'] = query['paymentStatus'];
 
+    if (query['fromTransferDate'])
+        parameters['payment.phases.transferDate'] = { "$gte": date.createLower(query['fromTransferDate']), "$lte": date.createUpper(query['fromTransferDate']) };
+
     if (query['from'] && query['to'])
         parameters['date'] = { "$gte": date.createLower(query['from']), "$lte": date.createUpper(query['to']) };
 

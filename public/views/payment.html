@@ -25,17 +25,17 @@
                                 <legend>Filter data</legend>
                                 <fieldset>
                                     <div class="row">
-                                        <section class="col col-sm-12 col-md-12 col-lg-4">
+                                        <section class="col col-sm-12 col-md-12 col-lg-6">
                                             <label class="input">
                                                 <input type="text" class="form-control" placeholder="Spb" ng-model="ctrl.filters.spbNumber" />
                                             </label>
                                         </section>
-                                        <section class="col col-sm-12 col-md-12 col-lg-4">
+                                        <section class="col col-sm-12 col-md-12 col-lg-6">
                                             <label class="input">
                                                 <input type="text" class="form-control" placeholder="Invoice" ng-model="ctrl.filters.invoice" />
                                             </label>
                                         </section>
-                                        <section class="col col-sm-12 col-md-12 col-lg-4">
+                                        <section class="col col-sm-12 col-md-12 col-lg-3">
                                             <label class="input">
                                                 <input type="text"
                                                        ng-model="ctrl.filters.sender"
@@ -46,7 +46,7 @@
                                                 <i ng-show="senderFilter" class="glyphicon glyphicon-refresh"></i>
                                             </label>
                                         </section>
-                                        <section class="col col-sm-12 col-md-12 col-lg-4">
+                                        <section class="col col-sm-12 col-md-12 col-lg-3">
                                             <label class="input">
                                                 <input type="text"
                                                        ng-model="ctrl.filters.paymentType"
@@ -57,7 +57,7 @@
                                                 <i ng-show="paymentTypeFilter" class="glyphicon glyphicon-refresh"></i>
                                             </label>
                                         </section>
-                                        <section class="col col-sm-12 col-md-12 col-lg-4">
+                                        <section class="col col-sm-12 col-md-12 col-lg-3">
                                             <label class="input">
                                                 <input type="text"
                                                        ng-model="ctrl.filters.regionDest"
@@ -68,7 +68,7 @@
                                                 <i ng-show="regionDestFilter" class="glyphicon glyphicon-refresh"></i>
                                             </label>
                                         </section>
-                                        <section class="col col-sm-12 col-md-12 col-lg-4">
+                                        <section class="col col-sm-12 col-md-12 col-lg-3">
                                             <label class="input">
                                                 <input type="text"
                                                        ng-model="ctrl.filters.regionSource"
@@ -79,7 +79,7 @@
                                                 <i ng-show="regionSourceFilter" class="glyphicon glyphicon-refresh"></i>
                                             </label>
                                         </section>
-                                        <section class="col col-sm-12 col-md-12 col-lg-4">
+                                        <section class="col col-sm-12 col-md-12 col-lg-3">
                                             <label class="input">
                                                 <select class="form-control" ng-model="ctrl.filters.paymentStatus">
                                                     <option value="">&nbsp Status Bayar</option>
@@ -89,7 +89,16 @@
                                                 </select>
                                             </label>
                                         </section>
-                                        <section class="col col-sm-12 col-md-12 col-lg-4">
+                                        <section class="col col-sm-12 col-md-12 col-lg-3">
+                                            <label class="input">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                                    <input datepicker class="form-control" placeholder="Dari Tanggal Transfer"
+                                                           id="from-transfer-date" type="text" ng-model="ctrl.filters.fromTransferDate" />
+                                                </div>
+                                            </label>
+                                        </section>
+                                        <section class="col col-sm-12 col-md-12 col-lg-3">
                                             <label class="input">
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
@@ -98,7 +107,7 @@
                                                 </div>
                                             </label>
                                         </section>
-                                        <section class="col col-sm-12 col-md-12 col-lg-4">
+                                        <section class="col col-sm-12 col-md-12 col-lg-3">
                                             <label class="input">
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
