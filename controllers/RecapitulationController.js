@@ -155,7 +155,7 @@ Controller.prototype.updateRecap = function (viewModels, user) {
                 return recapitulation._id.toString() === viewModel.recapitulation.toString();
             });
 
-            if (!recapitulation)
+            if (!recapitulation || recapitulation.available === 0)
                 return;
 
             recapitulation.limasColor = viewModel.limasColor;
