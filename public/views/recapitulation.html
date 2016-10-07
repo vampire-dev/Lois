@@ -152,9 +152,12 @@
                                     <a href="#" class="btn btn-default" style="color: black;" ng-click="ctrl.filter()">
                                         <i class="fa fa-search"></i> Cari
                                     </a>
+                                    <a href="#" class="btn btn-default" style="color: black;" ng-click="ctrl.updateRecap()" ng-show="ctrl.filterType == 1">
+                                        <i class="fa fa-check"></i> Perbaharui
+                                    </a>
                                     <a href="#" class="btn btn-default" style="color: black;" ng-click="ctrl.process()">
                                         <i class="fa fa-check"></i> Proses
-                                    </a>
+                                    </a>              
                                 </div>
                                 <div class="col-xs-9 col-sm-5 col-md-5 col-lg-6">
                                     <select name="dt_basic_length" aria-controls="dt_basic" class="form-control" ng-model="ctrl.paging.max"
@@ -179,12 +182,14 @@
                                         </th>
                                         <th style="text-align: center; width: 5%;">Spb</th>
                                         <th style="text-align: center; width: 10%;">Isi</th>
-                                        <th style="text-align: center; width: 3%;">Tersedia</th>
+                                        <th style="text-align: center; width: 7%;" ng-if="ctrl.filterType == 0">Tersedia</th>
                                         <th style="text-align: center; width: 7%;">Warna Limas</th>
                                         <th style="text-align: center; width: 7%;">Warna Relasi</th>
-                                        <th style="text-align: center; width: 10%;">Keterangan</th>
-                                        <th style="text-align: center; width: 6%;">Qty</th>
+                                        <th style="text-align: center; width: 7%;">Keterangan</th>
+                                        <th style="text-align: center; width: 5%;" >Qty</th>
                                         <th style="text-align: center; width: 5%;">Weight</th>
+                                        <th style="text-align: center; width: 5%;" ng-if="ctrl.filterType == 1">Tgl Berangkat</th>
+                                        <th style="text-align: center; width: 5%;" ng-if="ctrl.filterType == 1">No Mobil</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -203,7 +208,7 @@
                                         <td>
                                             {{entity.items.content}}
                                         </td>
-                                        <td style="text-align:right;">
+                                        <td style="text-align:right;" ng-show="ctrl.filterType == 0">
                                             {{ctrl.filterType == 0 ? entity.items.colli.available : entity.items.recapitulations.available}}
                                         </td>
                                         <td>
@@ -215,11 +220,20 @@
                                         <td>
                                             <input type="text" class="form-control" ng-model="entity.viewModel.notes" />
                                         </td>
-                                        <td style="text-align:right;">
+                                        <td style="text-align:right;" ng-if="ctrl.filterType == 0">
                                             <input type="text" class="form-control" ng-model="entity.viewModel.quantity" />
+                                        </td>
+                                        <td style="text-align:right;" ng-if="ctrl.filterType == 1">
+                                            {{entity.viewModel.quantity}}
                                         </td>
                                         <td style="text-align:right;">
                                             {{(entity.viewModel.weight / entity.items.colli.quantity)*entity.viewModel.quantity | number}}
+                                        </td>
+                                        <td style="text-align:right;" ng-if="ctrl.filterType == 1">
+                                            {{entity.items.recapitulations.departureDate | date:'dd-MM-yyyy'}}
+                                        </td>
+                                        <td style="text-align:right;" ng-if="ctrl.filterType == 1">
+                                            {{entity.items.recapitulations.vehicleNumber}}
                                         </td>
                                     </tr>
                                 </tbody>

@@ -46,4 +46,13 @@ router.post(config.api + 'recapitulation/cancelRecap', auth.isAuthenticated, fun
     });
 });
 
+router.post(config.api + 'recapitulation/updateRecap', auth.isAuthenticated, function (req, res) {
+    controller.updateRecap(req.body, req.session.user).then(function (result) {
+        return res.status(200).send(result);
+    }).catch(function (error) {
+        console.log(error);
+        return res.status(500).send(error.message);
+    });
+});
+
 module.exports = router;

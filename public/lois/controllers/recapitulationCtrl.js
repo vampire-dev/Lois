@@ -32,9 +32,9 @@ var app;
                     ctrl.entities = result.data;
                     ctrl.entities.map(function (e) {
                         e['viewModel'] = {};
-                        e['viewModel']['limasColor'] = null;
-                        e['viewModel']['relationColor'] = null;
-                        e['viewModel']['notes'] = null;
+                        e['viewModel']['limasColor'] = ctrl.filterType === FilterType.recap ? null : e.items.recapitulations.limasColor;
+                        e['viewModel']['relationColor'] = ctrl.filterType === FilterType.recap ? null : e.items.recapitulations.relationColor;
+                        e['viewModel']['notes'] = ctrl.filterType === FilterType.recap ? null : e.items.recapitulations.notes;
                         e['viewModel']['quantity'] = ctrl.filterType === FilterType.recap ? e.items.colli.available : e.items.recapitulations.available;
                         e['viewModel']['weight'] = e.items.dimensions.weight;
                     });
@@ -96,6 +96,40 @@ var app;
                     ctrl.load();
                 }).catch(function (error) {
                     ctrl.notify('error', 'Rekapitulasi gagal ' + error.data);
+                }).finally(function () {
+                    ctrl.loadingData = false;
+                });
+            };
+            recapitulationCtrl.prototype.updateRecap = function () {
+                var _this = this;
+                var checkedEntities = this.entities.filter(function (e) { return e.checked; });
+                if (checkedEntities.length === 0) {
+                    this.notify('warning', 'Tidak ada item yang dipilih');
+                    return;
+                }
+                var viewModels = [];
+                checkedEntities.forEach(function (entity) {
+                    var departureDate = new Date(_this.departureDate);
+                    var viewModel = {
+                        shipping: entity._id,
+                        item: entity.items._id,
+                        recapitulation: entity.items.recapitulations._id,
+                        limasColor: entity.viewModel.limasColor,
+                        relationColor: entity.viewModel.relationColor,
+                        notes: entity.viewModel.notes,
+                        driver: _this.driver ? _this.driver._id : null,
+                        trainType: _this.trainType ? _this.trainType._id : null,
+                        vehicleNumber: _this.vehicleNumber || null,
+                        departureDate: _this.departureDate ? Date.UTC(departureDate.getFullYear(), departureDate.getMonth(), departureDate.getDate()) : null
+                    };
+                    viewModels.push(viewModel);
+                });
+                var ctrl = this;
+                app.api.recapitulation.updateRecap(viewModels).then(function (result) {
+                    ctrl.notify('success', 'Proses update rekapitulasi berhasil');
+                    ctrl.load();
+                }).catch(function (error) {
+                    ctrl.notify('error', 'Update rekapitulasi gagal ' + error.data);
                 }).finally(function () {
                     ctrl.loadingData = false;
                 });

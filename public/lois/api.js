@@ -89,6 +89,9 @@ var app;
             recapitulation.cancelRecap = function (data) {
                 return app.http.post('/lois/api/recapitulation/cancelRecap', JSON.stringify(data));
             };
+            recapitulation.updateRecap = function (data) {
+                return app.http.post('/lois/api/recapitulation/updateRecap', JSON.stringify(data));
+            };
             return recapitulation;
         }());
         api.recapitulation = recapitulation;

@@ -135,6 +135,46 @@ Controller.prototype.recap = function (viewModels, user) {
     });
 };
 
+Controller.prototype.updateRecap = function (viewModels, user) {
+    var self = this;
+    return co(function* () {
+        yield* _co.coEach(viewModels, function* (viewModel) {
+            var shipping = yield schemas.shippings.findOne({ _id: ObjectId(viewModel.shipping) });
+
+            if (!shipping)
+                return;
+
+            var item = _.find(shipping.items, function (item) {
+                return item._id.toString() === viewModel.item.toString();
+            });
+
+            if (!item)
+                return;
+
+            var recapitulation = _.find(item.recapitulations, function (recapitulation) {
+                return recapitulation._id.toString() === viewModel.recapitulation.toString();
+            });
+
+            if (!recapitulation)
+                return;
+
+            recapitulation.limasColor = viewModel.limasColor;
+            recapitulation.relationColor = viewModel.relationColor;
+            recapitulation.notes = viewModel.notes;
+            if (viewModel.driver)
+                recapitulation.driver = viewModel.driver;
+            if (viewModel.trainType)
+                recapitulation.trainType = viewModel.trainType;
+            if (viewModel.vehicleNumber)
+                recapitulation.vehicleNumber = viewModel.vehicleNumber;
+            if (viewModel.departureDate)
+                recapitulation.departureDate = viewModel.departureDate;
+            
+            yield shipping.save();           
+        });
+    });
+};
+
 Controller.prototype.cancelRecap = function (viewModels, user) {
     var self = this;
 

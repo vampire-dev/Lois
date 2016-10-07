@@ -262,10 +262,26 @@ Controller.prototype.getRecapitulationsReport = function (viewModels, query, use
             var paymentType = yield schemas.paymentTypes.findOne({ _id: ObjectId(viewModel.payment.type) });
 
             var price = 0;
-            if (viewModel.cost.expeditionType == 'include')
-                price = (viewModel.cost.worker / viewModel.itemCount) + ((viewModel.items.cost.shipping / viewModel.items.colli.quantity) * viewModel.items.recapitulations.quantity);
-            else if (viewModel.cost.expeditionType == 'reimburse')
-                price = (viewModel.cost.expedition / viewModel.itemCount) + (viewModel.cost.worker / viewModel.itemCount) + ((viewModel.items.cost.shipping / viewModel.items.colli.quantity) * viewModel.items.recapitulations.quantity);
+            if (viewModel.cost.expeditionType == 'include') {           
+                var baseprice = (viewModel.cost.worker / viewModel.itemCount) + ((viewModel.items.cost.shipping / viewModel.items.colli.quantity) * viewModel.items.recapitulations.quantity);
+                var ppn = baseprice * viewModel.cost.ppn;
+                if (viewModel.cost.pph == 0.98)
+                    price = (baseprice / viewModel.cost.pph) + ppn;
+                else {
+                    var pph = baseprice * viewModel.cost.pph;
+                    price = baseprice + pph + ppn;
+                }
+            }
+            else if (viewModel.cost.expeditionType == 'reimburse') {
+                var baseprice = (viewModel.cost.expedition / viewModel.itemCount) + (viewModel.cost.worker / viewModel.itemCount) + ((viewModel.items.cost.shipping / viewModel.items.colli.quantity) * viewModel.items.recapitulations.quantity);
+                var ppn = baseprice * viewModel.cost.ppn;
+                if (viewModel.cost.pph == 0.98)
+                    price = (baseprice / viewModel.cost.pph) + ppn;
+                else {
+                    var pph = baseprice * viewModel.cost.pph;
+                    price = baseprice + pph + ppn;
+                }
+            }
 
             if (driver)
                 result.recap_driver = driver.name;
@@ -368,10 +384,26 @@ Controller.prototype.getDeliveriesReport = function (viewModels, user) {
             var driver = yield schemas.drivers.findOne({ _id: ObjectId(viewModel.items.deliveries.driver) });
 
             var price = 0;
-            if (viewModel.cost.expeditionType == 'include')
-                price = (viewModel.cost.worker / viewModel.itemCount) + ((viewModel.items.cost.shipping / viewModel.items.colli.quantity) * viewModel.items.deliveries.quantity);
-            else if (viewModel.cost.expeditionType == 'reimburse')
-                price = (viewModel.cost.expedition / viewModel.itemCount) + (viewModel.cost.worker / viewModel.itemCount) + ((viewModel.items.cost.shipping / viewModel.items.colli.quantity) * viewModel.items.deliveries.quantity);            
+            if (viewModel.cost.expeditionType == 'include') {
+                var baseprice = (viewModel.cost.worker / viewModel.itemCount) + ((viewModel.items.cost.shipping / viewModel.items.colli.quantity) * viewModel.items.deliveries.quantity);
+                var ppn = baseprice * viewModel.cost.ppn;
+                if (viewModel.cost.pph == 0.98)
+                    price = (baseprice / viewModel.cost.pph) + ppn;
+                else {
+                    var pph = baseprice * viewModel.cost.pph;
+                    price = baseprice + pph + ppn;
+                }                               
+            }
+            else if (viewModel.cost.expeditionType == 'reimburse') {
+                var baseprice = (viewModel.cost.expedition / viewModel.itemCount) + (viewModel.cost.worker / viewModel.itemCount) + ((viewModel.items.cost.shipping / viewModel.items.colli.quantity) * viewModel.items.deliveries.quantity);
+                var ppn = baseprice * viewModel.cost.ppn;
+                if (viewModel.cost.pph == 0.98)
+                    price = (baseprice / viewModel.cost.pph) + ppn;
+                else {
+                    var pph = baseprice * viewModel.cost.pph;
+                    price = baseprice + pph + ppn;
+                }                               
+            }
 
             if (driver)
                 result.delivery_driver = driver.name;
