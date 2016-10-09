@@ -26,46 +26,55 @@ var app;
                 this.activeReport = report;
                 switch (report) {
                     case 'Belum Terbayar':
+                        this.paging.max = 10;
                         this.functions.load = app.api.report.getUnpaid;
                         this.dataFunc = app.api.report.getUnpaidReport;
-                        this.renderFunc = app.api.reportPrint.printUnpaid;
+                        this.renderFunc = app.api.reportPrint.printUnpaid;                       
                         break;
                     case 'Terbayar':
+                        this.paging.max = 10;
                         this.functions.load = app.api.report.getPaid;
                         this.dataFunc = app.api.report.getPaidReport;
                         this.renderFunc = app.api.reportPrint.printPaid;
                         break;
                     case 'Rekapitulasi':
+                        this.paging.max = 10;
                         this.functions.load = app.api.report.getRecapitulations;
                         this.dataFunc = app.api.report.getRecapitulationsReport;
                         this.renderFunc = app.api.reportPrint.printRecapitulation;
                         break;
                     case 'Pengiriman':
+                        this.paging.max = 10;
                         this.functions.load = app.api.report.getDeliveries;
                         this.dataFunc = app.api.report.getDeliveriesReport;
                         this.renderFunc = app.api.reportPrint.printDelivery;
                         break;
                     case 'Retur':
+                        this.paging.max = 10;
                         this.functions.load = app.api.report.getReturns;
                         this.dataFunc = app.api.report.getReturnsReport;
                         this.renderFunc = app.api.reportPrint.printReturn;
                         break;
                     case 'SJ Belum Kembali':
+                        this.paging.max = 10;
                         this.functions.load = app.api.report.getUnconfirmed;
                         this.dataFunc = app.api.report.getUnconfirmedReport;
                         this.renderFunc = app.api.reportPrint.printUnconfirmed;
                         break;
                     case 'Daftar Kiriman':
+                        this.paging.max = 10;
                         this.functions.load = app.api.report.getDeliveryList;
                         this.dataFunc = app.api.report.getDeliveryListReport;
                         this.renderFunc = app.api.reportPrint.printDeliveryList;
                         break;
                     case 'Komisi':
+                        this.paging.max = 10;
                         this.functions.load = app.api.report.getCommisions;
                         this.dataFunc = app.api.report.getCommisionsReport;
                         this.renderFunc = app.api.reportPrint.printCommision;
                         break;
                     case 'Lunas':
+                        this.paging.max = 10;
                         this.functions.load = app.api.report.getPayOff;
                         this.dataFunc = app.api.report.getPayOffReport;
                         this.renderFunc = app.api.reportPrint.printPayOff;

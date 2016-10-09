@@ -617,8 +617,8 @@ Controller.prototype.getDeliveryListReport = function (viewModels, query, user) 
         "template_file": "lapdaftarkirim.xlsx",
         "location": user.location.name,
         "user": user.name,
-        "start_date": query['from'],
-        "end_date": query['to'],
+        "start_date": query['from'] ? query['from'] : " ",
+        "end_date": query['to'] ? query['to'] : " ",
         "report_data": []
     };
 
