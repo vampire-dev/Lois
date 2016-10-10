@@ -241,6 +241,7 @@ Controller.prototype.getRecapitulationsReport = function (viewModels, query, use
         "template_file": "laprekap.xlsx",
         "location": user.location.name,
         "train_type": "",
+        "user": user.name,
         "date": query['recapDate'] ? query['recapDate'] : query['departureDate'],
         "recap_driver": null,
         "recap_car": null,
