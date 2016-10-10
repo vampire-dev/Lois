@@ -26,9 +26,10 @@ Controller.prototype.getAll = function (query) {
     if (query['paymentType'])
         parameters['payment.type'] = ObjectId(query['paymentType']);
 
-    if (!query['paymentType'] && query['paymentTypeNull'] && query['paymentTypeNull']=="kosong")
+    if (!query['paymentType'] && query['paymentTypeNull'] && query['paymentTypeNull'] == "kosong") {
         parameters['$and'] = [{ "payment.type": { "$ne": ObjectId("57c46a80398059b414b3784f") } }, { "payment.type": { "$ne": ObjectId("57c46a81398059b414b37856") } }, { "payment.type": { "$ne": ObjectId("57c46a81398059b414b3785a") } }, { "payment.type": { "$ne": ObjectId("57c46a82398059b414b3785f") } }, { "payment.type": { "$ne": ObjectId("57c46a82398059b414b37861") } }, { "payment.type": { "$ne": ObjectId("57c46a82398059b414b37864") } }];
-
+        parameters['$or'] = [{ "confirmed": true }, { "confirmed": false}];
+    }
     if (query['partner'])
         parameters['partner'] = ObjectId(query['partner']);
 
