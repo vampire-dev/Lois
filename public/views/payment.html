@@ -25,16 +25,16 @@
                                 <legend>Filter data</legend>
                                 <fieldset>
                                     <div class="row">
-                                        <section class="col col-sm-12 col-md-12 col-lg-6">
+                                        <section class="col col-sm-12 col-md-12 col-lg-3">
                                             <label class="input">
                                                 <input type="text" class="form-control" placeholder="Spb" ng-model="ctrl.filters.spbNumber" />
                                             </label>
                                         </section>
-                                        <section class="col col-sm-12 col-md-12 col-lg-6">
+                                        <section class="col col-sm-12 col-md-12 col-lg-3">
                                             <label class="input">
                                                 <input type="text" class="form-control" placeholder="Invoice" ng-model="ctrl.filters.invoice" />
                                             </label>
-                                        </section>
+                                        </section>                                    
                                         <section class="col col-sm-12 col-md-12 col-lg-3">
                                             <label class="input">
                                                 <input type="text"
@@ -44,6 +44,14 @@
                                                        typeahead-min-length="2"
                                                        typeahead-loading="senderFilter" class="form-control" />
                                                 <i ng-show="senderFilter" class="glyphicon glyphicon-refresh"></i>
+                                            </label>
+                                        </section>
+                                        <section class="col col-sm-12 col-md-12 col-lg-3">
+                                            <label class="input">
+                                                <select class="form-control" ng-model="ctrl.filters.paymentTypeNull">
+                                                    <option value="">&nbsp Isi Cara Bayar</option>
+                                                    <option value="kosong">&nbsp Cara Bayar Kosong</option>
+                                                </select>
                                             </label>
                                         </section>
                                         <section class="col col-sm-12 col-md-12 col-lg-3">
@@ -95,6 +103,15 @@
                                                     <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                                                     <input datepicker class="form-control" placeholder="Dari Tanggal Transfer"
                                                            id="from-transfer-date" type="text" ng-model="ctrl.filters.fromTransferDate" />
+                                                </div>
+                                            </label>
+                                        </section>
+                                        <section class="col col-sm-12 col-md-12 col-lg-3">
+                                            <label class="input">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                                    <input datepicker class="form-control" placeholder="Dari Tanggal Input"
+                                                           id="from-input-date" type="text" ng-model="ctrl.filters.fromInputDate" />
                                                 </div>
                                             </label>
                                         </section>

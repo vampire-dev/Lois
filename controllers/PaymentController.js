@@ -12,7 +12,7 @@ function Controller() {};
 Controller.prototype.getAll = function (query) {
     var limit = query['limit'] ? query['limit'] : 10;
     var skip = query['skip'] ? query['skip'] : 0;
-    var parameters = { "inputLocation": ObjectId(query['location']), "$or": [{ "payment.type": ObjectId(static.paid) }, { "confirmed": true }]};
+    var parameters = { "inputLocation": ObjectId(query['location']), "$or": [{ "payment.type": ObjectId(static.paid) }, { "confirmed": true }] };
 
     if (query['spbNumber'])
         parameters['spbNumber'] = { $regex: new RegExp(query.spbNumber, 'i') };
@@ -25,6 +25,9 @@ Controller.prototype.getAll = function (query) {
 
     if (query['paymentType'])
         parameters['payment.type'] = ObjectId(query['paymentType']);
+
+    if (!query['paymentType'] && query['paymentTypeNull'] && query['paymentTypeNull']=="kosong")
+        parameters['$and'] = [{ "payment.type": { "$ne": ObjectId("57c46a80398059b414b3784f") } }, { "payment.type": { "$ne": ObjectId("57c46a81398059b414b37856") } }, { "payment.type": { "$ne": ObjectId("57c46a81398059b414b3785a") } }, { "payment.type": { "$ne": ObjectId("57c46a82398059b414b3785f") } }, { "payment.type": { "$ne": ObjectId("57c46a82398059b414b37861") } }, { "payment.type": { "$ne": ObjectId("57c46a82398059b414b37864") } }];
 
     if (query['partner'])
         parameters['partner'] = ObjectId(query['partner']);
@@ -43,6 +46,9 @@ Controller.prototype.getAll = function (query) {
 
     if (query['fromTransferDate'])
         parameters['payment.phases.transferDate'] = { "$gte": date.createLower(query['fromTransferDate']), "$lte": date.createUpper(query['fromTransferDate']) };
+
+    if (query['fromInputDate'])
+        parameters['payment.phases.date'] = { "$gte": date.createLower(query['fromInputDate']), "$lte": date.createUpper(query['fromInputDate']) };
 
     if (query['from'] && query['to'])
         parameters['date'] = { "$gte": date.createLower(query['from']), "$lte": date.createUpper(query['to']) };
