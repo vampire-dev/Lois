@@ -121,6 +121,9 @@
                                     <a href="#" class="btn btn-default" style="color: black;" ng-click="ctrl.viewType == 1 ? ctrl.add() : ctrl.addItem()">
                                         <i class="fa fa-plus"></i> Tambah
                                     </a>
+                                    <a href="#" class="btn btn-default" ng-show="ctrl.viewType == 1" style="color: black;" ng-click="ctrl.print()">
+                                        <i class="fa fa-file-pdf-o"></i> Cetak
+                                    </a>
                                 </div>
                                 <div class="col-xs-9 col-sm-5 col-md-5 col-lg-6">
                                     <select name="dt_basic_length" aria-controls="dt_basic" class="form-control" ng-model="ctrl.paging.max"
@@ -139,6 +142,9 @@
                             <table class="table table-bordered table-condensed table-striped table-hover smart-form has-tickbox" ng-show="ctrl.viewType == 1">
                                 <thead>
                                     <tr style="color:black;">
+                                        <th style="text-align: center; width: 1%;">
+                                            <input type="checkbox" ng-model="ctrl.checkedAll" ng-click="ctrl.toggleCheckAll()" ng-true-value="true" ng-false-value="false" />
+                                        </th>
                                         <th style="text-align: center; width: 7%;">Spb</th>
                                         <th style="text-align: center; width: 8%;">Tanggal</th>
                                         <th style="text-align: center; width: 12%;">Pengirim</th>
@@ -157,6 +163,9 @@
                                         </td>
                                     </tr>
                                     <tr ng-repeat="entity in ctrl.entities" ng-show="!ctrl.loadingData" style="color:black;">
+                                        <td style="text-align: center;">
+                                            <input type="checkbox" ng-model="entity.checked" />
+                                        </td>
                                         <td>{{entity.spbNumber}}</td>
                                         <td>{{entity.date | date:'dd-MM-yyyy'}}</td>
                                         <td>{{entity.sender.name}}</td>

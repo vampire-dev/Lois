@@ -32,6 +32,9 @@ var app;
             shipping.add = function () {
                 return app.http.post('/lois/api/shipping/add', null);
             };
+            shipping.getDataReport = function (data) {
+                return app.http.post('/lois/api/shipping/getDataReport', JSON.stringify(data));
+            };
             return shipping;
         }());
         api.shipping = shipping;
@@ -295,7 +298,7 @@ var app;
                     "headers": { "content-type": "application/x-www-form-urlencoded; charset=UTF-8" },
                     "responseType": "arraybuffer"
                 };
-                return app.http.post('http://lois.limassentosa.net/index.php/suratjalan', JSON.stringify(data), config);
+                return app.http.post('http://lois.limassentosa.net/index.php/deliveryOrder', JSON.stringify(data), config);
             };
             reportPrint.printPaid = function (data) {
                 var config = {

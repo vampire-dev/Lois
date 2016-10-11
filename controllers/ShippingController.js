@@ -294,4 +294,62 @@ Controller.prototype.auditComponent = function (data, item) {
     });
 };
 
+Controller.prototype.getDataReport = function (viewModels, user) {
+    var self = this;
+
+    var result = {
+        "title": "SURAT JALAN",
+        "template_file": "suratjalan.xlsx",
+        "user": user.name,
+        "report_data": []
+    };
+
+    return co(function* () {
+        yield _co.coEach(viewModels, function* (viewModel) {
+            var shipping = yield schemas.shippings.findOne({ _id: ObjectId(viewModel.shipping) }).populate('items.packingType');
+            //var items = _.map(shipping.items, "_id");
+            var items = [];
+            var totalColli = 0;
+            var totalWeight = 0;
+            var additional = 0;
+
+            _.forEach(shipping.items, function (item) {
+                items.push({
+                    "content": item.content,
+                    "packing": item.packingType ? item.packingType.name : " ",
+                    "colli": item.colli.quantity,
+                    "weight": item.dimensions.weight,
+                    "volume": item.dimensions.length + "x" + item.dimensions.width + "x" + item.dimensions.height
+                });
+                totalColli += item.colli.quantity;
+                totalWeight += item.dimensions.weight;
+                additional += item.cost.additional;
+            });
+
+            result.report_data.push({
+                sender: viewModel.sender,
+                sender_driver: viewModel.sender_driver,
+                pickup_driver: viewModel.pickup_driver,
+                destination_city: viewModel.destination_city,
+                receiver: viewModel.receiver,
+                receiver_phone: viewModel.receiver_phone,
+                receiver_address: viewModel.receiver_address,
+                items: items,
+                sum_total_coli: totalColli,
+                sum_total_weight: totalWeight,
+                bea_tambahan: additional,
+                sum_price: viewModel.sum_price,
+                payment_method: viewModel.payment_method,
+                spb_no: viewModel.spb_no,
+                po_no: viewModel.po_no,
+                transaction_date: viewModel.transaction_date,
+                note: viewModel.note
+            });
+
+            
+        });
+        return result;
+    });
+};
+
 module.exports = new Controller();

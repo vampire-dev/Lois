@@ -46,4 +46,12 @@ router.post(config.api + 'shipping/add', auth.isAuthenticated, function (req, re
     });
 });
 
+router.post(config.api + 'shipping/getDataReport', auth.isAuthenticated, function (req, res) {
+    controller.getDataReport(req.body, req.session.user).then(function (result) {
+        return res.status(200).send(result);
+    }).catch(function (error) {
+        return res.status(500).send(error.message);
+    });
+});
+
 module.exports = router;
