@@ -680,6 +680,9 @@ Controller.prototype.getCommisions = function (query) {
     if (query['paymentType'])
         parameters['payment.type'] = ObjectId(query['paymentType']);
 
+    if (query['paymentStatus'])
+        parameters['payment.status'] = query['paymentStatus'];
+
     if (query['from'] && query['to'])
         parameters['date'] = { "$gte": date.createLower(query['from']), "$lte": date.createUpper(query['to']) };
 
@@ -696,6 +699,7 @@ Controller.prototype.getCommisionsReport = function (viewModels, query, user) {
         "user": user.name,
         "start_date": query['from'],
         "end_date": query['to'],
+        "payment_status": query['paymentStatus'],
         "report_data": []
     };
 
@@ -703,6 +707,11 @@ Controller.prototype.getCommisionsReport = function (viewModels, query, user) {
         var sumTotalColli = 0;
         var sumTotalWeight = 0;
         var sumPrice = 0;
+        var sumCost = 0;
+        var sumBeaTambahan = 0;
+        var sumBeaKuli = 0;
+        var sumPph = 0;
+        var sumPpn = 0; 
 
         if (query['regionDest']) {
             var region = yield schemas.regions.findOne({ "_id": ObjectId(query['regionDest']) }).exec();
@@ -721,6 +730,8 @@ Controller.prototype.getCommisionsReport = function (viewModels, query, user) {
             var contents = _.map(viewModel.items, "content");
 
             var cost = viewModel.cost.base - totalAdditionalCost;
+            var pph = viewModel.cost.pph === 0.98 ? (viewModel.cost.base / viewModel.cost.pph) - viewModel.cost.base : viewModel.cost.pph * viewModel.cost.base;
+            var ppn = viewModel.cost.ppn * viewModel.cost.base;
 
             result.report_data.push({
                 "transaction_date": viewModel.date,
@@ -733,19 +744,31 @@ Controller.prototype.getCommisionsReport = function (viewModels, query, user) {
                 "cost": cost,
                 "price": viewModel.cost.total,
                 "bea_tambahan": totalAdditionalCost,
-                "pph": viewModel.cost.pph === 0.98 ? (viewModel.cost.base / viewModel.cost.pph) - viewModel.cost.base : viewModel.cost.pph * viewModel.cost.base,
-                "ppn": viewModel.cost.ppn * viewModel.cost.base,
+                "pph": pph,
+                "ppn": ppn,
                 "bea_kuli": viewModel.cost.worker
             });
 
             sumTotalColli += totalColli;
             sumTotalWeight += totalWeight;
             sumPrice += viewModel.cost.total;
+
+            sumCost += cost;
+            sumBeaTambahan += totalAdditionalCost;
+            sumBeaKuli += viewModel.cost.worker;
+            sumPph += pph;
+            sumPpn += ppn;
         });
 
         result['sum_total_coli'] = sumTotalColli;
         result['sum_total_weight'] = sumTotalWeight;
         result['sum_price'] = sumPrice;
+
+        result['sum_cost'] = sumCost;
+        result['sum_bea_tambahan'] = sumBeaTambahan;
+        result['sum_bea_kuli'] = sumBeaKuli;
+        result['sum_pph'] = sumPph;
+        result['sum_ppn'] = sumPpn;
 
         return result;
     });
