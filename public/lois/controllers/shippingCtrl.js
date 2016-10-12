@@ -185,7 +185,7 @@ var app;
                 this.selectedItem = null;
                 this.load();
             };
-            shippingCtrl.prototype.print = function () {
+            shippingCtrl.prototype.print = function (noPrice) {
                 var ctrl = this;
                 var checkedEntities = this.entities.filter(function (e) { return e.checked; });
                 if (checkedEntities.length === 0) {
@@ -210,7 +210,8 @@ var app;
                         spb_no: entity.spbNumber,
                         po_no: entity.notes.po,
                         transaction_date: entity.date,
-                        note: entity.notes.shipping
+                        note: entity.notes.shipping,
+                        noPrice: noPrice
                     };
                     viewModels.push(viewModel);
                 });

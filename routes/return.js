@@ -9,7 +9,9 @@ var storage = multer.diskStorage({
         cb(null, './public/berita_acara/')
     },
     filename: function (req, file, cb) {
-        cb(null, Date.now() + '.pdf')
+        var originalname = file.originalname;
+        var extension = originalname.split(".");
+        cb(null, Date.now() + '.' + extension[extension.length - 1])
     }
 });
 

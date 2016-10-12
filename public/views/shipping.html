@@ -121,9 +121,11 @@
                                     <a href="#" class="btn btn-default" style="color: black;" ng-click="ctrl.viewType == 1 ? ctrl.add() : ctrl.addItem()">
                                         <i class="fa fa-plus"></i> Tambah
                                     </a>
-                                    <a href="#" class="btn btn-default" ng-show="ctrl.viewType == 1" style="color: black;" ng-click="ctrl.print()">
+                                    <a href="#" class="btn btn-default" ng-show="ctrl.viewType == 1" style="color: black;" ng-click="ctrl.print(ctrl.printNoPrice)">
                                         <i class="fa fa-file-pdf-o"></i> Cetak
                                     </a>
+                                    &nbsp;
+                                    <label class="checkbox-inline" ng-show="ctrl.viewType == 1"><input type="checkbox" value="" ng-model="ctrl.printNoPrice">Cetak tanpa harga</label>
                                 </div>
                                 <div class="col-xs-9 col-sm-5 col-md-5 col-lg-6">
                                     <select name="dt_basic_length" aria-controls="dt_basic" class="form-control" ng-model="ctrl.paging.max"
