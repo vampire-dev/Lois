@@ -321,6 +321,13 @@ var app;
                 };
                 return app.http.post('http://lois.limassentosa.net/index.php/recapitulation', JSON.stringify(data), config);
             };
+            reportPrint.printRecapitulationNoPrice = function (data) {
+                var config = {
+                    "headers": { "content-type": "application/x-www-form-urlencoded; charset=UTF-8" },
+                    "responseType": "arraybuffer"
+                };
+                return app.http.post('http://lois.limassentosa.net/index.php/recapitulationNoPrice', JSON.stringify(data), config);
+            };
             reportPrint.printDelivery = function (data) {
                 var config = {
                     "headers": { "content-type": "application/x-www-form-urlencoded; charset=UTF-8" },

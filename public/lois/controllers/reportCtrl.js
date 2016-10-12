@@ -90,6 +90,10 @@ var app;
                     this.notify('warning', 'Tidak ada data yang pilih');
                     return;
                 }
+                if (this.printNoPrice && this.renderFunc == app.api.reportPrint.printRecapitulation) {
+                    this.renderFunc = app.api.reportPrint.printRecapitulationNoPrice;
+                }
+
                 var ctrl = this;
                 ctrl.loadingData = true;
                 var dataFunction = ctrl.dataFunc(checkedEntities, ctrl.query);
