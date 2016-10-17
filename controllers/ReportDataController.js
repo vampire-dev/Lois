@@ -603,6 +603,9 @@ Controller.prototype.getDeliveryList = function (query) {
         if (query['sender'])
             parameters['sender'] = ObjectId(query['sender']);
 
+        if (query['destination'])
+            parameters['destination'] = ObjectId(query['destination']);
+
         if (query['paymentType'])
             parameters['payment.type'] = ObjectId(query['paymentType']);
 
