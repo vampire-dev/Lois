@@ -12,7 +12,8 @@ function Controller() {};
 Controller.prototype.getAll = function (query) {
     var limit = query['limit'] ? query['limit'] : 10;
     var skip = query['skip'] ? query['skip'] : 0;
-    var parameters = { "regions.destination": ObjectId(query['region']) };
+    //modified pekalongan and tegal
+    var parameters = { "$or": [{ "regions.destination": ObjectId(query['region']) }, { "$and": [{ "regions.destination": ObjectId("5804f7185b195d4f4e5ad9b7") }, { "regions.source": ObjectId(query['region']) }] }, { "$and": [{ "regions.destination": ObjectId("5804f7235b195d4f4e5ad9b8") }, { "regions.source": ObjectId(query['region']) }] }] };
 
     var recapParameters = {};
 
