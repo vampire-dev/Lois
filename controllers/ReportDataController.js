@@ -600,6 +600,9 @@ Controller.prototype.getDeliveryList = function (query) {
         if (query['spbNumber'])
             parameters['spbNumber'] = new RegExp(query['spbNumber'], 'i');
 
+        if (query['sender'])
+            parameters['sender'] = ObjectId(query['sender']);
+
         if (query['paymentType'])
             parameters['payment.type'] = ObjectId(query['paymentType']);
 
