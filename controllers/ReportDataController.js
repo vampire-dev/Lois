@@ -603,6 +603,9 @@ Controller.prototype.getDeliveryList = function (query) {
         if (query['sender'])
             parameters['sender'] = ObjectId(query['sender']);
 
+        if (query['receiverName'])
+            parameters['receiver.name'] = new RegExp(query['receiverName'], 'i');
+
         if (query['destination'])
             parameters['destination'] = ObjectId(query['destination']);
 
@@ -682,6 +685,9 @@ Controller.prototype.getCommisions = function (query) {
 
     if (query['spbNumber'])
         parameters['spbNumber'] = new RegExp(query['spbNumber'], 'i');
+
+    if (query['destination'])
+        parameters['destination'] = ObjectId(query['destination']);
 
     if (query['paymentType'])
         parameters['payment.type'] = ObjectId(query['paymentType']);

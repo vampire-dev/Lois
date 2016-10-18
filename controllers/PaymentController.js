@@ -54,7 +54,7 @@ Controller.prototype.getAll = function (query) {
     if (query['from'] && query['to'])
         parameters['date'] = { "$gte": date.createLower(query['from']), "$lte": date.createUpper(query['to']) };
 
-    return schemas.shippings.find(parameters).sort({ "number": -1 }).populate('payment.type').skip(skip).limit(limit).lean().exec();
+    return schemas.shippings.find(parameters).sort({ "number": -1 }).populate('payment.type sender').skip(skip).limit(limit).lean().exec();
 };
 
 Controller.prototype.pay = function (viewModels, user) {

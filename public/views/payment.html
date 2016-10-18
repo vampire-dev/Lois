@@ -196,15 +196,16 @@
                                         <th style="text-align: center; width: 1%;">
                                             <input type="checkbox" ng-model="ctrl.checkedAll" ng-click="ctrl.toggleCheckAll()" ng-true-value="true" ng-false-value="false" />
                                         </th>
-                                        <th style="text-align: center; width: 6%;">Spb</th>
-                                        <th style="text-align: center; width: 8%;">Bank</th>
-                                        <th style="text-align: center; width: 10%;">Keterangan</th>
-                                        <th style="text-align: center; width: 8%;">Cara Bayar</th>
-                                        <th style="text-align: center; width: 10%;">Status</th>
-                                        <th style="text-align: center; width: 9%;">Total</th>
-                                        <th style="text-align: center; width: 9%;">Terbayar</th>
+                                        <th style="text-align: center; width: 7%;">Spb</th>
+                                        <th style="text-align: center; width: 13%;">Pengirim</th>
+                                        <th style="text-align: center; width: 7%;">Bank</th>
+                                        <th style="text-align: center; width: 2%;">Keterangan</th>
+                                        <th style="text-align: center; width: 7%;">Cara Bayar</th>
+                                        <th style="text-align: center; width: 5%;">Status</th>
+                                        <th style="text-align: center; width: 10%;">Total</th>
+                                        <th style="text-align: center; width: 10%;">Terbayar</th>
                                         <th style="text-align: center; width: 6%;">Tahap</th>
-                                        <th style="text-align: center; width: 8%;">Bayar</th>
+                                        <th style="text-align: center; width: 9%;">Bayar</th>
                                         <th style="text-align: center; width: 2%;">Audit</th>
                                     </tr>
                                 </thead>
@@ -222,6 +223,9 @@
                                             {{entity.spbNumber}}
                                         </td>
                                         <td>
+                                            {{entity.sender.name}}
+                                        </td>
+                                        <td>
                                             <input type="text" class="form-control" ng-model="entity.viewModel.bank" />
                                         </td>
                                         <td>
@@ -232,13 +236,13 @@
                                         </td>
                                         <td>
                                             <p ng-if="entity.payment.status == 'Belum Terbayar'" style="text-align:center;" class="center-block padding-3 label label-danger txt-color-white">
-                                                {{entity.payment.status}}
+                                                Belum
                                             </p>
                                             <p ng-if="entity.payment.status == 'Terbayar Sebagian'" style="text-align:center;" class="center-block padding-3 label label-warning txt-color-white">
-                                                {{entity.payment.status}}
+                                                Sebagian
                                             </p>
                                             <p ng-if="entity.payment.status == 'Terbayar'" style="text-align:center;" class="center-block padding-3 label label-success txt-color-white">
-                                                {{entity.payment.status}}
+                                                Terbayar
                                             </p>
                                         </td>
                                         <td>
