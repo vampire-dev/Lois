@@ -329,6 +329,7 @@ Controller.prototype.getDataReport = function (viewModels, user) {
             result.report_data.push({
                 sender: viewModel.sender,
                 sender_driver: viewModel.sender_driver,
+                sender_contact: viewModel.sender_contact,
                 pickup_driver: viewModel.pickup_driver,
                 destination_city: viewModel.destination_city,
                 receiver: viewModel.receiver,

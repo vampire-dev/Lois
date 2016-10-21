@@ -198,7 +198,8 @@ var app;
                     var viewModel = {
                         shipping: entity._id,
                         sender: entity.sender.name,
-                        sender_driver: entity.driver.sender,
+                        sender_contact: entity.sender.contact,
+                        sender_driver: entity.driver.sender,                       
                         pickup_driver: entity.driver.pickup,
                         destination_city: entity.destination.name,
                         receiver: entity.receiver.name,
