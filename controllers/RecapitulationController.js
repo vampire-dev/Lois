@@ -89,6 +89,16 @@ Controller.prototype.recap = function (viewModels, user) {
             if (viewModel.quantity === 0)
                 return;
 
+            var checkTrainType = yield schemas.trainTypes.findOne({ _id: ObjectId(viewModel.trainType) }).exec();
+            var checkTrainId = checkTrainType.name; //send error while wrong trainType name
+            if (!checkTrainType)
+                return;
+
+            var checkDriver = yield schemas.drivers.findOne({_id: ObjectId(viewModel.driver) });
+            var checkDriverId = checkDriver.name;
+            if (!checkDriver)
+                return;
+
             var shipping = yield schemas.shippings.findOne({ _id: ObjectId(viewModel.shipping) });
 
             if (!shipping)

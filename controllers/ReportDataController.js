@@ -846,4 +846,19 @@ Controller.prototype.getPayOffReport = function (viewModels, query, user) {
     });
 };
 
+Controller.prototype.getPartner = function (query) {
+    var limit = query['limit'] ? query['limit'] : 10;
+    var skip = query['skip'] ? query['skip'] : 0;
+    var parameters = { "inputLocation": ObjectId(query['location']), "sender": { "$ne": ObjectId(static.client) }, "cost.expedition": {"$gt": 0} };
+
+    if (query['from'] && query['to'])
+        parameters['date'] = { "$gte": date.createLower(query['from']), "$lte": date.createUpper(query['to']) };
+
+    return schemas.shippings.find(parameters).sort({ "number": -1 }).populate('sender destination regions.destination payment.type partner').skip(skip).limit(limit).exec();
+};
+
+Controller.prototype.getPartnerReport = function (viewModels, query, user) {
+   
+};
+
 module.exports = new Controller();

@@ -79,6 +79,12 @@ var app;
                         this.dataFunc = app.api.report.getPayOffReport;
                         this.renderFunc = app.api.reportPrint.printPayOff;
                         break;
+                    case 'Partner':
+                        this.paging.max = 10;
+                        this.functions.load = app.api.report.getPartner;
+                        this.dataFunc = app.api.report.getPartnerReport;
+                        this.renderFunc = app.api.reportPrint.printPartner;
+                        break;
                 }
                 this.filters = {};
                 this.paging.page = 1;

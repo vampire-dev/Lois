@@ -188,4 +188,24 @@ router.post(config.api + 'reportData/getPayOffReport', auth.isAuthenticated, fun
     });
 });
 
+router.get(config.api + 'reportData/getPartner', auth.isAuthenticated, function (req, res) {
+    var query = JSON.parse(req.query['query']);
+    query['location'] = req.session.user.location._id;
+
+    controller.getPartner(query).then(function (result) {
+        res.status(200).send(result);
+    }).catch(function (error) {
+        res.status(500).send(error.message);
+    });
+});
+
+router.post(config.api + 'reportData/getPartnerReport', auth.isAuthenticated, function (req, res) {
+    var query = JSON.parse(req.query['query']);
+    controller.getPartnerReport(req.body, query, req.session.user).then(function (result) {
+        res.status(200).send(result);
+    }).catch(function (error) {
+        res.status(500).send(error.message);
+    });
+});
+
 module.exports = router;

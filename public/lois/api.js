@@ -287,6 +287,12 @@ var app;
             report.getPayOffReport = function (data, query) {
                 return app.http.post('/lois/api/reportData/getPayOffReport?query=' + JSON.stringify(query), JSON.stringify(data));
             };
+            report.getPartner = function (query) {
+                return app.http.get('/lois/api/reportData/getPartner?query=' + JSON.stringify(query));
+            };
+            report.getPartnerReport = function (data, query) {
+                return app.http.post('/lois/api/reportData/getPartnerReport?query=' + JSON.stringify(query), JSON.stringify(data));
+            };
             return report;
         }());
         api.report = report;
@@ -390,6 +396,13 @@ var app;
                     "responseType": "arraybuffer"
                 };
                 return app.http.post('http://lois.limassentosa.net/index.php/PayOff', JSON.stringify(data), config);
+            };
+            reportPrint.printPartner = function (data) {
+                var config = {
+                    "headers": { "content-type": "application/x-www-form-urlencoded; charset=UTF-8" },
+                    "responseType": "arraybuffer"
+                };
+                return app.http.post('http://lois.limassentosa.net/index.php/Partner', JSON.stringify(data), config);
             };
             return reportPrint;
         }());
