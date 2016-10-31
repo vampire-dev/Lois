@@ -41,16 +41,16 @@
                     <li ng-class="{'active': ctrl.config == 'packingType'}">
                         <a data-toggle="tab" href="#" ng-click="ctrl.onConfigChange('packingType')"><span class="hidden-mobile hidden-tablet">Packing</span></a>
                     </li>
-                    <li ng-class="{'active': ctrl.config == 'role'}">
+                    <li ng-class="{'active': ctrl.config == 'role'}" ng-if="ctrl.role == 'admin'">
                         <a data-toggle="tab" href="#" ng-click="ctrl.onConfigChange('role')"><span class="hidden-mobile hidden-tablet">Role</span></a>
                     </li>
-                    <li ng-class="{'active': ctrl.config == 'user'}">
+                    <li ng-class="{'active': ctrl.config == 'user'}" ng-if="ctrl.role == 'admin'">
                         <a data-toggle="tab" href="#" ng-click="ctrl.onConfigChange('user')"><span class="hidden-mobile hidden-tablet">User</span></a>
                     </li>
                     <li ng-class="{'active': ctrl.config == 'trainType'}">
                         <a data-toggle="tab" href="#" ng-click="ctrl.onConfigChange('trainType')"><span class="hidden-mobile hidden-tablet">Jenis Kereta</span></a>
                     </li>
-                    <li ng-class="{'active': (ctrl.config == 'roleMenu' || ctrl.config == 'roleReport')}">
+                    <li ng-class="{'active': (ctrl.config == 'roleMenu' || ctrl.config == 'roleReport')}" ng-if="ctrl.role == 'admin'">
                         <a class="btn dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
                             Akses <i class="fa fa-caret-down"></i>
                         </a>
