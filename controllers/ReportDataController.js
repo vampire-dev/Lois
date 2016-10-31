@@ -830,7 +830,7 @@ Controller.prototype.getPayOffReport = function (viewModels, query, user) {
                 "total_weight": totalWeight,
                 "price": viewModel.cost.total,
                 "payment_method": viewModel.payment.type.name,
-                "transaction_date": viewModel.date,
+                "transaction_date": viewModel.date
             });
 
             sumTotalColli += totalColli;
@@ -849,7 +849,28 @@ Controller.prototype.getPayOffReport = function (viewModels, query, user) {
 Controller.prototype.getPartner = function (query) {
     var limit = query['limit'] ? query['limit'] : 10;
     var skip = query['skip'] ? query['skip'] : 0;
-    var parameters = { "inputLocation": ObjectId(query['location']), "sender": { "$ne": ObjectId(static.client) }, "cost.expedition": {"$gt": 0} };
+    var parameters = { "inputLocation": ObjectId(query['location']), "sender": { "$ne": ObjectId(static.client) } };
+
+    if (query['feeType'] == 'worker')
+        parameters['cost.worker'] = { "$gt": 0 };
+    else
+        parameters['cost.expedition'] = { "$gt": 0 };
+
+    if (query['spbNumber'])
+        parameters['spbNumber'] = new RegExp(query['spbNumber'], 'i');
+
+    if (query['partner'])
+        parameters['partner'] = ObjectId(query['partner']);
+
+    if (query['paymentStatus'])
+        parameters['payment.status'] = query['paymentStatus'];
+
+    if (query['sender'])
+        parameters['sender'] = ObjectId(query['sender']);
+
+    if (query['paymentDate'])
+        parameters['payment.phases'] = { "$elemMatch": { "date": { "$gte": date.createLower(query['paymentDate']), "$lte": date.createUpper(query['paymentDate']) } } };
+    
 
     if (query['from'] && query['to'])
         parameters['date'] = { "$gte": date.createLower(query['from']), "$lte": date.createUpper(query['to']) };
@@ -858,7 +879,61 @@ Controller.prototype.getPartner = function (query) {
 };
 
 Controller.prototype.getPartnerReport = function (viewModels, query, user) {
-   
+    var self = this;
+
+    var result = {
+        "title": "PARTNER",
+        "template_file": "lappartner.xlsx",
+        "location": user.location.name,
+        "user": user.name,
+        "start_date": query['from'],
+        "end date": query['to'],
+        "feeType": query['feeType'] == "" ? "expedition" : query['feeType'],
+        "paymentStatus": query['paymentStatus'] || " ",
+        "paymentDate": query['paymentDate'] || " ",
+        "report_data": []
+    };
+
+    return co(function* () {
+        var sumTotalColli = 0;
+        var sumTotalWeight = 0;
+        var sumPrice = 0;
+        var sumPartnerFee = 0;
+        var sumWorkerFee = 0;
+
+        yield* _co.coEach(viewModels, function* (viewModel) {
+            var totalWeight = _.sumBy(viewModel.items, 'dimensions.weight');
+            var totalColli = _.sumBy(viewModel.items, 'colli.quantity');
+
+            result.report_data.push({
+                "transaction_date": viewModel.date,
+                "spb_no": viewModel.spbNumber,
+                "sender": viewModel.sender.name,
+                "total_coli": totalColli,
+                "total_weight": totalWeight,
+                "price": viewModel.cost.total,
+                "partner": viewModel.partner ? viewModel.partner.name : " ",
+                "payment_fee": viewModel.cost.partner,
+                "partner_code": viewModel.returnInfo.relationCode ? viewModel.returnInfo.relationCode : " ",
+                "destination_city": viewModel.destination.name,
+                "worker_fee": viewModel.cost.worker,
+            });
+
+            sumTotalColli += totalColli;
+            sumTotalWeight += totalWeight;
+            sumPrice += viewModel.cost.total;
+            sumPartnerFee += viewModel.cost.partner;
+            sumWorkerFee += viewModel.cost.worker;
+        });
+
+        result['sum_total_coli'] = sumTotalColli;
+        result['sum_total_weight'] = sumTotalWeight;
+        result['sum_price'] = sumPrice;
+        result['sum_partner_fee'] = sumPartnerFee;
+        result['sum_worker_fee'] = sumWorkerFee;
+
+        return result;
+    });   
 };
 
 module.exports = new Controller();

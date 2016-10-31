@@ -1326,7 +1326,23 @@
                                         <legend>Filter data</legend>
                                         <fieldset>
                                             <div class="row">
-                                                <section class="col col-sm-12 col-md-12 col-lg-6">
+                                                <section class="col col-sm-12 col-md-12 col-lg-3">
+                                                    <label class="input">
+                                                        <input type="text" placeholder="Spb" ng-model="ctrl.filters.spbNumber" />
+                                                    </label>
+                                                </section>
+                                                <section class="col col-sm-12 col-md-12 col-lg-3">
+                                                    <label class="input">
+                                                        <input type="text"
+                                                               ng-model="ctrl.filters.partner"
+                                                               placeholder="Partner"
+                                                               uib-typeahead="data as data.name for data in ctrl.suggest('partner', $viewValue)"
+                                                               typeahead-min-length="2"
+                                                               typeahead-loading="partnerFilter" class="form-control" />
+                                                        <i ng-show="partnerFilter" class="glyphicon glyphicon-refresh"></i>
+                                                    </label>
+                                                </section>
+                                                <section class="col col-sm-12 col-md-12 col-lg-3">
                                                     <label class="input">
                                                         <div class="input-group">
                                                             <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
@@ -1335,13 +1351,52 @@
                                                         </div>
                                                     </label>
                                                 </section>
-                                                <section class="col col-sm-12 col-md-12 col-lg-6">
+                                                <section class="col col-sm-12 col-md-12 col-lg-3">
                                                     <label class="input">
                                                         <div class="input-group">
                                                             <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                                                             <input datepicker class="form-control" placeholder="Sampai Tanggal"
                                                                    id="to-transaction-date-confirm" type="text" ng-model="ctrl.filters.to" />
                                                         </div>
+                                                    </label>
+                                                </section>
+                                                <section class="col col-sm-12 col-md-12 col-lg-3">
+                                                    <label class="input">
+                                                        <select class="form-control" ng-model="ctrl.filters.feeType">
+                                                            <option value="">&nbsp Pilih Bea</option>
+                                                            <option value="expedition">&nbsp Bea Ekspedisi</option>
+                                                            <option value="worker">&nbsp Bea Kuli</option>
+                                                        </select>
+                                                    </label>
+                                                </section>
+                                                <section class="col col-sm-12 col-md-12 col-lg-3">
+                                                    <label class="input">
+                                                        <select class="form-control" ng-model="ctrl.filters.paymentStatus">
+                                                            <option value="">&nbsp Status Bayar</option>
+                                                            <option value="Terbayar">&nbsp Terbayar</option>
+                                                            <option value="Terbayar Sebagian">&nbsp Terbayar Sebagian</option>
+                                                            <option value="Belum Terbayar">&nbsp Belum Terbayar</option>
+                                                        </select>
+                                                    </label>
+                                                </section>
+                                                <section class="col col-sm-12 col-md-12 col-lg-3">
+                                                    <label class="input">
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                                            <input datepicker class="form-control" placeholder="Tanggal bayar"
+                                                                   id="payment-date-confirm" type="text" ng-model="ctrl.filters.paymentDate" />
+                                                        </div>
+                                                    </label>
+                                                </section>
+                                                <section class="col col-sm-12 col-md-12 col-lg-3">
+                                                    <label class="input">
+                                                        <input type="text"
+                                                               ng-model="ctrl.filters.sender"
+                                                               placeholder="Pengirim"
+                                                               uib-typeahead="data as data.name for data in ctrl.suggest('client', $viewValue)"
+                                                               typeahead-min-length="2"
+                                                               typeahead-loading="senderFilter" class="form-control" />
+                                                        <i ng-show="senderFilter" class="glyphicon glyphicon-refresh"></i>
                                                     </label>
                                                 </section>
                                             </div>
@@ -1380,12 +1435,12 @@
                                                 </th>
                                                 <th style="text-align: center; width: 8%;">Spb</th>
                                                 <th style="text-align: center; width: 10%;">Pengirim</th>
-                                                <th style="text-align: center; width: 10%;">Penerima</th>
-                                                <th style="text-align: center; width: 5%;">Koli</th>
                                                 <th style="text-align: center; width: 10%;">Harga</th>
                                                 <th style="text-align: center; width: 10%;">Tujuan</th>
-                                                <th style="text-align: center; width: 10%;">Partner/relasi</th>
-                                                <th style="text-align: center; width: 10%;">Harga partner</th>
+                                                <th style="text-align: center; width: 10%;">Partner</th>
+                                                <th style="text-align: center; width: 10%;">Biaya Partner</th>
+                                                <th style="text-align: center; width: 10%;">Keterangan</th>
+                                                <th style="text-align: center; width: 10%;">Biaya Kuli</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -1400,12 +1455,12 @@
                                                 </td>
                                                 <td> {{entity.spbNumber}} </td>
                                                 <td> {{entity.sender.name}} </td>
-                                                <td> {{entity.receiver.name}}</td>
-                                                <td> {{entity.colli}}</td>
                                                 <td> {{entity.cost.total | currency: 'Rp ' : 2}} </td>
                                                 <td> {{entity.destination.name}}</td>
                                                 <td> {{entity.partner.name}}</td>
                                                 <td> {{entity.cost.expedition | currency: 'Rp ' : 2}} </td>
+                                                <td> {{entity.notes.partner}}</td>
+                                                <td> {{entity.cost.worker | currency: 'Rp ' : 2}} </td>
                                             </tr>
                                         </tbody>
                                     </table>
