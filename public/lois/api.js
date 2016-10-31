@@ -395,14 +395,14 @@ var app;
                     "headers": { "content-type": "application/x-www-form-urlencoded; charset=UTF-8" },
                     "responseType": "arraybuffer"
                 };
-                return app.http.post('http://lois.limassentosa.net/index.php/PayOff', JSON.stringify(data), config);
+                return app.http.post('http://lois.limassentosa.net/index.php/payOff', JSON.stringify(data), config);
             };
             reportPrint.printPartner = function (data) {
                 var config = {
                     "headers": { "content-type": "application/x-www-form-urlencoded; charset=UTF-8" },
                     "responseType": "arraybuffer"
                 };
-                return app.http.post('http://lois.limassentosa.net/index.php/Partner', JSON.stringify(data), config);
+                return app.http.post('http://lois.limassentosa.net/index.php/partner', JSON.stringify(data), config);
             };
             return reportPrint;
         }());
