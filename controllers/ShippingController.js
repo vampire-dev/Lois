@@ -63,7 +63,10 @@ Controller.prototype.add = function (user) {
 
     return co(function* () {
         var lastShipping = yield schemas.shippings.findOne({}).sort({ "number": -1 }).exec();
-        var lastLocShipping = yield schemas.shippings.findOne({ "inputLocation": ObjectId(user.location._id) }).sort({ "number": -1 }).exec();
+
+        var lastLocShipping = yield schemas.shippings.findOne({ "inputLocation": ObjectId(user.location._id) })
+            .sort({ "number": -1 }).exec();
+
         var number = lastShipping ? lastShipping.number + 1 : 1;
         var spbNumber = lastLocShipping ? (parseInt(lastLocShipping.spbNumber.split('-')[0]) + 1) + '-' + user.location.prefix
             : '1-' + user.location.prefix;
