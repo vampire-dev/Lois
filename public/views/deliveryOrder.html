@@ -105,8 +105,11 @@
                         <div class="widget-body-toolbar">
                             <div class="row">
                                 <div class="col-xs-9 col-sm-5 col-md-5 col-lg-6">
-                                    <a href="#" class="btn btn-default" style="color: black;" ng-click="ctrl.filter()">
+                                    <a href="#" class="btn btn-default" style="color: black;" ng-click="ctrl.filter()" ng-show="ctrl.viewType == 1">
                                         <i class="fa fa-search"></i> Cari
+                                    </a>
+                                    <a href="#" class="btn btn-default" style="color: black;" ng-click="ctrl.viewShipping()" ng-show="ctrl.viewType == 2">
+                                        <i class="fa fa-arrow-left"></i> Kembali
                                     </a>
                                 </div>
                                 <div class="col-xs-9 col-sm-5 col-md-5 col-lg-6">
@@ -123,10 +126,10 @@
                             </div>
                         </div>
                         <div class="table-responsive">
-                            <table class="table table-bordered table-striped table-condensed table-hover smart-form has-tickbox">
+                            <table class="table table-bordered table-striped table-condensed table-hover smart-form has-tickbox" ng-show="ctrl.viewType == 1">
                                 <thead>
                                     <tr style="color:black;">
-                                        <th style="text-align: center; width: 6%;">Tanggal</th>
+                                        <th style="text-align: center; width: 4%;">Tanggal</th>
                                         <th style="text-align: center; width: 5%;">Spb</th>
                                         <th style="text-align: center; width: 9%;">Pengirim</th>
                                         <th style="text-align: center; width: 8%;">Penerima</th>                                        
@@ -134,8 +137,7 @@
                                         <th style="text-align: center; width: 4%;">Cara Bayar</th>
                                         <th style="text-align: center; width: 2%;">Berat</th>
                                         <th style="text-align: center; width: 2%;">Koli</th>
-                                        <th style="text-align: center; width: 9%;">Item</th>
-                                        <th style="text-align: center; width: 10%;">Status</th>
+                                        <th style="text-align: center; width: 2%;">Detil</th>
                                     </tr>
                                     <tr ng-show="ctrl.loadingData" style="color:black;">
                                         <td style="text-align: center; margin: 10px 0px;" colspan="100">
@@ -169,7 +171,12 @@
                                         <td ng-if="$first" rowspan="{{entity.items.length}}">
                                             {{entity.colli}}
                                         </td>
-                                        <td>{{item.content}}</td>
+                                       
+                                        <td>
+                                            <a href="#" class="txt-color-white btn-sm btn-primary" title="Edit" ng-click="ctrl.viewDetail(entity)">
+                                                <i class="fa fa-list"></i> Detil
+                                            </a>
+                                        </td>
                                         <td ng-if="entity.returned && $first" rowspan="{{entity.items.length}}">
                                             <p ng-if="entity.confirmed" style="text-align:center;" class="label label-pink txt-color-white">
                                                 SJ Balik
@@ -178,6 +185,8 @@
                                                 Retur
                                             </p>
                                         </td>
+                                       
+                                        <!--
                                         <td ng-if="!entity.returned">                                                    
                                             <p ng-if="item.status == 'Belum Terekap'" style="text-align:center;" class="label label-grey txt-color-white">
                                                 {{item.status}} <span class="btn badge badge-inverse badge-btn pull-right">{{item.colli.quantity}}</span>
@@ -194,6 +203,66 @@
                                             <p ng-if="item.status == 'Terkirim'" style="text-align:center;" class="label label-info txt-color-white">
                                                 {{item.status}} <span class="btn badge badge-inverse badge-btn pull-right">{{item.colli.delivered}}</span>
                                             </p>
+                                        </td>-->
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <table class="table table-bordered table-striped table-condensed table-hover smart-form has-tickbox" ng-show="ctrl.viewType == 2">
+                                <thead>
+                                    <tr style="color:black;">
+                                        <th style="text-align: center; width: 7%;">Spb</th>
+                                        <th style="text-align: center; width: 7%;">Jenis</th>
+                                        <th style="text-align: center; width: 7%;">Bungkus</th>
+                                        <th style="text-align: center; width: 12%;">Isi</th>
+                                        <th style="text-align: center; width: 4%;">Panjang</th>
+                                        <th style="text-align: center; width: 4%;">Lebar</th>
+                                        <th style="text-align: center; width: 4%;">Tinggi</th>
+                                        <th style="text-align: center; width: 4%;">Berat</th>
+                                        <th style="text-align: center; width: 4%;">Koli</th>
+                                        <th style="text-align: center; width: 12%;">Bea Angkut</th>
+                                        <th style="text-align: center; width: 12%;">Status</th>
+                                        <th style="text-align: center; width: 2%;">Audit</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-show="ctrl.loadingData">
+                                        <td style="text-align: center; margin: 10px 0px;" colspan="100">
+                                            <img src="../assets/img/ajax-loader.gif">
+                                        </td>
+                                    </tr>
+                                    <tr ng-repeat="entity in ctrl.selectedEntity.items" ng-show="!ctrl.loadingData" style="color:black;">
+                                        <td>{{ctrl.selectedEntity.spbNumber}}</td>
+                                        <td>{{entity.itemType.name}}</td>
+                                        <td>{{entity.packingType.name}}</td>
+                                        <td>{{entity.content}}</td>
+                                        <td>{{entity.dimensions.length}}</td>
+                                        <td>{{entity.dimensions.width}}</td>
+                                        <td>{{entity.dimensions.height}}</td>
+                                        <td>{{entity.dimensions.weight}}</td>
+                                        <td>{{entity.colli.quantity}}</td>
+                                        <td>{{entity.cost.shipping | currency: 'Rp. ' : 2}}</td>
+                                        <td>
+                                            <p ng-if="entity.status == 'Belum Terekap'"
+                                               style="text-align:center;" class="center-block padding-3 label label-danger txt-color-white">
+                                                {{entity.status}}
+                                            </p>
+                                            <p ng-if="entity.status == 'Terekap' || entity.status == 'Terekap Sebagian'"
+                                               style="text-align:center;" class="center-block padding-3 label label-warning txt-color-white">
+                                                {{entity.status}}
+                                            </p>
+                                            <p ng-if="entity.status == 'Terkirim' || entity.status == 'Terkirim Sebagian'"
+                                               style="text-align:center;" class="center-block padding-3 label label-success txt-color-white">
+                                                {{entity.status}}
+                                            </p>
+                                            <p ng-if="entity.status == 'Retur' || entity.status == 'Surat Jalan Balik'"
+                                               style="text-align:center;" class="center-block padding-3 label label-success txt-color-white">
+                                                {{entity.status}}
+                                            </p>
+                                        </td>
+                                        <td style="text-align:center;">
+                                            <i class="fa fa-check" ng-show="entity.audited"></i>
+                                            <i class="fa fa-remove" ng-show="!entity.audited"></i>
                                         </td>
                                     </tr>
                                 </tbody>

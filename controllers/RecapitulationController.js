@@ -127,8 +127,10 @@ Controller.prototype.recap = function (viewModels, user) {
                 "notes": viewModel.notes,
                 "trainType": viewModel.trainType,
                 "departureDate": new Date(viewModel.departureDate),
-                "date": new Date(),
-                "user": user._id
+                "createdDate": new Date(),
+                "userCreated": user._id,
+                "updatedDate": new Date(),
+                "userUpdated": user._id
             };
 
             item.recapitulations.push(recapitulation);
@@ -171,6 +173,10 @@ Controller.prototype.updateRecap = function (viewModels, user) {
             recapitulation.limasColor = viewModel.limasColor;
             recapitulation.relationColor = viewModel.relationColor;
             recapitulation.notes = viewModel.notes;
+
+            recapitulation['userUpdated'] = user._id;
+            recapitulation['updatedDate'] = new Date();
+
             if (viewModel.driver)
                 recapitulation.driver = viewModel.driver;
             if (viewModel.trainType)
@@ -221,6 +227,8 @@ Controller.prototype.cancelRecap = function (viewModels, user) {
             recapitulation.available -= viewModel.quantity;
             recapitulation.quantity -= viewModel.quantity;
             recapitulation.weight = (item.dimensions.weight / item.colli.quantity) * recapitulation.available;
+            recapitulation['userUpdated'] = user._id;
+            recapitulation['updatedDate'] = new Date();
 
             if (item.colli.available === item.colli.quantity)
                 item.status = static.belumTerekap;

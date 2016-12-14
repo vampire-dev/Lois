@@ -131,8 +131,10 @@ var shippingItem = {
         "notes": { type: String, default: null },
         "trainType": { type: ObjectId, ref: 'TrainType' },
         "driver": { type: ObjectId, ref: 'Driver' },
-        "date": { type: Date, default: Date.now },
-        "user": { type: ObjectId, ref: 'User' }
+        "createdDate": { type: Date, default: null },
+        "updatedDate": { type: Date, default: null },
+        "userCreated": { type: ObjectId, ref: 'User', default: null },
+        "userUpdated": { type: ObjectId, ref: 'User', default: null }
     }],
     "deliveries": [{
         "item": { type: ObjectId },
@@ -146,8 +148,10 @@ var shippingItem = {
         "deliveryCode": { type: String, default: null },
         "notes": { type: String, default: null },
         "driver": { type: ObjectId, ref: 'Driver' },
-        "date": { type: Date, default: Date.now },
-        "user": { type: ObjectId, ref: 'User' }
+        "createdDate": { type: Date, default: null },
+        "updatedDate": { type: Date, default: null },
+        "userCreated": { type: ObjectId, ref: 'User', default: null },
+        "userUpdated": { type: ObjectId, ref: 'User', default: null }
     }]
 };
 

@@ -133,8 +133,10 @@ Controller.prototype.delivery = function (viewModels, user) {
                 "deliveryCode": viewModel.deliveryCode,
                 "driver": viewModel.driver,
                 "notes": viewModel.notes,
-                "date": new Date(),
-                "user": user._id
+                "createdDate": new Date(),
+                "userCreated": user._id,
+                "updatedDate": new Date(),
+                "userUpdated": user._id
             };
 
             item.colli.delivered += viewModel.quantity;
@@ -193,6 +195,8 @@ Controller.prototype.cancelDelivery = function (viewModels, user) {
             delivery.available -= viewModel.quantity;
             delivery.quantity -= viewModel.quantity;
             delivery.weight = (item.dimensions.weight / item.colli.quantity) * delivery.available;
+            delivery['updatedUser'] = user._id;
+            delivery['updatedDate'] = new Date();
 
             if (item.colli.delivered > 0)
                 item.status = static.terkirimSebagian;

@@ -173,10 +173,10 @@
                                         <td>{{entity.sender.name}}</td>
                                         <td>{{entity.receiver.name}}</td>
                                         <td>{{entity.destination.name}}</td>
-                                        <td>{{entity.payment.type.name}}</td>                                        
-                                        <td>{{entity.cost.total | currency: 'Rp. ' : 2}}</td>  
+                                        <td>{{entity.payment.type.name}}</td>
+                                        <td>{{entity.cost.total | currency: 'Rp. ' : 2}}</td>
                                         <td style="color:red" ng-if="entity.audited">
-                                           Ya
+                                            Ya
                                         </td>
                                         <td style="color:green" ng-if="!entity.audited">
                                             Tidak
@@ -388,7 +388,7 @@
                                             <label class="input">
                                                 <input type="text" ng-model="ctrl.entity.notes.shipping" />
                                             </label>
-                                        </section>                                        
+                                        </section>
                                         <section class="col col-sm-12 col-md-12 col-lg-4">
                                             <label class="label">
                                                 Cara Bayar<strong class="txt-color-red">*</strong>
@@ -477,7 +477,7 @@
                                             <label class="input">
                                                 <input type="text" ng-model="ctrl.entity.notes.partner" />
                                             </label>
-                                        </section>                                  
+                                        </section>
                                         <section class="col col-sm-12 col-md-12 col-lg-4">
                                             <label class="label">
                                                 Biaya Kuli
@@ -485,7 +485,7 @@
                                             <label class="input">
                                                 <input type="text" onkeypress='return event.charCode >= 48 && event.charCode <= 57' ng-model="ctrl.entity.cost.worker" />
                                             </label>
-                                        </section>                                        
+                                        </section>
                                         <section class="col col-sm-12 col-md-12 col-lg-4">
                                             <label class="label">
                                                 Pph
@@ -508,7 +508,7 @@
                                                     <option value="0.1">10%</option>
                                                 </select><i></i>
                                             </label>
-                                        </section>                                                                             
+                                        </section>
                                     </div>
                                 </fieldset>
                                 <footer>

@@ -7,10 +7,17 @@ var app;
 (function (app) {
     var controllers;
     (function (controllers) {
+        var ViewType;
+        (function (ViewType) {
+            ViewType[ViewType["shipping"] = 1] = "shipping";
+            ViewType[ViewType["item"] = 2] = "item";
+        })(ViewType || (ViewType = {}));
+        ;
         var deliveryOrderCtrl = (function (_super) {
             __extends(deliveryOrderCtrl, _super);
             function deliveryOrderCtrl($scope, Notification) {
                 _super.call(this, Notification);
+                this.viewType = ViewType.shipping;
                 this.functions.load = app.api.deliveryOrder.getAll;
                 this.functions.autocomplete = app.api.autocomplete.getAll;
                 this.filter();
@@ -27,6 +34,14 @@ var app;
                 }).finally(function () {
                     ctrl.loadingData = false;
                 });
+            };
+            deliveryOrderCtrl.prototype.viewDetail = function (entity) {
+                this.viewType = ViewType.item;
+                this.selectedEntity = entity;
+            };
+            deliveryOrderCtrl.prototype.viewShipping = function () {
+                this.viewType = ViewType.shipping;
+                this.selectedEntity = null;
             };
             deliveryOrderCtrl.$inject = ['$scope', 'Notification'];
             return deliveryOrderCtrl;

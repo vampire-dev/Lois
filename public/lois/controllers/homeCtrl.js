@@ -17,17 +17,8 @@ var app;
             __extends(homeCtrl, _super);
             function homeCtrl($scope, Notification) {
                 _super.call(this, Notification);
-
-                var dates = new Date();
-                var dd = dates.getDate();
-                var mm = dates.getMonth() + 1;
-                var yyyy = dates.getFullYear();
-
-                var ToDate = yyyy + '-' + mm + '-' + dd;
-                this.filters.date = ToDate;
-
-                //this.viewType = ViewType.summary;
-                //this.loadOverall();
+                this.viewType = ViewType.summary;
+                this.loadOverall();
                 this.onSummaryChanges('destination');
             }
             homeCtrl.prototype.loadOverall = function () {
@@ -38,51 +29,33 @@ var app;
                     ctrl.notify('error', error.data);
                 });
             };
-            homeCtrl.prototype.load = function () {
-                var ctrl = this;
-                ctrl.createQuery();
-                ctrl.loadingData = true;
-                ctrl.functions.load(ctrl.query).then(function (result) {
-                    ctrl.entities = result.data;
-                }).catch(function (error) {
-                    ctrl.notify('error', error.data);
-                }).finally(function () {
-                    ctrl.loadingData = false;
-                });
-                ctrl.loadOverall();
-            };
             homeCtrl.prototype.onSummaryChanges = function (summary) {
                 switch (summary) {
                     case 'destination':
                         this.functions.load = app.api.home.getDestinations;
                         this.type = 'destination';
-                        document.getElementById("dynamicHeader").innerHTML = "Tujuan";
                         break;
                     case 'sender':
                         this.functions.load = app.api.home.getSenders;
                         this.type = 'sender';
-                        document.getElementById("dynamicHeader").innerHTML = "Pengirim";
                         break;
                     case 'paymentType':
-                        this.functions.load = app.api.home.getPaymentTypes;                        
-                        this.type = 'paymentType';
-                        document.getElementById("dynamicHeader").innerHTML = "Metode Pembayaran";
+                        this.functions.load = app.api.home.getPaymentTypes;
+                        this.type = 'payment.type';
                         break;
                     case 'paymentStatus':
-                        this.functions.load = app.api.home.getPaymentStatuses;                        
-                        this.type = 'paymentStatus';
-                        document.getElementById("dynamicHeader").innerHTML = "Status Pembayaran";
+                        this.functions.load = app.api.home.getPaymentStatuses;
+                        this.type = 'payment.status';
                         break;
                     case 'region':
                         this.functions.load = app.api.home.getRegions;
-                        this.type = 'regionDest';
-                        document.getElementById("dynamicHeader").innerHTML = "Regional Tujuan";
+                        this.type = 'regions.destination';
                         break;
                 }
                 this.summary = summary;
                 this.viewType = ViewType.summary;
                 this.paging.page = 1;
-                //this.loadOverall();
+                this.loadOverall();
                 this.filter();
             };
             homeCtrl.prototype.viewDetails = function (id) {

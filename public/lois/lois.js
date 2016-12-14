@@ -1,4 +1,4 @@
-/// <reference path="../typings/index.d.ts" />
+/// <reference path="../../typings/tsd.d.ts" />
 var app;
 (function (app) {
     app.lois = angular.module('lois', ['ui.router',

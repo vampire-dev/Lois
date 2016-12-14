@@ -54,10 +54,6 @@ var app;
                     this.notify('warning', 'Cara pembayaran tidak boleh kosong');
                     return;
                 }
-                if (this.entity.cost.expedition === '' || this.entity.cost.worker === '') {
-                    this.notify('warning', 'Biaya harus diisi walaupun 0');
-                    return;
-                }
                 var ctrl = this;
                 ctrl.processing = true;
                 ctrl.functions.save(ctrl.entity).then(function (result) {
@@ -109,20 +105,8 @@ var app;
                     this.notify('warning', 'Packing barang harus diisi');
                     return;
                 }
-                if (this.selectedItem.dimensions.weight === 0) {
-                    this.notify('warning', 'Berat harus lebih besar dari nol');
-                    return;
-                }
                 if (this.selectedItem.colli.quantity === 0) {
                     this.notify('warning', 'Koli harus lebih besar dari nol');
-                    return;
-                }
-                if (this.selectedItem.colli.quantity === '' || this.selectedItem.dimensions.weight === '' || this.selectedItem.dimensions.height === '' || this.selectedItem.dimensions.width === '' || this.selectedItem.dimensions.length === '') {
-                    this.notify('warning', 'Ukuran barang harus diisi walaupun 0');
-                    return;
-                }
-                if (this.selectedItem.cost.additional === '' || this.selectedItem.cost.colli === '' || this.selectedItem.cost.discount === '') {
-                    this.notify('warning', 'Biaya barang harus diisi walaupun 0');
                     return;
                 }
                 var index = this.selectedEntity['items'].indexOf(this.selectedItem);
@@ -184,49 +168,6 @@ var app;
                 this.showForm = show;
                 this.selectedItem = null;
                 this.load();
-            };
-            shippingCtrl.prototype.print = function (noPrice) {
-                var ctrl = this;
-                var checkedEntities = this.entities.filter(function (e) { return e.checked; });
-                if (checkedEntities.length === 0) {
-                    this.notify('warning', 'Tidak ada item yang dipilih');
-                    return;
-                }
-                //ctrl.loadingData = true;
-                var viewModels = [];
-                checkedEntities.forEach(function (entity) {
-                    var viewModel = {
-                        shipping: entity._id,
-                        sender: entity.sender.name,
-                        sender_contact: entity.sender.contact,
-                        sender_driver: entity.driver.sender,                       
-                        pickup_driver: entity.driver.pickup,
-                        destination_city: entity.destination.name,
-                        receiver: entity.receiver.name,
-                        receiver_phone: entity.receiver.contact,
-                        receiver_address: entity.receiver.address,
-                        sum_total_coli: entity.colli,
-                        sum_price: entity.cost.total,
-                        payment_method: entity.payment.type.name,
-                        spb_no: entity.spbNumber,
-                        po_no: entity.notes.po,
-                        transaction_date: entity.date,
-                        note: entity.notes.shipping,
-                        noPrice: noPrice
-                    };
-                    viewModels.push(viewModel);
-                });
-                
-                app.api.shipping.getDataReport(viewModels).then(function (result) {
-                    app.api.reportPrint.printDeliveryOrder(result.data).then(function (buffer) {
-                        var blob = new Blob([buffer.data], { type: 'application/pdf' });
-                        var url = URL.createObjectURL(blob);
-                        window.open(url, '_blank');
-                    });
-                }).finally(function () {
-                    ctrl.loadingData = false;
-                    });
-                
             };
             shippingCtrl.$inject = ['$scope', 'Notification'];
             return shippingCtrl;

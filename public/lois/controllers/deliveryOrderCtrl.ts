@@ -1,9 +1,15 @@
 ﻿module app.controllers {
+    enum ViewType { shipping = 1, item = 2 };
+
     class deliveryOrderCtrl extends baseCtrl {
+        viewType: ViewType;
+        selectedEntity: any;
+
         static $inject = ['$scope', 'Notification'];
 
         constructor($scope, Notification) {
             super(Notification);
+            this.viewType = ViewType.shipping;
             this.functions.load = api.deliveryOrder.getAll;
             this.functions.autocomplete = api.autocomplete.getAll;
             this.filter();
@@ -22,6 +28,16 @@
             }).finally(() => {
                 ctrl.loadingData = false;
             });
+        }
+
+        viewDetail(entity: any): void {
+            this.viewType = ViewType.item;
+            this.selectedEntity = entity;
+        }
+
+        viewShipping(): void {
+            this.viewType = ViewType.shipping;
+            this.selectedEntity = null;
         }
     }
 
