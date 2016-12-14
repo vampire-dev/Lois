@@ -90,7 +90,7 @@ Controller.prototype.return = function (viewModels, user) {
             shipping.returnInfo.modified.date = new Date();
             shipping.returnInfo.modified.user = user._id;
 
-            if (!shipping.returnInfo.created.date) {
+            if (!shipping.returnInfo.created.user) {
                 shipping.returnInfo.created.date = new Date();
                 shipping.returnInfo.created.user = user._id;
             }
